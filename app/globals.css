@@ -2,32 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+
+
+
+.tabs a:hover img{
+    transform: scale(1.2);
+}
+.product:hover{
+    box-shadow: 0px 8px 32px 0px rgba(0,0,0,.1);
+}
+.product:hover .product-content .product-imgbox a img:last-child{
+    opacity: 0;
+    pointer-events: none;
+}
+.product:hover .product-info{
+    background-color: #FFF;
+    transform: translateY(-40px);
+}
+.product:hover .product-info{
+    bottom: -39px;
+}
+.product:hover .product-info .product-info-content{
+    overflow: unset;
+}
+.product-btn-wrapper a:hover{
+    color: #7f8487;
+    border: 1px solid #7f8487;
+}
+/* product page slider and product page input increment and decrement */
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.main-product-image-wrapper .main-product-image-wrapper-content ul.slick-dots {
+    bottom: 20px;
+}
+ .slick-dots li button:before {
+    font-family: 'slick';
+    font-size: 12px !important;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: '•';
+    text-align: center;
+    opacity: .25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* header */
+
+.whishcounter::after {
+    content: attr(counter);
+    background-color: black;
+    color: white;
+    padding: 1px 6px;
+    position: absolute;
+    bottom: 0;
+    right: -20px;
+    border-radius: 100px;
+    font-size: 11px;
+}
+.cartcounter::after {
+    content: attr(counter2);
+    background-color: black;
+    color: white;
+    padding: 1px 6px;
+    position: absolute;
+    bottom: 0;
+    right: -20px;
+    border-radius: 100px;
+    font-size: 11px;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.navmenu li:hover ul{
+    opacity: 1;
+    pointer-events: all;
+    top: 120px;
+}
+ul.navmenu li a{
+    font-size: clamp(10px , 0.8vw , 20px);
 }
