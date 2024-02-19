@@ -1,42 +1,22 @@
-import { BEST_SELLER } from "@/graphql/bestSeller";
 
-const bestSellerCollection = async () => {
-    try {
-        const response = await fetch('https://reactstore1.myshopify.com/api/graphql.json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Shopify-Storefront-Access-Token': '902fd2f1b08ce2377bad6f2a9aaae656', // Replace with your actual access token
-            },
-            body: JSON.stringify({ query: BEST_SELLER }),
-        });
+import { bestSellerCollection } from "@/graphql/bestSeller";
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
-        }
-
-        const res = await response.json();
-        return res.data.collections.edges
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error;
-    }
-};
 
 const BestSellers = async () => {
     const bestSellers = await bestSellerCollection()
     console.log("BestSeller Collection:==>", bestSellers)
-    bestSellers.map((item, index) => {
-        console.log("item", item.node.products.edges)
-        item.node.products.edges.map((item, index) => {
-            console.log("Varients", item.node.title)
-            item.node.variants.edges.map((item, index) => {
-                console.log("Varients2222", item.node)
-            })
-        })
-    })
+    // bestSellers.map((item, index) => {
+    //     console.log("item", item.node.products.edges)
+    //     item.node.products.edges.map((item, index) => {
+    //         console.log("Varients", item.node.media.edges)
+    //         item.node.media.edges.map((item, index) => {
+    //             console.log("Preview Images", item.node)
+    //         })
+    //     })
+    // })
 
     return (
+       
         <div class="block w-full px-[18px] md:px-[40px] lg:px-{60px} mb-[60px]">
             <div class="block w-full max-w-[1440px] mx-auto">
                 <div class="block w-full md:px-[12px] 2xl:px-5">
@@ -44,7 +24,7 @@ const BestSellers = async () => {
 
                         <div class="block w-full col-span-full md:col-auto">
                             <div class=" relative block w-full h-full pb-9 after:absolute after:bottom-0 after:left-0 after:w-5 after:h-[2px] after:bg-black">
-                                <h2 class="text-4xl md:text-[5.5vw]  lg:text-[5vw] 2xl:text-[72px]  leading-[1.1428571429] font-light mb-9">Explore Our Bestsellers</h2>
+                                <h2 class="text-4xl md:text-[5.5vw]  lg:text-[5vw] 2xl:text-[66px]  leading-[1.1428571429] font-light mb-9">Explore Our Bestsellers</h2>
                                 <p class="text-base font-light text-[#161619]">Discover Comfort with our Luxurious Bedding Collections for Your Dreamy Haven</p>
                             </div>
                         </div>
@@ -60,7 +40,12 @@ const BestSellers = async () => {
                                         
                                         <div class="product-imgbox block w-full h-full">
                                             <a href="#" class="block w-full h-full leading-[0] relative">
-                                                <img src="/p-1.png" class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
+                                                {
+                                                    item.node.media.edges.map((item, index)=> {
+                                                        return index === 1 && <img src={item.node.previewImage.url} class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" /> 
+                                                    })
+                                                }
+                                                {/* <img src="/p-1.png" class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" /> */}
                                                 <img src={item.node.featuredImage.url} class="block w-full object-contain absolute top-0 left-0 transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
                                             </a>
                                         </div>
