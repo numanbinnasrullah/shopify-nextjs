@@ -27,11 +27,11 @@ export const BLOGS_QUERY = `
 
 export const blogs = async () => {
   try {
-      const response = await fetch('https://reactstore1.myshopify.com/api/graphql.json', {
+      const response = await fetch(process.env.STORE_ENDPOINT, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              'X-Shopify-Storefront-Access-Token': '902fd2f1b08ce2377bad6f2a9aaae656', // Replace with your actual access token
+              'X-Shopify-Storefront-Access-Token': process.env.STOREFRONT_ACCESS_TOKEN, // Replace with your actual access token
           },
           body: JSON.stringify({ query: BLOGS_QUERY }),
       });
