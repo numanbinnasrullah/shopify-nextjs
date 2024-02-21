@@ -12,8 +12,8 @@ const Collection = () => {
                 <CollectionDescription />
                 <div class="block w-full">
                     <div class="flex flex-col lg:flex-row">
-                        <Filters />
-                        <GridItems />
+                        {/* <Filters />
+                        <GridItems /> */}
                         {/* <BestSellers /> */}
                     </div>
                 </div>
