@@ -4,37 +4,18 @@ import Link from 'next/link';
 const Menu = async () => {
   const getMenus = await fetchMenus();
   console.log("Get Menus", getMenus)
-  getMenus.map((item, index)=> {
-    item.items.map((it, index)=>{
-      console.log("Internal Items", it.title)
-      const decodeurl = decodeURIComponent(it.title)
-    })
-  })
 
+  // getMenus.map((item, index)=> {
+  //   const urlParts = item.url.split('/');
+  // return urlParts[urlParts.length - 1];
+  //   item.items.map((it, index)=>{
+  //     console.log("Internal Items", it.title)
+  //     const decodeurl = decodeURIComponent(it.title)
+  //   })
+  // })
 
-  const decodedTitles = getMenus.map(mainItem => ({
-    ...mainItem,
-    items: mainItem.items.map(subItem => ({
-      ...subItem,
-      decodedSubTitle: decodeURIComponent(subItem.title),
-    })),
-    decodedTitle: decodeURIComponent(mainItem.title),
-  }));
-  let decodeurl = ""
- 
   return (
     <>
-
-      {/* {getMenus.map(item => (
-      <div key={item.id}>
-        <h2>Main Menu {item.title}</h2>
-        <ul>
-          {item.items.map(item => (
-            <li key={item}>Item: {item.title}</li>
-          ))}
-        </ul>
-      </div>
-    ))} */}
 
 
       <div className="hidden xl:block w-full max-w-[60%]">
@@ -42,7 +23,7 @@ const Menu = async () => {
           {getMenus.map(mainItem => ( 
             <li key={mainItem.id} className="py-12 px-3 cursor-pointer relative">
              
-              <Link href={`/collections/${mainItem.title.toLowerCase()}`} className="bedding block w-full max-w-fit text-base xl:text-[0.8vw] relative">
+              <Link href={`/collections/${getLastUrlPart(mainItem.url)}`} className="bedding block w-full max-w-fit text-base xl:text-[0.8vw] relative">
                 <span>{mainItem.title}</span>
                 {mainItem.items.length > 0 && (
                   <span className="absolute top-1/2 -translate-y-1/2 -right-5">
@@ -56,9 +37,9 @@ const Menu = async () => {
                 <ul className="block  absolute z-10 w-[200px] pl-5 bg-white left-0 top-36 transition-all duration-150 ease-linear opacity-0 pointer-events-none hover:opacity-100">
                   <ul className="block w-full max-w-[600px] mx-auto">
                     {mainItem.items.map(subItem => (
-                      decodeurl = decodeURIComponent(subItem.title),
+                      
                       <li key={subItem.id}>
-                        <Link href={`/collections/${decodeurl}`} className="block w-full text-base leading-[1.875] font-medium text-black uppercase mb-[10px] hover:text-blue-500 hover:text-lg">
+                        <Link href={`/collections/${getLastUrlPart(subItem.url)}`} className="block w-full text-base leading-[1.875] font-medium text-black uppercase mb-[10px] hover:text-blue-500 hover:text-lg">
                           <span>{subItem.title}</span>
                         </Link>
                       </li>
@@ -73,5 +54,10 @@ const Menu = async () => {
     </>
   )
 }
+
+const getLastUrlPart = (url) => {
+  const urlParts = url.split('/');
+  return urlParts[urlParts.length - 1];
+};
 
 export default Menu;

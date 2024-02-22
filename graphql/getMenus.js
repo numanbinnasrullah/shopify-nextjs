@@ -1,23 +1,25 @@
 export const MENU_QUERY = `
 {
-    menu(handle: "main-menu") {
+  menu(handle: "main-menu") {
+    id
+    items {
       id
+      title
+      url
       items {
         id
         title
-        items {
-          id
-          title
-        }
+        url 
       }
-      }
-  }
+    }
+    }
+}
 `;
 
 
 export const fetchMenus = async () => {
   try {
-    const response = await fetch(process.env.STORE_ENDPOINT, {
+    const response = await fetch(process.env.SHOPIFY_GRAPHQL_ENDPOINT, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

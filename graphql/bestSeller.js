@@ -58,7 +58,7 @@ export const BEST_SELLER = `
 
 export const bestSellerCollection = async () => {
   try {
-      const response = await fetch(process.env.STORE_ENDPOINT, {
+      const response = await fetch(process.env.SHOPIFY_GRAPHQL_ENDPOINT, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',

@@ -40,7 +40,7 @@ export const FEATURED_COLLECTION_QUERY = `
 
 export const fetchfeaturedCollections = async () => {
   try {
-      const response = await fetch(process.env.STORE_ENDPOINT, {
+      const response = await fetch(process.env.SHOPIFY_GRAPHQL_ENDPOINT, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
