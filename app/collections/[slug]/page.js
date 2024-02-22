@@ -7,7 +7,7 @@ import Filters from '@/components/CollectionComponents/Filters/Filters'
 import GridItems from '@/components/CollectionComponents/GridItems/GridItems'
 
 const page = ({params}) => {
-  console.log("params", params.slug)
+  console.log("paramsssss", params.slug)
     // const params = useParams()
     // const collectionSlug = params.slug[params.slug.length - 1];
 
@@ -19,7 +19,7 @@ const page = ({params}) => {
                 <div class="block w-full">
                     <div class="flex flex-col lg:flex-row">
                         <Filters />
-                        <GridItems />
+                        <GridItems collectionSlug={params.slug} />
                         {/* <BestSellers /> */}
                     </div>
                 </div>

@@ -1,20 +1,4 @@
-export const MENU_QUERY = `
-{
-  menu(handle: "main-menu") {
-    id
-    items {
-      id
-      title
-      url
-      items {
-        id
-        title
-        url 
-      }
-    }
-    }
-}
-`;
+import { MENU_QUERY } from "@/components/Header/menu/Menu";
 
 
 export const fetchMenus = async () => {

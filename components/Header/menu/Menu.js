@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Menu = async () => {
   const getMenus = await fetchMenus();
-  console.log("Get Menus", getMenus)
+  // console.log("Get Menus", getMenus)
 
   // getMenus.map((item, index)=> {
   //   const urlParts = item.url.split('/');
@@ -59,5 +59,24 @@ const getLastUrlPart = (url) => {
   const urlParts = url.split('/');
   return urlParts[urlParts.length - 1];
 };
+
+
+export const MENU_QUERY = `
+{
+  menu(handle: "main-menu") {
+    id
+    items {
+      id
+      title
+      url
+      items {
+        id
+        title
+        url 
+      }
+    }
+    }
+}
+`;
 
 export default Menu;
