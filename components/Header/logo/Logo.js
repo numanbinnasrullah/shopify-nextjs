@@ -15,7 +15,7 @@ const Logo = () => {
                 </div>
                 <div class="block w-full max-w-[50%] xl:max-w-[20%] shrink-0">
                     <div class="block w-full mx-auto xl:mx-0 max-w-[170px]">
-                        <Link href="/"><Image src="/Moonlight-Logo.png" width="150" height="100"  /></Link>
+                        <Link href="/"><Image src="/Moonlight-Logo.png" width="170" height="45" /></Link>
                         
                         {/* <img src="Moonlight-Logo-Final.png" class="block w-full object-contain" width="auto" height="auto" alt="Image" /> */}
                     </div>
@@ -25,4 +25,4 @@ const Logo = () => {
   )
 }
 
-export default Logo
+export default Logo;

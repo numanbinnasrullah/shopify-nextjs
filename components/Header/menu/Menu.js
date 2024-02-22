@@ -7,9 +7,21 @@ const Menu = async () => {
   getMenus.map((item, index)=> {
     item.items.map((it, index)=>{
       console.log("Internal Items", it.title)
+      const decodeurl = decodeURIComponent(it.title)
     })
   })
 
+
+  const decodedTitles = getMenus.map(mainItem => ({
+    ...mainItem,
+    items: mainItem.items.map(subItem => ({
+      ...subItem,
+      decodedSubTitle: decodeURIComponent(subItem.title),
+    })),
+    decodedTitle: decodeURIComponent(mainItem.title),
+  }));
+  let decodeurl = ""
+ 
   return (
     <>
 
@@ -44,8 +56,9 @@ const Menu = async () => {
                 <ul className="block  absolute z-10 w-[200px] pl-5 bg-white left-0 top-36 transition-all duration-150 ease-linear opacity-0 pointer-events-none hover:opacity-100">
                   <ul className="block w-full max-w-[600px] mx-auto">
                     {mainItem.items.map(subItem => (
+                      decodeurl = decodeURIComponent(subItem.title),
                       <li key={subItem.id}>
-                        <Link href={`/collections/${subItem.title.toLowerCase()}`} className="block w-full text-base leading-[1.875] font-medium text-black uppercase mb-[10px] hover:text-blue-500 hover:text-lg">
+                        <Link href={`/collections/${decodeurl}`} className="block w-full text-base leading-[1.875] font-medium text-black uppercase mb-[10px] hover:text-blue-500 hover:text-lg">
                           <span>{subItem.title}</span>
                         </Link>
                       </li>

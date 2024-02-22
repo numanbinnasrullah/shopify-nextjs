@@ -1,4 +1,5 @@
 import { fetchfeaturedCollections } from "@/graphql/featuredCollections"
+import Link from "next/link"
 
 const FeaturedCollections = async() => {
     const featuredCollections = await fetchfeaturedCollections()
@@ -12,7 +13,7 @@ const FeaturedCollections = async() => {
                     console.log(item?.node?.image?.url)
                     return    <div class="block w-full px-3 tabs">
                     <div class="block w-full mx-auto overflow-hidden">
-                        <a href="#" class="transition-all duration-150">
+                        <Link href={`/collections/${item.node.title.toLowerCase()}`} class="transition-all duration-150">
                             <div class="block w-full md:max-w-[440px] mx-auto mb-2 relative">
                                 <img src={item?.node?.image?.url} class=" object-contain transition-all duration-1000 block w-full" width="auto" height="auto" alt="Stripe Image" />
                                 <div class="inner absolute top-0 left-0 block w-full h-full p-7 sm:p-[50px]">
@@ -22,7 +23,7 @@ const FeaturedCollections = async() => {
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 })}
