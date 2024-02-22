@@ -4,11 +4,50 @@ export const fetchCollection = async (collectionSlug) => {
       const query = `
           query FetchCollection($slug: String!) {
               collections(first: 1, query: $slug) {
-                  edges {
-                      node {
-                        description
+                edges {
+                  node {
+                    title
+                    description
+                      products(first: 3) {
+                      edges {
+                        node {
+                          id
+                          title
+                          description
+                          featuredImage {
+                            id
+                            url
+                          }
+                          media(first:2) {
+                            edges {
+                              node {
+                                previewImage {
+                                  id
+                                  url
+                                }
+                              }
+                            }
+                          }
+                          variants(first: 1) {
+                            edges {
+                              node {
+                                compareAtPrice{
+                                  amount
+                                  currencyCode
+                                }
+                                price {
+                                  amount
+                                  currencyCode
+                                }
+                              }
+                            }
+                          }
+                        }
                       }
+                    }
+                    
                   }
+                }
               }
           }
       `;
