@@ -1,14 +1,17 @@
 
-import { bestSellerCollection_Products } from "@/graphql/bestSeller";
+import { fetchCollection } from "@/graphql/singleCollection";
 import Link from "next/link";
 
 
 const BestSellers = async () => {
-    const bestSellers = await bestSellerCollection_Products("kitchen")
-    console.log("BestSeller Collection:==>", bestSellers?.products?.edges)
-    bestSellers?.products?.edges.map((item, index)=>{
-        console.log("Bestseller products", item?.node?.handle)
-    })
+    const bestSellers = await fetchCollection("kitchen")
+    // console.log("BestSeller Collection:==>", bestSellers?.products?.edges)
+    // bestSellers?.products?.edges.map((item, index)=>{
+    //     console.log("Bestseller products", item?.node.variants)
+    //     item?.node?.variants?.edges.map((item, index)=>{
+    //         console.log("varients ", item)
+    //     })
+    // })
     
 
     return (
@@ -41,7 +44,7 @@ const BestSellers = async () => {
                                     <div class="product-info block w-full py-5 px-3 md:px-5 transition-transform duration-150 ease-linear">
                                         <div class="product-info-content block w-full relative overflow-hidden">
                                             <a href="#" class="block w-full mb-[6px] max-w-fit">
-                                                <h2 class="block w-full text-base text-[#161619] max-w-fit truncate">15 Tog Duvet</h2>
+                                                <h2 class="block w-full text-base text-[#161619] max-w-fit truncate">{item?.node?.title}</h2>
                                             </a>
                                             <div class="review-box block w-full">
                                                 <div class="review-content flex w-full flex-wrap">
@@ -75,13 +78,24 @@ const BestSellers = async () => {
                                                     <span class="text-lg">1 review</span>
                                                 </div>
                                             </div>
-                                            <div class="price-box block w-full">
+                                            {
+                                                item?.node?.variants?.edges.map((item, index)=>{
+                                                    return <div class="price-box block w-full">
+                                                    <div class="price-box-content flex w-full max-w-fit items-center">
+                                                        <span class="text-sm font-medium">{item?.node?.price?.amount}</span>
+                                                        <span class="text-sm font-medium px-1">-</span>
+                                                        <span class="text-sm font-medium">{item?.node?.compareAtPrice?.amount}</span>
+                                                    </div>
+                                                </div>
+                                                })
+                                            }
+                                            {/* <div class="price-box block w-full">
                                                 <div class="price-box-content flex w-full max-w-fit items-center">
                                                     <span class="text-sm font-medium">£11.99</span>
                                                     <span class="text-sm font-medium px-1">-</span>
                                                     <span class="text-sm font-medium">£18.99</span>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div class="so block w-full pt-4 absolute -bottom-11 left-0">
                                                 <div class="so-content grid md:grid-cols-2 items-center w-full">
                                                     <a href="#" class="block w-full max-w-fit"><span class="block w-full max-w-fit font-semibold text-sm sm:text-base lg:text-[1.16vw] xl:text-sm uppercase">Select options</span></a>

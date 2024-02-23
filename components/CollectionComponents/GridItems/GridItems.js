@@ -1,4 +1,4 @@
-import { fetchCollection } from "@/graphql/collection";
+import { fetchCollection } from "@/graphql/singleCollection";
 import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
@@ -22,23 +22,23 @@ const GridItems = async({collectionSlug}) => {
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-[20px] md:gap-[40px] mb-[35px]">
                     
             {
-                fetchCollectionProducts.products.edges.map((item, index)=>{
+                fetchCollectionProducts?.products?.edges?.map((item, index)=>{
                     return  <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
                     <div class="product-content block w-full">
                         <div class="product-imgbox block w-full h-full">
-                            <Link href={`/products/${item.node.handle}`} class="block w-full h-full leading-[0] relative">
+                            <Link href={`/products/${item?.node?.handle}`} class="block w-full h-full leading-[0] relative">
                                 {
-                                    item.node.media.edges.map((item, index)=>{
-                                        return index === 1 && <img src={item.node.previewImage.url} class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
+                                    item?.node?.media?.edges?.map((item, index)=>{
+                                        return index === 1 && <img src={item?.node?.previewImage?.url} class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
                                     })
                                 }
-                                <img src={item.node.featuredImage.url} class="block w-full object-contain absolute top-0 left-0 transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
+                                <img src={item?.node?.featuredImage?.url} class="block w-full object-contain absolute top-0 left-0 transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
                             </Link>
                         </div>
                         <div class="product-info block w-full py-5 px-3 md:px-5 transition-transform duration-150 ease-linear">
                             <div class="product-info-content block w-full relative overflow-hidden">
                                 <a href="#" class="block w-full mb-[6px] max-w-fit">
-                                    <h2 class="block w-full text-base text-[#161619] max-w-fit truncate">15 Tog Duvet</h2>
+                                    <h2 class="block w-full text-base text-[#161619] max-w-fit truncate">{item?.node?.title}</h2>
                                 </a>
                                 <div class="review-box block w-full">
                                     <div class="review-content flex w-full flex-wrap">
@@ -72,13 +72,24 @@ const GridItems = async({collectionSlug}) => {
                                         <span class="text-lg">1 review</span>
                                     </div>
                                 </div>
-                                <div class="price-box block w-full">
+                                {
+                                                item?.node?.variants?.edges.map((item, index)=>{
+                                                    return <div class="price-box block w-full">
+                                                    <div class="price-box-content flex w-full max-w-fit items-center">
+                                                        <span class="text-sm font-medium">{item?.node?.price?.amount}</span>
+                                                        <span class="text-sm font-medium px-1">-</span>
+                                                        <span class="text-sm font-medium">{item?.node?.compareAtPrice?.amount}</span>
+                                                    </div>
+                                                </div>
+                                                })
+                                            }
+                                {/* <div class="price-box block w-full">
                                     <div class="price-box-content flex w-full max-w-fit items-center">
                                         <span class="text-sm font-medium">£11.99</span>
                                         <span class="text-sm font-medium px-1">-</span>
                                         <span class="text-sm font-medium">£18.99</span>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div class="so block w-full pt-4 absolute -bottom-11 left-0">
                                     <div class="so-content grid md:grid-cols-2 items-center w-full">
                                         <a href="#" class="block w-full max-w-fit"><span class="block w-full max-w-fit font-semibold text-sm sm:text-base lg:text-[1.16vw] xl:text-sm uppercase">Select options</span></a>

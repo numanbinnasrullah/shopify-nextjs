@@ -1,5 +1,5 @@
 export const fetchCollection = async (collectionSlug) => {
-  console.log("Slug", collectionSlug)
+
   try {
       const query = `
       query FetchCollection($slug: String!) {

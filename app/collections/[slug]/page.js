@@ -7,7 +7,7 @@ import Filters from '@/components/CollectionComponents/Filters/Filters'
 import GridItems from '@/components/CollectionComponents/GridItems/GridItems'
 
 const page = ({params}) => {
-  console.log("paramsssss", params.slug)
+  // console.log("paramsssss", params.slug)
     // const params = useParams()
     // const collectionSlug = params.slug[params.slug.length - 1];
 

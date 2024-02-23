@@ -87,7 +87,7 @@
 
 
 export const bestSellerCollection_Products = async (collectionSlug) => {
-  console.log("Slug", collectionSlug)
+ 
   try {
       const query = `
       query FetchCollection($slug: String!) {
