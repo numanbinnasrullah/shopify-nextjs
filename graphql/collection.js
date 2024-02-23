@@ -12,6 +12,7 @@ export const fetchCollection = async (collectionSlug) => {
                 id
                 title
                 description
+                handle
                 featuredImage {
                   id
                   url

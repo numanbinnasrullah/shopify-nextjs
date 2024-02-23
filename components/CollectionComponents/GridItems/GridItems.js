@@ -1,15 +1,16 @@
 import { fetchCollection } from "@/graphql/collection";
 import SidebarToggler from "./SidebarToggler/SidebarToggler"
+import Link from "next/link";
 
 const GridItems = async({collectionSlug}) => {
     const fetchCollectionProducts = await fetchCollection(collectionSlug);
     // console.log("Get Collection Products",fetchCollectionProducts.products.edges)
-    fetchCollectionProducts.products.edges.map((item, index)=>{
-        console.log("Products", item.node.media.edges)
-        item.node.media.edges.map((item,index)=>{
-            console.log("media images", item.node.previewImage.url)
-        })
-    })
+    // fetchCollectionProducts.products.edges.map((item, index)=>{
+    //     console.log("Products", item.node.handle)
+    //     item.node.media.edges.map((item,index)=>{
+    //         console.log("media images", item.node)
+    //     })
+    // })
   return (
     
     <div className="right block w-full">
@@ -25,15 +26,14 @@ const GridItems = async({collectionSlug}) => {
                     return  <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
                     <div class="product-content block w-full">
                         <div class="product-imgbox block w-full h-full">
-                            <a href="#" class="block w-full h-full leading-[0] relative">
+                            <Link href={`/products/${item.node.handle}`} class="block w-full h-full leading-[0] relative">
                                 {
                                     item.node.media.edges.map((item, index)=>{
                                         return index === 1 && <img src={item.node.previewImage.url} class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
                                     })
                                 }
-                                {/* <img src="/p-1.1.jpg" class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" /> */}
                                 <img src={item.node.featuredImage.url} class="block w-full object-contain absolute top-0 left-0 transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
-                            </a>
+                            </Link>
                         </div>
                         <div class="product-info block w-full py-5 px-3 md:px-5 transition-transform duration-150 ease-linear">
                             <div class="product-info-content block w-full relative overflow-hidden">
