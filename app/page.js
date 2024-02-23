@@ -6,10 +6,13 @@ import HeroBanner from "@/components/HomePageComponents/HeroBanner/HeroBanner";
 import MainCollections from "@/components/HomePageComponents/MainCollections/MainCollections";
 import OurBlog from "@/components/HomePageComponents/OurBlog/OurBlog";
 import RichText from "@/components/HomePageComponents/RichText/RichText";
+import homePageQuery from "@/graphql/homepage";
 
 
 
-export default function Home() {
+export default async function Home() {
+    const homePage = await homePageQuery()
+    console.log("HomePage", homePage.data.menu)
   return (
     <>
       <Header />
