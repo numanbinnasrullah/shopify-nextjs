@@ -4,7 +4,7 @@ import Link from "next/link";
 
 
 const BestSellers = async () => {
-    const bestSellers = await fetchCollection("rugs")
+    const bestSellers = await fetchCollection("bedding")
     // console.log("BestSeller Collection:==>", bestSellers?.products?.edges)
     // bestSellers?.products?.edges.map((item, index)=>{
     //     console.log("Bestseller products", item?.node.variants)

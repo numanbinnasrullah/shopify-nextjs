@@ -5,11 +5,11 @@ import Menu from './menu/Menu'
 import HeaderIcons from './headerIcons/HeaderIcons'
 import Sidebar from '../Sidebar/Sidebar'
 
-const Header = () => {
+const Header = ({menu}) => {
     return (
         <HomepageWrapper>
             <Logo />
-            <Menu />
+            <Menu menu={menu} />
             <HeaderIcons />
             <Sidebar />
         </HomepageWrapper>

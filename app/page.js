@@ -12,10 +12,12 @@ import homePageQuery from "@/graphql/homepage";
 
 export default async function Home() {
     const homePage = await homePageQuery()
-    console.log("HomePage", homePage.data.menu)
+    const {menu, collection1, collection2, collection3, collection, blogs} = homePage?.data
+    console.log("HomePage", collection1 )
+    // homePage.data.menu.items
   return (
     <>
-      <Header />
+      <Header menu={menu} />
       <HeroBanner />
       <RichText />
       <FeaturedCollections />

@@ -1,10 +1,17 @@
 import { fetchMenus } from '@/graphql/getMenus';
 import Link from 'next/link';
 
-const Menu = async () => {
-  const getMenus = await fetchMenus();
-  // console.log("Get Menus", getMenus)
+const Menu = async ({menu}) => {
+  // const getMenus = await fetchMenus();
+  // console.log("Get Menus", menu)
 
+
+  // menu.items.map((item, index) =>{
+  //   console.log("item menu",item.title)
+  //   item.items.map((item, index) =>{
+  //     console.log("Sub menu", item.title)
+  //   })
+  // })
   // getMenus.map((item, index)=> {
   //   const urlParts = item.url.split('/');
   // return urlParts[urlParts.length - 1];
@@ -20,7 +27,7 @@ const Menu = async () => {
 
       <div className="hidden xl:block w-full max-w-[60%]">
         <ul className="navmenu flex w-full h-full items-center justify-center gap-2 flex-wrap">
-          {getMenus?.map(mainItem => ( 
+          {menu?.items?.map(mainItem => ( 
             <li key={mainItem?.id} className="py-12 px-3 cursor-pointer relative">
              
               <Link href={`/collections/${getLastUrlPart(mainItem?.url)}`} className="bedding block w-full max-w-fit text-base xl:text-[0.8vw] relative">
@@ -61,22 +68,22 @@ const getLastUrlPart = (url) => {
 };
 
 
-export const MENU_QUERY = `
-{
-  menu(handle: "main-menu") {
-    id
-    items {
-      id
-      title
-      url
-      items {
-        id
-        title
-        url 
-      }
-    }
-    }
-}
-`;
+// export const MENU_QUERY = `
+// {
+//   menu(handle: "main-menu") {
+//     id
+//     items {
+//       id
+//       title
+//       url
+//       items {
+//         id
+//         title
+//         url 
+//       }
+//     }
+//     }
+// }
+// `;
 
 export default Menu;

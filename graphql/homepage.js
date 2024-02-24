@@ -107,7 +107,7 @@ const homePageQuery = async() => {
       
     `
     const variables = {
-        "handle1": "kitchen",
+      "handle1": "kitchen",
       "handle2": "bedding",
       "handle3": "curtains",
       "slug": "kitchen",
