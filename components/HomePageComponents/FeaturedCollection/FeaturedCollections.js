@@ -1,9 +1,11 @@
 import { fetchfeaturedCollections } from "@/graphql/featuredCollections"
 import Link from "next/link"
 
-const FeaturedCollections = async() => {
-    const featuredCollections = await fetchfeaturedCollections()
-    const ArrayFromMainObject = Object.values(featuredCollections);
+const FeaturedCollections = async({ featuredCollections}) => {
+    // const { collection1, collection2, collection3 } = featuredCollections;
+    console.log("Featured Collection Home",featuredCollections)
+    // const featuredCollections = await fetchfeaturedCollections()
+    // const ArrayFromMainObject = Object.values(featuredCollections);
    
     // ArrayFromMainObject.map((item, index)=>{
     //     console.log("Featured Collection Item", item)
@@ -14,7 +16,7 @@ const FeaturedCollections = async() => {
         <div class="block w-full">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {
-                    ArrayFromMainObject?.map((item, index)=>{
+                    featuredCollections?.map((item, index)=>{
                         return <div class="block w-full px-3 tabs">
                         <div class="block w-full mx-auto overflow-hidden">
                             <Link href={`/collections/${item?.handle}`} class="transition-all duration-150">

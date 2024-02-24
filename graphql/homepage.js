@@ -99,10 +99,13 @@ const homePageQuery = async() => {
       }
       
       fragment CollectionFields on Collection {
-        title
-        description
-        handle
-       
+        id
+           title
+           handle
+           image {
+           url
+             altText
+           } 
       }
       
     `
