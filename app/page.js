@@ -12,7 +12,7 @@ import homePageQuery from "@/graphql/homepage";
 
 export default async function Home() {
     const homePageData = await homePageQuery()
-    const {menu, collection1, collection2, collection3, collection, blogs} = homePageData?.data
+    const {menu, collection1, collection2, collection3, collection, blogs, newArrivalCollection1, newArrivalCollection2, newArrivalCollection3 } = homePageData?.data
     console.log("HomePage", homePageData?.data )
     // homePage.data.menu.items
   return (
@@ -22,7 +22,7 @@ export default async function Home() {
       <RichText />
       <FeaturedCollections featuredCollections={[collection1, collection2, collection3]} />
       <BestSellers collection={collection} />
-      <MainCollections />
+      <MainCollections newArrivalCollection1={newArrivalCollection1} newArrivalCollection2={newArrivalCollection2} newArrivalCollection3={newArrivalCollection3} />
       <OurBlog />
       <Footer />
     </>

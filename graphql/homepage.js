@@ -2,7 +2,7 @@ import { graphql } from "./graphql";
 
 const homePageQuery = async() => {
     const query = `
-    query HomePageQuery($handle1: String!, $handle2: String!, $handle3: String!, $slug:String) {
+    query HomePageQuery($handle1: String!, $handle2: String!, $handle3: String!, $slug:String, $newArrivalCollection1: String!, $newArrivalCollection2: String!, $newArrivalCollection3: String!) {
         menu(handle: "main-menu") {
             id
             items {
@@ -72,6 +72,19 @@ const homePageQuery = async() => {
               }
             }
           }
+
+
+          newArrivalCollection1: collection(handle: $newArrivalCollection1) {
+            ...CollectionFields
+          }
+        
+          newArrivalCollection2: collection(handle: $newArrivalCollection2) {
+            ...CollectionFields
+          }
+        
+          newArrivalCollection3: collection(handle: $newArrivalCollection3) {
+            ...CollectionFields
+          }
     
         
         blogs(query: "87509991609", first: 1) {
@@ -114,6 +127,9 @@ const homePageQuery = async() => {
       "handle2": "bedding",
       "handle3": "curtains",
       "slug": "kitchen",
+      "newArrivalCollection1": "rugs",
+      "newArrivalCollection2": "women",
+      "newArrivalCollection3": "velvet-curtains",
     };
     const Query = { query, variables }
     const res = await graphql(Query);

@@ -1,5 +1,5 @@
 
-import { fetchCollection } from "@/graphql/singleCollection";
+// import { fetchCollection } from "@/graphql/singleCollection";
 import Link from "next/link";
 
 

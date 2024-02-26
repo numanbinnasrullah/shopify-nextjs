@@ -1,6 +1,8 @@
+import Link from "next/link"
 
 
-const MainCollections = () => {
+const MainCollections = ({newArrivalCollection1, newArrivalCollection2, newArrivalCollection3}) => {
+    console.log("New Arrivals ====>", newArrivalCollection1, newArrivalCollection2, newArrivalCollection3)
   return (
     <div class="block w-full px-[18px] md:px-[40px] lg:px-{60px} mb-[50px]">
     <div class="block w-full max-w-[1440px] mx-auto">
@@ -11,7 +13,7 @@ const MainCollections = () => {
                     <div class="flex flex-col w-full mx-auto gap-10">
 
                         <div class="block w-full h-full">
-                            <a href="#" class="transition-all duration-150 w-full lg:max-w-[920px] block">
+                            <Link href="#" class="transition-all duration-150 w-full lg:max-w-[920px] block">
                                 <div class="block w-full lg:max-w-[920px] relative overflow-hidden">
                                     <img src="/cl-1.png" class=" object-contain transition-all duration-1000 block w-full" width="auto" height="auto" alt="Stripe Image" />
                                     <div class="inner absolute top-0 left-0 block w-full h-full p-7 sm:p-[50px]">
@@ -22,7 +24,7 @@ const MainCollections = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
 
                         <div class="block w-full">
