@@ -1,4 +1,4 @@
-import { fetchfeaturedCollections } from "@/graphql/featuredCollections"
+
 import Link from "next/link"
 
 const FeaturedCollections = async({ featuredCollections}) => {

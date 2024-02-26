@@ -1,6 +1,8 @@
 import { blogs } from "@/graphql/blogs";
+import Link from "next/link";
 
-const OurBlog = async() => {
+const OurBlog = async({blog}) => {
+    console.log("Blogs====>", blog?.articles?.edges)
     const fetchBlogs = await blogs();
     // fetchBlogs.map((item, index) =>{
     //     console.log("articles :", item.node.articles.edges)
@@ -19,26 +21,22 @@ const OurBlog = async() => {
                     <div class="grid gap-[40px] md:grid-cols-2 lg:grid-cols-3">
 
                     {
-                        fetchBlogs?.map((item, index) =>{
+                        blog?.articles?.edges?.map((item, index) =>{
                             return <>
-                            {
-                             item?.node?.articles?.edges?.map((article, index) =>{
-                                return   <div class="block w-full xl:px-5">
+                                <div class="block w-full xl:px-5">
                                 <div class="block w-full  md:max-w-[425px] mx-auto">
                                     <div class="block w-full md:max-w-[425px] mb-6">
-                                        <a href="#" class="block w-full"><img src={article?.node?.image?.url} class="block w-full object-contain" width="auto" height="auto" alt="Blog Image" /></a>
+                                        <Link href={`blogs/${item?.node?.handle}`} class="block w-full"><img src={item?.node?.image?.url} class="block w-full object-contain" width="auto" height="auto" alt="Blog Image" /></Link>
                                     </div>
                                     <div class="block w-full">
-                                        <h2 class="block w-full max-w-fit mb-[30px]"><a href="#" class="text-lg text-black font-medium block w-full max-w-fit">{article?.node?.title}</a></h2>
+                                        <h2 class="block w-full max-w-fit mb-[30px]"><a href="#" class="text-lg text-black font-medium block w-full max-w-fit">{item?.node?.title}</a></h2>
                                         <p class="block w-full text-base text-[#161619] line-clamp-2 mb-[30px]">
-                                        {`${article?.node?.content.split(' ').slice(0, 18).join(' ')} . . .`}
+                                        {`${item?.node?.content.split(' ').slice(0, 18).join(' ')} . . .`}
                                         </p>
                                         <a href="#" class="block w-full max-w-[158px]"><span class=" transition-all duration-150 ease-linear w-full max-w-[158px] border border-[#161619] text-[#161619] hover:bg-[#161619] hover:text-[#FFF] block text-center text-xs leading-[38px]">CONTINUE READING</span></a>
                                     </div>
                                 </div>
                             </div>
-                             })
-                            }
                             </>
                         })
                     }

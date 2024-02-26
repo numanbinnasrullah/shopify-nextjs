@@ -2,7 +2,7 @@ import Link from "next/link"
 
 
 const MainCollections = ({newArrivalCollection1, newArrivalCollection2, newArrivalCollection3}) => {
-    console.log("New Arrivals ====>", newArrivalCollection1, newArrivalCollection2, newArrivalCollection3)
+    // console.log("New Arrivals ====>", newArrivalCollection1, newArrivalCollection2, newArrivalCollection3)
   return (
     <div class="block w-full px-[18px] md:px-[40px] lg:px-{60px} mb-[50px]">
     <div class="block w-full max-w-[1440px] mx-auto">
