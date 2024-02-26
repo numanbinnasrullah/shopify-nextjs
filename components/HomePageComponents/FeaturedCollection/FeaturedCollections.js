@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const FeaturedCollections = async({ featuredCollections}) => {
     // const { collection1, collection2, collection3 } = featuredCollections;
-    console.log("Featured Collection Home",featuredCollections)
+    // console.log("Featured Collection Home",featuredCollections)
     // const featuredCollections = await fetchfeaturedCollections()
     // const ArrayFromMainObject = Object.values(featuredCollections);
    

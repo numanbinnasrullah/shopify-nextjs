@@ -3,9 +3,9 @@ import { fetchCollection } from "@/graphql/singleCollection";
 import Link from "next/link";
 
 
-const BestSellers = async () => {
-    const bestSellers = await fetchCollection("bedding")
-    // console.log("BestSeller Collection:==>", bestSellers?.products?.edges)
+const BestSellers = async ({collection}) => {
+    // const bestSellers = await fetchCollection("bedding")
+    // console.log("BestSeller Collection:==>", collection.products.edges)
     // bestSellers?.products?.edges.map((item, index)=>{
     //     console.log("Bestseller products", item?.node.variants)
     //     item?.node?.variants?.edges.map((item, index)=>{
@@ -29,7 +29,7 @@ const BestSellers = async () => {
                         </div>
                         {
 
-                            bestSellers?.products?.edges.map((item, index) => {
+                        collection?.products?.edges.map((item, index) => {
                                 return <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
                                 <div class="product-content block w-full">
                                     <div class="product-imgbox block w-full h-full">

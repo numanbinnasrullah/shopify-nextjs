@@ -21,7 +21,7 @@ export default async function Home() {
       <HeroBanner />
       <RichText />
       <FeaturedCollections featuredCollections={[collection1, collection2, collection3]} />
-      <BestSellers />
+      <BestSellers collection={collection} />
       <MainCollections />
       <OurBlog />
       <Footer />
