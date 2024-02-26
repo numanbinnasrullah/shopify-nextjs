@@ -13,7 +13,7 @@ const MainCollections = ({newArrivalCollection1, newArrivalCollection2, newArriv
                     <div class="flex flex-col w-full mx-auto gap-10">
 
                         <div class="block w-full h-full">
-                            <Link href="#" class="transition-all duration-150 w-full lg:max-w-[920px] block">
+                            <Link href={`/collections/${newArrivalCollection1?.handle}`} class="transition-all duration-150 w-full lg:max-w-[920px] block">
                                 <div class="block w-full lg:max-w-[920px] relative overflow-hidden">
                                     <img src="/cl-1.png" class=" object-contain transition-all duration-1000 block w-full" width="auto" height="auto" alt="Stripe Image" />
                                     <div class="inner absolute top-0 left-0 block w-full h-full p-7 sm:p-[50px]">
@@ -48,33 +48,33 @@ const MainCollections = ({newArrivalCollection1, newArrivalCollection2, newArriv
 
                         <div class="block w-full tabs lg:mb-10">
                             <div class="block w-full mx-auto overflow-hidden">
-                                <a href="#" class="transition-all duration-150">
+                                <Link href={`/collections/${newArrivalCollection2?.handle}`} class="transition-all duration-150">
                                     <div class="block w-full md:max-w-[440px] mx-auto mb-2 relative">
                                         <img src="/cl-2.png" class=" object-contain transition-all duration-1000 block w-full" width="auto" height="auto" alt="Stripe Image" />
                                         <div class="inner absolute top-0 left-0 block w-full h-full p-7 sm:p-[50px]">
                                             <div class="inner-content flex justify-center items-center flex-col w-full h-full">
-                                                <h2 class="block w-full max-w-md text-center text-[34px] sm:text-[40px] md:text-[4vw] lg:text-[2.6vw] xl:text-[36px] 2xl:text-[40px] font-semibold mb-[5px] sm:mb-[10px]">Sherpa Blanket</h2>
+                                                <h2 class="block w-full max-w-md text-center text-[34px] sm:text-[40px] md:text-[4vw] lg:text-[2.6vw] xl:text-[36px] 2xl:text-[40px] font-semibold mb-[5px] sm:mb-[10px]">{newArrivalCollection2?.title}</h2>
                                                 <span class=" transition-all duration-150 ease-linear w-full max-w-[158px] border border-[#161619] text-[#161619] hover:border-[#7f8487] hover:text-[#7f8487] block text-center text-sm leading-[38px]">Shop Now</span>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
                         <div class="block w-full tabs">
                             <div class="block w-full mx-auto overflow-hidden">
-                                <a href="#" class="transition-all duration-150">
+                                <Link href={`/collections/${newArrivalCollection3?.handle}`} class="transition-all duration-150">
                                     <div class="block w-full lg:max-w-[440px] mx-auto mb-2 relative">
                                         <img src="/cl-3.png" class=" object-contain transition-all duration-1000 block w-full" width="auto" height="auto" alt="Stripe Image" />
                                         <div class="inner absolute top-0 left-0 block w-full h-full p-7 sm:p-[50px]">
                                             <div class="inner-content flex justify-center items-center flex-col w-full h-full">
-                                                <h2 class="block w-full max-w-md text-center text-[34px] sm:text-[40px] md:text-[4vw] lg:text-[2.6vw] xl:text-[36px] 2xl:text-[40px] font-semibold mb-[5px] sm:mb-[10px]">Dreamy Pillowcases</h2>
+                                                <h2 class="block w-full max-w-md text-center text-[34px] sm:text-[40px] md:text-[4vw] lg:text-[2.6vw] xl:text-[36px] 2xl:text-[40px] font-semibold mb-[5px] sm:mb-[10px]">{newArrivalCollection3?.title}</h2>
                                                 <span class=" transition-all duration-150 ease-linear w-full max-w-[158px] border border-[#161619] text-[#161619] hover:border-[#7f8487] hover:text-[#7f8487] block text-center text-sm leading-[38px]">Shop Now</span>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
