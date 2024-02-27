@@ -1,5 +1,3 @@
-// 'use client'
-// import { useParams } from 'next/navigation';
 
 import CollectionDescription from '@/components/CollectionComponents/CollectionDescription/CollectionDescription'
 import CollectionWrapper from '@/components/CollectionComponents/CollectionWrapper/CollectionWrapper'
@@ -12,8 +10,8 @@ import collectionPageQuery from '@/graphql/collection'
 
 const page = async ({params}) => {
   const collectionPageData = await collectionPageQuery(params.slug)
-  console.log("Collection Page Data", collectionPageData?.data?.collection?.products.edges);
   const { menu, collection } = collectionPageData?.data
+//   console.log("Collection Page Data", collectionPageData?.data?.collection?.products.edges);
 
   return (
       <>
@@ -24,7 +22,6 @@ const page = async ({params}) => {
                     <div class="flex flex-col lg:flex-row">
                         <Filters />
                         <GridItems collection={collection} />
-                        {/* <BestSellers /> */}
                     </div>
                 </div>
             </CollectionWrapper>

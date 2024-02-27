@@ -1,16 +1,9 @@
-import { fetchCollection } from "@/graphql/singleCollection";
+
 import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
 const GridItems = async({collection}) => {
-    // const fetchCollectionProducts = await fetchCollection(collectionSlug);
-    // console.log("Get Collection Products",fetchCollectionProducts.products.edges)
-    // fetchCollectionProducts.products.edges.map((item, index)=>{
-    //     console.log("Products", item.node.handle)
-    //     item.node.media.edges.map((item,index)=>{
-    //         console.log("media images", item.node)
-    //     })
-    // })
+
   return (
     
     <div className="right block w-full">

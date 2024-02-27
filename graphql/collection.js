@@ -2,7 +2,7 @@ import { graphql } from "./graphql";
 
 const collectionPageQuery = async(collectionSlug) => {
     const query = `
-    query collectionPageQuery($slug:String) {
+    query collectionPageQuery($slug:String!) {
         menu(handle: "main-menu") {
           id
           items {

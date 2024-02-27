@@ -5,8 +5,13 @@ import ProductGallery from '@/components/ProductComponent/ProductGallery/Product
 import ProductInfo from '@/components/ProductComponent/ProductInfo/ProductInfo';
 import ProductWrapper from '@/components/ProductComponent/ProductWrapper/ProductWrapper'
 import YouMayAlsoLike from '@/components/ProductComponent/YouMayAlsoLike/YouMayAlsoLike';
+import productPageQuery from '@/graphql/product';
 
-const page = () => {
+const page = async ({params}) => {
+  const productPageData = await productPageQuery(params.slug);
+  const { menu, product } = productPageData?.data
+  console.log("Product Page", productPageData)
+  console.log("Product Params", params.slug)
     const images = [ 
         '/Variant-1-1.png',
         '/Variant-2.jpg',
@@ -15,10 +20,10 @@ const page = () => {
        ];
       return (
         <>
-        <Header />
+        <Header menu={menu} />
           <ProductWrapper>
             <ProductGallery images={images} />
-            <ProductInfo />
+            <ProductInfo product={product} />
           </ProductWrapper>
           <ProductDescription />
           <YouMayAlsoLike />

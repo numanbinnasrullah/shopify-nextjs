@@ -1,11 +1,5 @@
 
-
-import { fetchCollection } from "@/graphql/singleCollection";
-
-
 const CollectionDescription = async({collection}) => {
-  // const fetchedCollection = await fetchCollection(collectionSlug);
-  // console.log("fetchedCollection",fetchedCollection)
 
   return (
     <div class="up block w-full">
