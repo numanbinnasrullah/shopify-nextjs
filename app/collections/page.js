@@ -3,9 +3,11 @@ import CollectionWrapper from '@/components/CollectionComponents/CollectionWrapp
 import Filters from '@/components/CollectionComponents/Filters/Filters'
 import GridItems from '@/components/CollectionComponents/GridItems/GridItems'
 import BestSellers from '@/components/HomePageComponents/BestSellers/BestSellers'
+import collectionQuery from '@/graphql/collection'
 import React from 'react'
 
-const Collection = () => {
+const Collection = async() => {
+
     return (
         <>
             <CollectionWrapper>

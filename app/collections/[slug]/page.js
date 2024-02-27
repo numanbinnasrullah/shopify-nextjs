@@ -5,27 +5,31 @@ import CollectionDescription from '@/components/CollectionComponents/CollectionD
 import CollectionWrapper from '@/components/CollectionComponents/CollectionWrapper/CollectionWrapper'
 import Filters from '@/components/CollectionComponents/Filters/Filters'
 import GridItems from '@/components/CollectionComponents/GridItems/GridItems'
+import Footer from '@/components/Footer/Footer'
+import Header from '@/components/Header/Header'
+import collectionPageQuery from '@/graphql/collection'
 
-const page = ({params}) => {
-  // console.log("paramsssss", params.slug)
-    // const params = useParams()
-    // const collectionSlug = params.slug[params.slug.length - 1];
+
+const page = async ({params}) => {
+  const collectionPageData = await collectionPageQuery(params.slug)
+  console.log("Collection Page Data", collectionPageData?.data?.collection?.products.edges);
+  const { menu, collection } = collectionPageData?.data
 
   return (
-    <>
-   
+      <>
+          <Header menu={menu} />
             <CollectionWrapper>
-                <CollectionDescription collectionSlug={params.slug} />
+                <CollectionDescription collection={collection} />
                 <div class="block w-full">
                     <div class="flex flex-col lg:flex-row">
                         <Filters />
-                        <GridItems collectionSlug={params.slug} />
+                        <GridItems collection={collection} />
                         {/* <BestSellers /> */}
                     </div>
                 </div>
             </CollectionWrapper>
-    </>
-
+          <Footer />
+      </>
   )
 }
 

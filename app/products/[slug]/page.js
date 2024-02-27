@@ -1,3 +1,5 @@
+import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
 import ProductDescription from '@/components/ProductComponent/ProductDescription/ProductDescription';
 import ProductGallery from '@/components/ProductComponent/ProductGallery/ProductGallery'
 import ProductInfo from '@/components/ProductComponent/ProductInfo/ProductInfo';
@@ -13,14 +15,14 @@ const page = () => {
        ];
       return (
         <>
-        <ProductWrapper>
-         
-          <ProductGallery images={images} />
-          <ProductInfo />
-         
-        </ProductWrapper>
+        <Header />
+          <ProductWrapper>
+            <ProductGallery images={images} />
+            <ProductInfo />
+          </ProductWrapper>
           <ProductDescription />
           <YouMayAlsoLike />
+        <Footer />
           </>
       )
 }

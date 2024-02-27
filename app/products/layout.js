@@ -5,9 +5,9 @@ import Header from "@/components/Header/Header";
 const ProductLayout = ({children}) => {
   return (
     <>
-    <Header />
+    {/* <Header /> */}
     {children}
-    <Footer />
+    {/* <Footer /> */}
     </>
   )
 }

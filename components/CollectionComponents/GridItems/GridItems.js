@@ -2,8 +2,8 @@ import { fetchCollection } from "@/graphql/singleCollection";
 import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
-const GridItems = async({collectionSlug}) => {
-    const fetchCollectionProducts = await fetchCollection(collectionSlug);
+const GridItems = async({collection}) => {
+    // const fetchCollectionProducts = await fetchCollection(collectionSlug);
     // console.log("Get Collection Products",fetchCollectionProducts.products.edges)
     // fetchCollectionProducts.products.edges.map((item, index)=>{
     //     console.log("Products", item.node.handle)
@@ -22,7 +22,7 @@ const GridItems = async({collectionSlug}) => {
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-[20px] md:gap-[40px] mb-[35px]">
                     
             {
-                fetchCollectionProducts?.products?.edges?.map((item, index)=>{
+                collection?.products?.edges?.map((item, index)=>{
                     return  <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
                     <div class="product-content block w-full">
                         <div class="product-imgbox block w-full h-full">
@@ -73,16 +73,16 @@ const GridItems = async({collectionSlug}) => {
                                     </div>
                                 </div>
                                 {
-                                                item?.node?.variants?.edges.map((item, index)=>{
-                                                    return <div class="price-box block w-full">
-                                                    <div class="price-box-content flex w-full max-w-fit items-center">
-                                                        <span class="text-sm font-medium">{item?.node?.price?.amount}</span>
-                                                        <span class="text-sm font-medium px-1">-</span>
-                                                        <span class="text-sm font-medium">{item?.node?.compareAtPrice?.amount}</span>
-                                                    </div>
-                                                </div>
-                                                })
-                                            }
+                                    item?.node?.variants?.edges.map((item, index)=>{
+                                        return <div class="price-box block w-full">
+                                        <div class="price-box-content flex w-full max-w-fit items-center">
+                                            <span class="text-sm font-medium">{item?.node?.price?.amount}</span>
+                                            <span class="text-sm font-medium px-1">-</span>
+                                            <span class="text-sm font-medium">{item?.node?.compareAtPrice?.amount}</span>
+                                        </div>
+                                    </div>
+                                    })
+                                }
                                 {/* <div class="price-box block w-full">
                                     <div class="price-box-content flex w-full max-w-fit items-center">
                                         <span class="text-sm font-medium">£11.99</span>

@@ -13,7 +13,7 @@ import homePageQuery from "@/graphql/homepage";
 export default async function Home() {
     const homePageData = await homePageQuery()
     const {menu, collection1, collection2, collection3, collection, blog, newArrivalCollection1, newArrivalCollection2, newArrivalCollection3 } = homePageData?.data
-    console.log("HomePage", homePageData?.data?.blog?.articles?.edges )
+    // console.log("HomePage", homePageData?.data?.blog?.articles?.edges )
     // homePage.data.menu.items
   return (
     <>
