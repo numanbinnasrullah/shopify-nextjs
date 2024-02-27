@@ -30,7 +30,7 @@ const productPageQuery = async (productSlug) => {
               }
             }
           }
-          variants(first: 5) {
+          variants(first: 100) {
             edges {
               node {
                 id

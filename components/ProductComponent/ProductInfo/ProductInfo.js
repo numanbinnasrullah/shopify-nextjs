@@ -1,10 +1,15 @@
-import React from 'react'
 
-const ProductInfo = () => {
+
+const ProductInfo = ({product}) => {
+    console.log("Product Varients", product?.variants?.edges)
+    const colors = Array.from(new Set(product?.variants?.edges.map(variant => variant.node.title.split('/')[1].trim())));
+    const sizes = Array.from(new Set(product?.variants?.edges.map(variant => variant.node.title.split('/')[0].trim())));
+    console.log("Colors Array", sizes)
+
   return (
     <div class="right block w-full px-[18px] md:px-10 lg:px-0">
-    <div class="right-content block w-full lg:max-w-[400px]">
-        <h1 class="text-2xl md:text-[32px] text-[#161619] mb-2">15 Tog Duvet</h1>
+    <div class="right-content block w-full lg:max-w-[600px]">
+        <h1 class="text-2xl md:text-[32px] text-[#161619] mb-2">{product?.title}</h1>
         <div class="rating-box block w-full mb-8">
             <div class="rating-box-content block w-full">
                 <div class="review block w-full mb-1">
@@ -54,17 +59,51 @@ const ProductInfo = () => {
         </div>
         <div class="variant mb-14">
             <div class="variant-content">
-                <label for="size" class="block w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">Single</span></label>
+                <label for="size" class="block w-full text-base text-[#575759] capitalize mb-3">Color:<span class="ml-1">{colors[0]}</span></label>
                 <div class="variant-box block w-full">
                     <div class="variant-box-content flex w-full flex-wrap gap-5">
-                        <span class="block cursor-pointer w-full max-w-fit px-[10px] py-2 text-xs text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">single</span>
-                        <span class="block cursor-pointer w-full max-w-fit px-[10px] py-2 text-xs text-center bg-transparent border border-[#cccccc] capitalize">Double</span>
-                        <span class="block cursor-pointer w-full max-w-fit px-[10px] py-2 text-xs text-center bg-transparent border border-[#cccccc] capitalize">King</span>
-                        <span class="block cursor-pointer w-full max-w-fit px-[10px] py-2 text-xs text-center bg-transparent border border-[#cccccc] capitalize">Super King</span>
+                    <select className="w-[50%] p-2 border border-2" >
+                    {colors.map((color, index)=>{
+                            return <option key={color} value={color}  className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{color}</option>
+                        })}
+                    </select>
                     </div>
                 </div>
             </div>                                
         </div>
+
+        <div class="variant mb-14">
+            <div class="variant-content">
+                <label for="size" class="block w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">{sizes[0]}</span></label>
+                <div class="variant-box block w-full">
+                    <div class="variant-box-content flex w-full flex-wrap gap-5">
+                    <select className="w-[50%] p-2  border-2" >
+                    {sizes.map((size, index)=>{
+                            return <option key={size} value={size}  class="block cursor-pointer w-full  text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{size}</option>
+                        })}
+                    </select>
+                    </div>
+                </div>
+            </div>                                
+        </div>
+
+
+
+
+
+
+       
+     
+       
+      
+
+
+
+
+
+
+
+        
         <div class="price-box block w-full mb-10">
             <div class="price-box-content flex w-full">
                 <span class="text-3xl text-[#161619]"><span>£</span>11.99</span>
