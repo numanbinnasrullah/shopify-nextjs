@@ -35,6 +35,10 @@ const productPageQuery = async (productSlug) => {
               node {
                 id
                 title
+                image {
+                  id
+                  url
+                }
                 price {
                   amount
                   currencyCode

@@ -1,12 +1,221 @@
+'use client'
 
+import { useEffect, useState } from "react";
+import ProductGallery from "../ProductGallery/ProductGallery";
+
+const checkVariants = (title, variants) => {
+    let sizes = [];
+    let colors = [];
+    let choices = [];
+
+    // Check if title can be split by "/"
+    const canSplit = title.includes('/');
+    if (canSplit) {
+        sizes = Array.from(
+          new Set(variants.map((variant) => variant.node.title.split("/")[0]))
+        );
+        
+        colors = Array.from(
+            new Set(variants.map((variant) => variant.node.title.split("/")[1]))
+          );
+        choices = Array.from(
+            new Set(variants.map((variant) => variant.node.title.split("/")[2]))
+          );
+        //   console.log("title split hony k bad colors", colors)
+        //   console.log("title split hony k bad sizes", sizes)
+        //   console.log("title split hony k bad choices", choices)
+    } else {
+        // console.log("title to aya hy lakin split able nahi hy ")
+         sizes = Array.from(
+            new Set(variants.map((variant) => variant.node.title))
+          );
+        //   console.log("Just Sizes", justSizes)
+    }
+    return { sizes, colors, choices };
+  };
 
 const ProductInfo = ({product}) => {
-    console.log("Product Varients", product?.variants?.edges)
-    const colors = Array.from(new Set(product?.variants?.edges.map(variant => variant.node.title.split('/')[1].trim())));
-    const sizes = Array.from(new Set(product?.variants?.edges.map(variant => variant.node.title.split('/')[0].trim())));
-    console.log("Colors Array", sizes)
+    
+    const variants = product?.variants?.edges || [];
+    let colors1 = [];
+    let sizes1 = [];
+    let choices1 = [];
+    variants.forEach(variant => {
+        const { title } = variant.node;
+        const { sizes, colors, choices } = checkVariants(title, variants);
+        sizes1 = [...new Set([...sizes1, ...sizes])];
+        colors1 = [...new Set([...colors1, ...colors])];
+        choices1 = [...new Set([...choices1, ...choices])];
+    });
+    console.log("Sizes:", sizes1);
+    console.log("Colors:", colors1);
+    console.log("Choices:", choices1);
+
+    const [selectedColor, setSelectedColor] = useState(colors1[0]);
+    const [selectedSize, setSelectedSize] = useState(sizes1[0]);
+    const [selectedChoice, setSelectedChoice] = useState(choices1[0]);
+    const [selectedPrice, setSelectedPrice] = useState('');
+
+     // Function to handle color selection
+     const handleColorChange = (event) => {
+        const selectedColor = event.target.value;
+        setSelectedColor(selectedColor);
+
+        // Find sizes and choices for selected color
+        const { sizes, choices } = getSizesAndChoicesForColor(selectedColor);
+        
+        // Update selected size and choice based on the first option of each list
+        setSelectedSize(sizes[0] || '');
+        setSelectedChoice(choices[0] || '');
+
+        // Update selected price
+        const price = getSelectedVariantPrice(selectedColor, sizes[0] || '', choices[0] || '');
+        setSelectedPrice(price);
+    };
+
+       // Function to get sizes and choices for a specific color
+       const getSizesAndChoicesForColor = (color) => {
+        const filteredVariants = variants.filter(variant => variant.node.title.split("/")[1] === color);
+        const sizes = [...new Set(filteredVariants.map(variant => variant.node.title.split(' / ')[0]))];
+        const choices = [...new Set(filteredVariants.map(variant => variant.node.title.split(' / ')[2]))];
+        return { sizes, choices };
+    };
+
+        // Function to get price of selected variant
+        const getSelectedVariantPrice = (color, size, choice) => {
+            const selectedVariant = variants.find(variant =>
+                variant.node.title.split("/")[1] === color &&
+                variant.node.title.split("/")[0] === size &&
+                variant.node.title.split("/")[2] === choice
+            );
+            return selectedVariant ? selectedVariant.node.price.amount : '';
+        };
+     
+    // Function to handle size selection
+    const handleSizeChange = (event) => {
+        setSelectedSize(event.target.value);
+    };
+
+    // Function to handle choice selection
+    const handleChoiceChange = (event) => {
+        setSelectedChoice(event.target.value);
+
+         // Update selected price
+         const price = getSelectedVariantPrice(selectedColor, selectedSize, event.target.value);
+         setSelectedPrice(price);
+    };
+
+
+
+    // const colors = Array.from(
+    //     new Set(variants.map((variant) => variant.node.title.split("/")[1]))
+    //   );
+    //   const sizes = Array.from(
+    //     new Set(variants.map((variant) => variant.node.title.split("/")[0]))
+    //   );
+     
+      
+    // // const [selectedColor, setSelectedColor] = useState(colors[0]);
+    // // const [selectedSize, setSelectedSize] = useState(sizes[0]);
+    // const [selectedPrice, setSelectedPrice] = useState(null);
+    // const [availableSizes, setAvailableSizes] = useState([]);
+    // const [selectedImage, setSelectedImage] = useState("")
+    // const [variantImages, setVariantImages] = useState({});
+    // console.log("selected Imageeeeeeeeeeeeeee", variantImages)
+  
+    // const handleColorChange = (event) => {
+    //     const selectedColor = event.target.value;
+    //     setSelectedColor(selectedColor);
+    
+    //     // Filter variants based on the selected color
+    //     const variantsForColor = variants.filter(
+    //       (variant) => variant.node.title.split("/")[1] === selectedColor
+    //     );
+    //     // console.log("variantsForColor", variantsForColor)
+    
+    //     // Extract available sizes for the selected color
+    //     const availableSizes = variantsForColor.map((variant) =>
+    //       variant.node.title.split("/")[0]
+    //     );
+    
+    //     // Update selected size if it's not available for the selected color
+    //     if (!availableSizes.includes(selectedSize)) {
+    //       setSelectedSize(availableSizes[0]); // Set the first available size
+    //     }
+    
+    //     // Update the available sizes state with the available sizes for the selected color
+    //     setAvailableSizes(availableSizes);
+
+    //     updatePrice(selectedColor, selectedSize);
+    //   };
+
+  
+    // const updatePrice = (color, size) => {
+    //     const selectedVariant = variants.find(
+    //       (variant) => variant.node.title.includes(`${size} / ${color}`)
+    //     );
+    //     if(selectedVariant){
+    //         setSelectedPrice(selectedVariant.node.price);
+    //         // setSelectedImage(selectedVariant.node.image.url);
+
+    //         const selectedImage = variants.find(
+    //             (item) => item.node.image.id === selectedVariant?.node?.image?.id
+    //         );
+    //         setSelectedImage( selectedImage?.node?.image?.url );
+    //         console.log("Selected Image", selectedImage?.node?.image?.url)
+    //     }
+    //     // setSelectedPrice(selectedVariant ? selectedVariant?.node?.price : null);
+
+        
+            
+    //         const variantId = selectedVariant ? selectedVariant?.node?.id : null;
+    //         console.log("Ye wala variant select hua hy ", variantId)
+            
+    //   };
+    
+    //   useEffect(() => {
+    //     // Filter variants based on the default selected color
+    //     const variantsForColor = variants.filter(
+    //       (variant) => variant.node.title.split("/")[1] === selectedColor
+    //     );
+    
+    //     // Extract available sizes for the default selected color
+    //     const availableSizes = variantsForColor.map((variant) =>
+    //       variant.node.title.split("/")[0].trim()
+    //     );
+    
+    //     // Update the available sizes state with the available sizes for the default selected color
+    //     setAvailableSizes(availableSizes);
+    
+    //     updatePrice(selectedColor, selectedSize); // Update price when component mounts or color/size changes
+    //   }, [selectedColor, selectedSize]);
+
+
+    //   useEffect(() => {
+    //     // Initialize an empty object to store variant images for each color
+    //     const imagesByColor = {};
+
+    //     // Iterate through variants to collect images for each color
+    //     variants.forEach((variant) => {
+    //         const color = variant?.node?.title?.split("/")[1];
+    //         const imageUrl = variant?.node?.image?.url;
+    //         if (!imagesByColor[color]) {
+    //             imagesByColor[color] = [];
+    //         }
+    //         // Add image URL to the array if it's not already present
+    //         if (!imagesByColor[color].includes(imageUrl)) {
+    //             imagesByColor[color].push(imageUrl);
+    //         }
+    //     });
+
+    //     // Set the collected variant images
+    //     setVariantImages(imagesByColor);
+    // }, [variants]);
+
 
   return (
+    <>
+        <ProductGallery product={product} selectedColor={selectedColor}  />
     <div class="right block w-full px-[18px] md:px-10 lg:px-0">
     <div class="right-content block w-full lg:max-w-[600px]">
         <h1 class="text-2xl md:text-[32px] text-[#161619] mb-2">{product?.title}</h1>
@@ -57,35 +266,73 @@ const ProductInfo = ({product}) => {
                 </div>
             </div>
         </div>
-        <div class="variant mb-14">
-            <div class="variant-content">
-                <label for="size" class="block w-full text-base text-[#575759] capitalize mb-3">Color:<span class="ml-1">{colors[0]}</span></label>
+        <div class="variant mb-14 flex ">
+            <div class="variant-content flex-1">
+                <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Color:<span class="ml-1">{selectedColor}</span></label>
                 <div class="variant-box block w-full">
                     <div class="variant-box-content flex w-full flex-wrap gap-5">
-                    <select className="w-[50%] p-2 border border-2" >
-                    {colors.map((color, index)=>{
+                    <select className="w-[50%] p-2  border-2" value={selectedColor} onChange={handleColorChange}>
+                    {colors1.map((color, index)=>{
                             return <option key={color} value={color}  className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{color}</option>
                         })}
                     </select>
                     </div>
                 </div>
-            </div>                                
-        </div>
+            </div> 
 
-        <div class="variant mb-14">
-            <div class="variant-content">
-                <label for="size" class="block w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">{sizes[0]}</span></label>
+
+
+              <div class="variant-content flex-1">
+                <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">{selectedSize}</span></label>
                 <div class="variant-box block w-full">
                     <div class="variant-box-content flex w-full flex-wrap gap-5">
-                    <select className="w-[50%] p-2  border-2" >
-                    {sizes.map((size, index)=>{
-                            return <option key={size} value={size}  class="block cursor-pointer w-full  text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{size}</option>
-                        })}
+                    <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={handleSizeChange}>
+                        {getSizesAndChoicesForColor(selectedColor).sizes.map((size, index) => (
+                            <option key={index} value={size} className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{size}</option>
+                        ))}
+                    </select>
+                    </div>
+                </div>
+            </div> 
+
+
+            <div class="variant-content flex-1">
+                <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Choices:<span class="ml-1">{selectedChoice}</span></label>
+                <div class="variant-box block w-full">
+                    <div class="variant-box-content flex w-full flex-wrap gap-5">
+                    <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={handleChoiceChange}>
+                        {getSizesAndChoicesForColor(selectedColor).choices.map((choice, index) => (
+                            <option key={index} value={choice} className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{choice}</option>
+                        ))}
+                    </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {/* <div class="variant mb-14">
+            <div class="variant-content">
+                <label for="size" class="block w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">{selectedSize}</span></label>
+                <div class="variant-box block w-full">
+                    <div class="variant-box-content flex w-full flex-wrap gap-5">
+                    <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
+                    {availableSizes.map((size, index) => {
+                    return (
+                      <option
+                        key={size}
+                        value={size}
+                        className="block cursor-pointer w-full text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize"
+                      >
+                        {size}
+                      </option>
+                    );
+                  })}
                     </select>
                     </div>
                 </div>
             </div>                                
-        </div>
+        </div> */}
 
 
 
@@ -106,7 +353,10 @@ const ProductInfo = ({product}) => {
         
         <div class="price-box block w-full mb-10">
             <div class="price-box-content flex w-full">
-                <span class="text-3xl text-[#161619]"><span>£</span>11.99</span>
+                <span class="text-3xl text-[#161619]">
+                {/* {selectedPrice ? `£${selectedPrice.amount}` : 'Select Color and Size'} */}
+                Price: {selectedPrice}
+                </span>
             </div>
         </div>
         <div class="stocks block w-full mb-5">
@@ -167,6 +417,8 @@ const ProductInfo = ({product}) => {
         </div>
     </div>
 </div>
+    </>
+      
   )
 }
 
