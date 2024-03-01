@@ -9,17 +9,17 @@ const checkVariants = (title, variants) => {
     let choices = [];
 
     // Check if title can be split by "/"
-    const canSplit = title.includes('/');
+    const canSplit = title.includes("/");
     if (canSplit) {
         sizes = Array.from(
-          new Set(variants.map((variant) => variant.node.title.split("/")[0]))
+          new Set(variants.map((variant) => variant.node.title.split("/")[0].trim()))
         );
         
         colors = Array.from(
-            new Set(variants.map((variant) => variant.node.title.split("/")[1]))
+            new Set(variants.map((variant) => variant.node.title.split("/")[1].trim()))
           );
         choices = Array.from(
-            new Set(variants.map((variant) => variant.node.title.split("/")[2]))
+            new Set(variants.map((variant) => variant.node.title.split("/")[2].trim()))
           );
         //   console.log("title split hony k bad colors", colors)
         //   console.log("title split hony k bad sizes", sizes)
@@ -47,53 +47,85 @@ const ProductInfo = ({product}) => {
         colors1 = [...new Set([...colors1, ...colors])];
         choices1 = [...new Set([...choices1, ...choices])];
     });
-    console.log("Sizes:", sizes1);
-    console.log("Colors:", colors1);
-    console.log("Choices:", choices1);
+  
 
     const [selectedColor, setSelectedColor] = useState(colors1[0]);
     const [selectedSize, setSelectedSize] = useState(sizes1[0]);
     const [selectedChoice, setSelectedChoice] = useState(choices1[0]);
     const [selectedPrice, setSelectedPrice] = useState('');
-
+    console.log("Sizes:", selectedColor);
+    console.log("Colors:", selectedSize);
+    console.log("Choicesaa:", selectedChoice);
      // Function to handle color selection
      const handleColorChange = (event) => {
-        const selectedColor = event.target.value;
-        setSelectedColor(selectedColor);
-
+        const selectColor = event.target.value;
+        console.log("ffffff", selectColor)
+        setSelectedColor(selectColor);
+        console.log("ffffff", selectColor)
         // Find sizes and choices for selected color
-        const { sizes, choices } = getSizesAndChoicesForColor(selectedColor);
+        const { sizes, choices } = getSizesAndChoicesForColor(selectColor);
+        console.log("size return", sizes)
         
         // Update selected size and choice based on the first option of each list
         setSelectedSize(sizes[0] || '');
         setSelectedChoice(choices[0] || '');
 
         // Update selected price
-        const price = getSelectedVariantPrice(selectedColor, sizes[0] || '', choices[0] || '');
-        setSelectedPrice(price);
+        getSelectedVariantPrice( selectedSize, selectColor, selectedChoice);
+      
     };
 
        // Function to get sizes and choices for a specific color
        const getSizesAndChoicesForColor = (color) => {
-        const filteredVariants = variants.filter(variant => variant.node.title.split("/")[1] === color);
-        const sizes = [...new Set(filteredVariants.map(variant => variant.node.title.split(' / ')[0]))];
-        const choices = [...new Set(filteredVariants.map(variant => variant.node.title.split(' / ')[2]))];
+        console.log('getSizesAndChoicesForColor', color)
+        const filteredVariants = variants.filter(variant => variant.node.title.split("/")[1].trim() == color);
+        console.log("Check result", filteredVariants)
+        const sizes = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[0].trim()))];
+        const choices = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[2].trim()))];
         return { sizes, choices };
     };
 
         // Function to get price of selected variant
-        const getSelectedVariantPrice = (color, size, choice) => {
-            const selectedVariant = variants.find(variant =>
-                variant.node.title.split("/")[1] === color &&
-                variant.node.title.split("/")[0] === size &&
-                variant.node.title.split("/")[2] === choice
+        const getSelectedVariantPrice = (size, color, choice) => {
+            console.log("Compareddddd ====> :", size, color, choice);
+            console.log("Compare1 ====> :", selectedSize, selectedColor, selectedChoice);
+            console.log("Variantsdddddddddd:", variants);
+            const selectedVariant = variants.find(
+                (variant) => variant.node.title.includes(`${size} / ${color} / ${choice}`)
             );
-            return selectedVariant ? selectedVariant.node.price.amount : '';
+            console.log("Selected Variant Price:",  selectedVariant); // Selected variant ko check karein
+            setSelectedPrice(selectedVariant?.node?.price?.amount);
+            // const selectedVariant = variants.find(variant => {
+            //     const titleParts = variant.node.title.split("/");
+            //     const variantSize = titleParts[0];
+            //     const variantColor = titleParts[1];
+            //     const variantChoice = titleParts[2];
+            //     console.log("you", variantColor  )
+            //     return variantSize === size && variantColor === color && variantChoice === choice;
+            // });
+            // const selectedVariant = variants.find(
+            //     (variant) => variant.node.title.includes(`${size} / ${color} / ${choice}`)
+            // );
+            // const selectedVariant = variants.find(variant => 
+            //     variant.node.title.split("/")[1] === color &&
+            //     variant.node.title.split("/")[0] === size &&
+            //     variant.node.title.split("/")[2] === choice
+            // );
+           
         };
      
     // Function to handle size selection
     const handleSizeChange = (event) => {
-        setSelectedSize(event.target.value);
+        const selectSize = event.target.value;
+        setSelectedSize(selectSize);
+
+        // Find sizes and choices for selected color
+        const { sizes, choices } = getSizesAndChoicesForColor(selectSize);
+        console.log("size return", sizes)
+        
+        // Update selected price
+         getSelectedVariantPrice( selectSize, selectedColor, selectedChoice);
+        
     };
 
     // Function to handle choice selection
@@ -101,10 +133,17 @@ const ProductInfo = ({product}) => {
         setSelectedChoice(event.target.value);
 
          // Update selected price
-         const price = getSelectedVariantPrice(selectedColor, selectedSize, event.target.value);
-         setSelectedPrice(price);
+         getSelectedVariantPrice(selectedColor, selectedSize, event.target.value);
+         
     };
 
+    useEffect(() => {
+        console.log("Compare1111 ====> :", selectedSize, selectedColor, selectedChoice);
+        // Set default price on component mount
+        getSelectedVariantPrice( selectedSize, selectedColor, selectedChoice);
+       console.log("Check get", selectedPrice)
+      
+    }, []);
 
 
     // const colors = Array.from(
