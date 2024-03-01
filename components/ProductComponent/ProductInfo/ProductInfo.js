@@ -18,9 +18,12 @@ const checkVariants = (title, variants) => {
         colors = Array.from(
             new Set(variants.map((variant) => variant.node.title.split("/")[1].trim()))
           );
-        choices = Array.from(
-            new Set(variants.map((variant) => variant.node.title.split("/")[2].trim()))
-          );
+        // Check if choices are available
+        if (variants.some(variant => variant.node.title.split("/").length > 2)) {
+            choices = Array.from(
+                new Set(variants.map((variant) => variant.node.title.split("/")[2].trim()))
+            );
+        }
         //   console.log("title split hony k bad colors", colors)
         //   console.log("title split hony k bad sizes", sizes)
         //   console.log("title split hony k bad choices", choices)
@@ -29,7 +32,7 @@ const checkVariants = (title, variants) => {
          sizes = Array.from(
             new Set(variants.map((variant) => variant.node.title))
           );
-        //   console.log("Just Sizes", justSizes)
+          console.log("Just Sizes", sizes)
     }
     return { sizes, colors, choices };
   };
@@ -53,9 +56,9 @@ const ProductInfo = ({product}) => {
     const [selectedSize, setSelectedSize] = useState(sizes1[0]);
     const [selectedChoice, setSelectedChoice] = useState(choices1[0]);
     const [selectedPrice, setSelectedPrice] = useState('');
-    console.log("Sizes:", selectedColor);
-    console.log("Colors:", selectedSize);
-    console.log("Choicesaa:", selectedChoice);
+    console.log("Sizes:", selectedSize);
+    // console.log("Colors:", selectedSize);
+    // console.log("Choicesaa:", selectedChoice);
      // Function to handle color selection
      const handleColorChange = (event) => {
         const selectColor = event.target.value;
@@ -76,12 +79,45 @@ const ProductInfo = ({product}) => {
     };
 
        // Function to get sizes and choices for a specific color
-       const getSizesAndChoicesForColor = (color) => {
-        console.log('getSizesAndChoicesForColor', color)
-        const filteredVariants = variants.filter(variant => variant.node.title.split("/")[1].trim() == color);
-        console.log("Check result", filteredVariants)
-        const sizes = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[0].trim()))];
-        const choices = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[2].trim()))];
+    //    const getSizesAndChoicesForColor = (color) => {
+    //     console.log('getSizesAndChoicesForColor', color)
+     
+    //         const filteredVariants = variants.filter(variant => variant.node.title.split("/")[1].trim() == color);
+    //         console.log("Check result", filteredVariants)
+    //         const sizes = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[0].trim()))];
+    //         const choices = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[2].trim()))];
+    //         return { sizes, choices };
+  
+        
+    // };
+       
+    const getSizesAndChoicesForColor = (color) => {
+        console.log('getSizesAndChoicesForColor', color);
+        const filteredVariants = variants.filter(variant => {
+            const titleParts = variant.node.title.split("/");
+            if (titleParts.length === 1) {
+                // If title cannot be split, consider the color as the only option
+                return titleParts[0].trim() === color;
+            } else {
+                return titleParts[1].trim() === color;
+            }
+        });
+        console.log("Check result", filteredVariants);
+        let sizes = [];
+        let choices = [];
+        if (filteredVariants.length > 0) {
+            sizes = [...new Set(filteredVariants.map(variant => {
+                const titleParts = variant.node.title.split("/");
+                return titleParts[0].trim();
+            }))];
+           // Check if choices exist in any variant
+        if (filteredVariants.some(variant => variant.node.title.split("/").length > 2)) {
+            choices = [...new Set(filteredVariants.map(variant => {
+                const titleParts = variant.node.title.split("/");
+                return titleParts[2].trim();
+            }))];
+        }
+        }
         return { sizes, choices };
     };
 
@@ -90,11 +126,21 @@ const ProductInfo = ({product}) => {
             console.log("Compareddddd ====> :", size, color, choice);
             console.log("Compare1 ====> :", selectedSize, selectedColor, selectedChoice);
             console.log("Variantsdddddddddd:", variants);
-            const selectedVariant = variants.find(
-                (variant) => variant.node.title.includes(`${size} / ${color} / ${choice}`)
-            );
-            console.log("Selected Variant Price:",  selectedVariant); // Selected variant ko check karein
+            if(size && color && choice){
+                const selectedVariant = variants.find(
+                    (variant) => variant.node.title.includes(`${size} / ${color} / ${choice}`)
+                );
+                console.log("Selected Variant Price:",  selectedVariant); // Selected variant ko check karein
             setSelectedPrice(selectedVariant?.node?.price?.amount);
+            } else {
+                const selectedVariant = variants.find(
+                    (variant) => variant.node.title.includes(`${size}`)
+                );
+                console.log("Selected Variant Price:",  selectedVariant); // Selected variant ko check karein
+            setSelectedPrice(selectedVariant?.node?.price?.amount);
+            }
+            
+            
             // const selectedVariant = variants.find(variant => {
             //     const titleParts = variant.node.title.split("/");
             //     const variantSize = titleParts[0];
@@ -117,11 +163,12 @@ const ProductInfo = ({product}) => {
     // Function to handle size selection
     const handleSizeChange = (event) => {
         const selectSize = event.target.value;
+        console.log("Ab size select hua ", selectSize)
         setSelectedSize(selectSize);
 
         // Find sizes and choices for selected color
-        const { sizes, choices } = getSizesAndChoicesForColor(selectSize);
-        console.log("size return", sizes)
+        // const { sizes, choices } = getSizesAndChoicesForSize(selectSize);
+        // console.log("size return", sizes)
         
         // Update selected price
          getSelectedVariantPrice( selectSize, selectedColor, selectedChoice);
@@ -306,47 +353,69 @@ const ProductInfo = ({product}) => {
             </div>
         </div>
         <div class="variant mb-14 flex ">
-            <div class="variant-content flex-1">
+            {
+                selectedColor ?  <>
+                <div class="variant-content flex-1">
                 <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Color:<span class="ml-1">{selectedColor}</span></label>
                 <div class="variant-box block w-full">
-                    <div class="variant-box-content flex w-full flex-wrap gap-5">
-                    <select className="w-[50%] p-2  border-2" value={selectedColor} onChange={handleColorChange}>
-                    {colors1.map((color, index)=>{
-                            return <option key={color} value={color}  className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{color}</option>
-                        })}
-                    </select>
+                        <div class="variant-box-content flex w-full flex-wrap gap-5">
+                        <select className="w-[50%] p-2  border-2" value={selectedColor} onChange={handleColorChange}>
+                        {colors1.map((color, index)=>{
+                                        return <option key={color} value={color}  className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{color}</option>
+                                    })}
+                                </select>
+                                </div>
+                            </div>
+                        </div> 
+
+                    <div class="variant-content flex-1">
+                    <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">{selectedSize}</span></label>
+                    <div class="variant-box block w-full">
+                        <div class="variant-box-content flex w-full flex-wrap gap-5">
+                        <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={handleSizeChange}>
+                            {getSizesAndChoicesForColor(selectedColor).sizes.map((size, index) => (
+                                <option key={index} value={size} className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{size}</option>
+                            ))}
+                        </select>
+                        </div>
                     </div>
-                </div>
-            </div> 
-
-
-
-              <div class="variant-content flex-1">
-                <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">{selectedSize}</span></label>
+                    </div>
+{
+    selectedChoice &&  <div class="variant-content flex-1">
+    <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Choices:<span class="ml-1">{selectedChoice}</span></label>
+    <div class="variant-box block w-full">
+        <div class="variant-box-content flex w-full flex-wrap gap-5">
+        <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={handleChoiceChange}>
+            {getSizesAndChoicesForColor(selectedColor).choices.map((choice, index) => (
+                <option key={index} value={choice} className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{choice}</option>
+            ))}
+        </select>
+        </div>
+    </div>
+</div>
+}
+                   
+                </> :   <div class="variant-content flex-1">
+                <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Size<span class="ml-1">{selectedColor}</span></label>
                 <div class="variant-box block w-full">
                     <div class="variant-box-content flex w-full flex-wrap gap-5">
                     <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={handleSizeChange}>
-                        {getSizesAndChoicesForColor(selectedColor).sizes.map((size, index) => (
-                            <option key={index} value={size} className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{size}</option>
-                        ))}
-                    </select>
-                    </div>
-                </div>
-            </div> 
-
-
-            <div class="variant-content flex-1">
-                <label for="size" class=" w-full text-base text-[#575759] capitalize mb-3">Choices:<span class="ml-1">{selectedChoice}</span></label>
-                <div class="variant-box block w-full">
-                    <div class="variant-box-content flex w-full flex-wrap gap-5">
-                    <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={handleChoiceChange}>
-                        {getSizesAndChoicesForColor(selectedColor).choices.map((choice, index) => (
-                            <option key={index} value={choice} className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{choice}</option>
-                        ))}
+                    {sizes1.map((size, index) => (
+                        <option key={index} value={size} className=" cursor-pointer w-full  py-6 text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize">{size}</option>
+                    ))}
                     </select>
                     </div>
                 </div>
             </div>
+            }
+            
+
+
+          
+              
+
+
+           
 
         </div>
 
