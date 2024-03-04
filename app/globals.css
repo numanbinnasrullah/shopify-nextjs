@@ -99,3 +99,131 @@ ul.navmenu li a{
 .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Hide scrollbar for WebKit browsers */
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Basic styling */
+    
+        .tabs-container {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          max-width: 1300px;
+          margin: 100px auto;
+          padding: 0px 10px;
+        }
+        .tabs {
+          width: 20%;
+          border-right: 1px solid #ccc; /* Vertical border between tabs and content */
+        }
+        .tabs ul {
+          list-style-type: none;
+          /* padding: 10px; */
+          margin: 0;
+        }
+        .tabs li {
+          cursor: pointer;
+          padding: 10px;
+          position: relative; /* Positioning for the line */
+          transition: all 0.3s ease; /* Smooth transition */
+        }
+        .tabs li::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: -20px; /* Move the line to the left of the tab text */
+          transform: translateY(-100%);
+          width: 20px; /* Width of the line */
+          height: 1px; /* Height of the line */
+          background-color: #000; /* Color of the line */
+          opacity: 0; /* Initially hide the line */
+          transition: opacity 0.4s ease, left 0.4s ease; /* Smooth transition for opacity and left position */
+        }
+        .tabs li.active {
+          font-weight: bold; /* Make text bold when active */
+          transform: translateX(5px); /* Move tab slightly to the right when active */
+          font-size: 15px;
+        }
+        .tabs li:hover {
+          font-weight: bold; /* Make text bold on hover */
+          transform: translateX(5px); /* Move tab slightly to the right on hover */
+          font-size: 15px;
+        }
+        .tabs li:hover::before,
+        .tabs li.active::before {
+          opacity: 1; /* Show the line on hover or when active */
+          left: -30px; /* Move the line further to the left when active */
+        }
+        .content {
+          flex: 1;
+          padding: 0px 30px;
+        }
+        /* Hide content by default */
+        .tab-content {
+          display: none;
+        }
+        /* Show content when tab is active */
+        .tab-content.active {
+          display: block;
+        }
+  .Product-description_heading{
+    font-size: 18px;
+    font-weight: 600;
+  }
+        /* Media query for responsiveness */
+        @media screen and (max-width: 678px) {
+          .tabs-container {
+            display: block;
+            margin: 10px 0px !important;
+          }
+          table tbody tr th{
+            width: 30% !important;
+          }
+          .tabs {
+            width: auto;
+            border-right: none;
+            border-bottom: 1px solid #ccc; /* Horizontal border between tabs for small screens */
+          }
+          .content {
+            flex: none;
+            padding: 10px 10px;
+          }
+        }
+
+
+
+        /* table design */
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          border-radius: 12px; /* Border radius of 12px */
+          background-color: #f2f2f2; /* Gray background color for the entire table */
+        }
+        .table-th{
+            padding: 15px !important;
+            /* text-align: center; */
+        }
+        th, td {
+          padding: 15px;
+          /* text-align: left; */
+          border-bottom: 1px solid #ccc; /* Border bottom for rows */
+        }
+        th:first-child, td:first-child {
+          /* width: 15%; */
+        }
+       tr:last-child td, tr:last-child th {
+          border-bottom: none; /* Remove border bottom for the last row's cells */
+        }

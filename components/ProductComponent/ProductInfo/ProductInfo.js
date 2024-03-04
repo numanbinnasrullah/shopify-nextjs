@@ -425,7 +425,7 @@ const ProductInfo = ({product}) => {
                 <div class="counter block w-full mb-7">
                     <div class="counter-box block w-full max-w-[116px] border border-[#cdcfd0]">
                         <div class="counter-box-content flex w-full items-center justify-between">
-                            <button class="block py-5 px-2 w-full max-w-fit cursor-pointer decrement" onClick={handleProductCountDecrease} disabled={productCount <= 1}>
+                            <button class="block py-5 px-2 w-full max-w-fit cursor-pointer decrement" onClick={handleProductCountDecrease} disabled={productCount <= 1} style={{ cursor: productCount <= 1 ? 'not-allowed' : 'pointer' }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                                 </svg>

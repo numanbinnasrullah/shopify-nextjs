@@ -14,7 +14,7 @@ const page = async ({params}) => {
   //   console.log("hhhhhhhhhh", item)
   // }))
   
-  console.log("Product Params", productPageData?.data?.product?.variants.edges)
+  console.log("Product Params", productPageData?.data)
     const images = [ 
         '/Variant-1-1.png',
         '/Variant-2.jpg',
@@ -28,7 +28,7 @@ const page = async ({params}) => {
             {/* <ProductGallery images={images} product={product} /> */}
             <ProductInfo product={product} />
           </ProductWrapper>
-          <ProductDescription />
+          <ProductDescription product={product}  />
           <YouMayAlsoLike />
         <Footer />
           </>
