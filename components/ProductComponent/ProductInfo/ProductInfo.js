@@ -56,6 +56,7 @@ const ProductInfo = ({product}) => {
     const [selectedPrice, setSelectedPrice] = useState('');
     const [selectedImage, setSelectedImage] = useState("")
     const [quantityAvailable, setQuantityAvailable] = useState("")
+    const [productCount, setProductCount] = useState(1)
     console.log("Sizes:", selectedSize);
 
      const handleColorChange = (event) => {
@@ -159,6 +160,17 @@ const ProductInfo = ({product}) => {
          // Update selected price
          getSelectedVariantPrice(selectedColor, selectedSize, event.target.value);
          
+    };
+
+
+    const handleProductCountDecrease = () => {
+        if(productCount > 1){
+            setProductCount(productCount - 1)
+        }
+        
+    };
+    const handleProductCountIncrease = () => {
+        setProductCount(productCount + 1)
     };
 
     useEffect(() => {
@@ -413,17 +425,17 @@ const ProductInfo = ({product}) => {
                 <div class="counter block w-full mb-7">
                     <div class="counter-box block w-full max-w-[116px] border border-[#cdcfd0]">
                         <div class="counter-box-content flex w-full items-center justify-between">
-                            <span class="block py-5 px-2 w-full max-w-fit cursor-pointer decrement">
+                            <button class="block py-5 px-2 w-full max-w-fit cursor-pointer decrement" onClick={handleProductCountDecrease} disabled={productCount <= 1}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                                 </svg>
-                            </span>
-                            <input type="number" value="1" class="block w-full max-w-[35px] text-center" />
-                            <span class="block py-5 px-2 w-full max-w-fit cursor-pointer increment">
+                            </button>
+                            {productCount}
+                            <button class="block py-5 px-2 w-full max-w-fit cursor-pointer increment" onClick={handleProductCountIncrease}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </div>
