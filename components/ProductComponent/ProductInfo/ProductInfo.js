@@ -24,11 +24,9 @@ const checkVariants = (title, variants) => {
                 new Set(variants.map((variant) => variant.node.title.split("/")[2].trim()))
             );
         }
-        //   console.log("title split hony k bad colors", colors)
-        //   console.log("title split hony k bad sizes", sizes)
-        //   console.log("title split hony k bad choices", choices)
+       
     } else {
-        // console.log("title to aya hy lakin split able nahi hy ")
+        
          sizes = Array.from(
             new Set(variants.map((variant) => variant.node.title))
           );
@@ -56,10 +54,10 @@ const ProductInfo = ({product}) => {
     const [selectedSize, setSelectedSize] = useState(sizes1[0]);
     const [selectedChoice, setSelectedChoice] = useState(choices1[0]);
     const [selectedPrice, setSelectedPrice] = useState('');
+    const [selectedImage, setSelectedImage] = useState("")
+    const [quantityAvailable, setQuantityAvailable] = useState("")
     console.log("Sizes:", selectedSize);
-    // console.log("Colors:", selectedSize);
-    // console.log("Choicesaa:", selectedChoice);
-     // Function to handle color selection
+
      const handleColorChange = (event) => {
         const selectColor = event.target.value;
         console.log("ffffff", selectColor)
@@ -78,19 +76,6 @@ const ProductInfo = ({product}) => {
       
     };
 
-       // Function to get sizes and choices for a specific color
-    //    const getSizesAndChoicesForColor = (color) => {
-    //     console.log('getSizesAndChoicesForColor', color)
-     
-    //         const filteredVariants = variants.filter(variant => variant.node.title.split("/")[1].trim() == color);
-    //         console.log("Check result", filteredVariants)
-    //         const sizes = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[0].trim()))];
-    //         const choices = [...new Set(filteredVariants.map(variant => variant.node.title.split("/")[2].trim()))];
-    //         return { sizes, choices };
-  
-        
-    // };
-       
     const getSizesAndChoicesForColor = (color) => {
         console.log('getSizesAndChoicesForColor', color);
         const filteredVariants = variants.filter(variant => {
@@ -105,70 +90,62 @@ const ProductInfo = ({product}) => {
         console.log("Check result", filteredVariants);
         let sizes = [];
         let choices = [];
+    
         if (filteredVariants.length > 0) {
             sizes = [...new Set(filteredVariants.map(variant => {
                 const titleParts = variant.node.title.split("/");
                 return titleParts[0].trim();
             }))];
-           // Check if choices exist in any variant
-        if (filteredVariants.some(variant => variant.node.title.split("/").length > 2)) {
-            choices = [...new Set(filteredVariants.map(variant => {
-                const titleParts = variant.node.title.split("/");
-                return titleParts[2].trim();
-            }))];
-        }
+            // Check if choices exist in any variant
+            if (filteredVariants.some(variant => variant.node.title.split("/").length > 2)) {
+                choices = [...new Set(filteredVariants.map(variant => {
+                    const titleParts = variant.node.title.split("/");
+                    return titleParts[2].trim();
+                }))];
+            }
         }
         return { sizes, choices };
     };
 
-        // Function to get price of selected variant
+       
+     
         const getSelectedVariantPrice = (size, color, choice) => {
             console.log("Compareddddd ====> :", size, color, choice);
             console.log("Compare1 ====> :", selectedSize, selectedColor, selectedChoice);
             console.log("Variantsdddddddddd:", variants);
-            if(size && color && choice){
-                const selectedVariant = variants.find(
-                    (variant) => variant.node.title.includes(`${size} / ${color} / ${choice}`)
-                );
-                console.log("Selected Variant Price:",  selectedVariant); // Selected variant ko check karein
-            setSelectedPrice(selectedVariant?.node?.price?.amount);
-            } else {
-                const selectedVariant = variants.find(
-                    (variant) => variant.node.title.includes(`${size}`)
-                );
-                console.log("Selected Variant Price:",  selectedVariant); // Selected variant ko check karein
-            setSelectedPrice(selectedVariant?.node?.price?.amount);
+        
+            let selectedTitle = "";
+        
+            if (size && color && choice) {
+                selectedTitle = `${size} / ${color} / ${choice}`;
+            } else if (size && color) {
+                selectedTitle = `${size} / ${color}`;
+            } else if (size) {
+                selectedTitle = `${size}`;
             }
-            
-            
-            // const selectedVariant = variants.find(variant => {
-            //     const titleParts = variant.node.title.split("/");
-            //     const variantSize = titleParts[0];
-            //     const variantColor = titleParts[1];
-            //     const variantChoice = titleParts[2];
-            //     console.log("you", variantColor  )
-            //     return variantSize === size && variantColor === color && variantChoice === choice;
-            // });
-            // const selectedVariant = variants.find(
-            //     (variant) => variant.node.title.includes(`${size} / ${color} / ${choice}`)
-            // );
-            // const selectedVariant = variants.find(variant => 
-            //     variant.node.title.split("/")[1] === color &&
-            //     variant.node.title.split("/")[0] === size &&
-            //     variant.node.title.split("/")[2] === choice
-            // );
-           
+        
+            const selectedVariant = variants.find(
+                (variant) => variant.node.title.includes(selectedTitle)
+            );
+        
+            console.log("Selected Variant Price:", selectedVariant); // Selected variant ko check karein
+            setSelectedPrice(selectedVariant?.node?.price?.amount);
+        
+            const selectedImage = variants.find(
+                (item) => item.node.image.id === selectedVariant?.node?.image?.id
+            );
+            setSelectedImage(selectedImage?.node?.image?.url);
+            console.log("Selected Image", selectedImage?.node?.image?.url);
+
+            setQuantityAvailable(selectedVariant?.node.quantityAvailable)
         };
-     
+        
+
     // Function to handle size selection
     const handleSizeChange = (event) => {
         const selectSize = event.target.value;
         console.log("Ab size select hua ", selectSize)
         setSelectedSize(selectSize);
-
-        // Find sizes and choices for selected color
-        // const { sizes, choices } = getSizesAndChoicesForSize(selectSize);
-        // console.log("size return", sizes)
         
         // Update selected price
          getSelectedVariantPrice( selectSize, selectedColor, selectedChoice);
@@ -191,6 +168,10 @@ const ProductInfo = ({product}) => {
        console.log("Check get", selectedPrice)
       
     }, []);
+
+ 
+
+
 
 
     // const colors = Array.from(
@@ -301,7 +282,7 @@ const ProductInfo = ({product}) => {
 
   return (
     <>
-        <ProductGallery product={product} selectedColor={selectedColor}  />
+        <ProductGallery variants={variants} selectedColor={selectedColor} selectedImage={selectedImage}  />
     <div class="right block w-full px-[18px] md:px-10 lg:px-0">
     <div class="right-content block w-full lg:max-w-[600px]">
         <h1 class="text-2xl md:text-[32px] text-[#161619] mb-2">{product?.title}</h1>
@@ -410,55 +391,9 @@ const ProductInfo = ({product}) => {
             }
             
 
-
-          
-              
-
-
-           
-
         </div>
 
-        {/* <div class="variant mb-14">
-            <div class="variant-content">
-                <label for="size" class="block w-full text-base text-[#575759] capitalize mb-3">Size:<span class="ml-1">{selectedSize}</span></label>
-                <div class="variant-box block w-full">
-                    <div class="variant-box-content flex w-full flex-wrap gap-5">
-                    <select className="w-[50%] p-2  border-2" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
-                    {availableSizes.map((size, index) => {
-                    return (
-                      <option
-                        key={size}
-                        value={size}
-                        className="block cursor-pointer w-full text-md text-center bg-[#e5e5e5] border-[2px] border-[#00000099] capitalize"
-                      >
-                        {size}
-                      </option>
-                    );
-                  })}
-                    </select>
-                    </div>
-                </div>
-            </div>                                
-        </div> */}
-
-
-
-
-
-
-       
-     
-       
       
-
-
-
-
-
-
-
-        
         <div class="price-box block w-full mb-10">
             <div class="price-box-content flex w-full">
                 <span class="text-3xl text-[#161619]">
@@ -469,7 +404,7 @@ const ProductInfo = ({product}) => {
         </div>
         <div class="stocks block w-full mb-5">
             <div class="stocks-content flex items-center">
-                <span class="text-[#161619] text-xs font-medium">49 in stock</span>
+                <span class="text-[#161619] text-xs font-medium">{quantityAvailable > 0  ? `${quantityAvailable} in Stock` : "Out of Stock"}</span>
             </div>
         </div>
         <div class="ac block w-full mb-12">

@@ -35,6 +35,7 @@ const productPageQuery = async (productSlug) => {
               node {
                 id
                 title
+                quantityAvailable
                 image {
                   id
                   url
