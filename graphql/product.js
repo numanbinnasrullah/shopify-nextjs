@@ -53,7 +53,7 @@ const productPageQuery = async (productSlug) => {
 
         collection(handle: $youmayalsolike) {
           title
-          description
+          
           products(first: 3) {
             edges {
               node {
@@ -75,20 +75,7 @@ const productPageQuery = async (productSlug) => {
                     }
                   }
                 }
-                variants(first: 1) {
-                  edges {
-                    node {
-                      compareAtPrice {
-                        amount
-                        currencyCode
-                      }
-                      price {
-                        amount
-                        currencyCode
-                      }
-                    }
-                  }
-                }
+                
               }
             }
           }
