@@ -41,17 +41,18 @@ const ProductDescription = ({product}) => {
           {product?.description}
         </div>
         <div className={`tab-content ${activeTab === 1 ? "active" : ""}`} id="tab2">
-          <table>
+          <h1 className="text-2xl">Product Specs</h1>
           {product?.description}
-            {/* <tbody>
+          {/* <table>
+            <tbody>
               {product.metafields.custom.custom_specs.value.map((field, index) => (
                 <tr key={index}>
                   <th className="table-th">{field[0]}</th>
                   <td>{field[1]}</td>
                 </tr>
               ))}
-            </tbody> */}
-          </table>
+            </tbody>
+          </table> */}
         </div>
       </div>
     </div>

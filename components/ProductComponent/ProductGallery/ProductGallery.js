@@ -39,7 +39,7 @@ const ProductGallery = ({ product, selectedImage,variants }) => {
             <div class="left block w-full">
                 <div class="left-content block lg:flex w-full lg:gap-[10px]">
                     <div class="slider-left hidden lg:block w-full max-w-[12%]">
-                        <div class="slider-left-content block w-full slider-nav">
+                        <div class="slider-left-content block w-full ">
                             <div class="slide block w-full mb-2 max-h-[580px] overflow-y-scroll hide-scrollbar">
                                 <div class="imgbox block w-full max-w-[80px]">
                                     {variantImages?.map((item, index) => (
