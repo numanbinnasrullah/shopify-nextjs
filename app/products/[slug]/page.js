@@ -9,12 +9,12 @@ import productPageQuery from '@/graphql/product';
 
 const page = async ({params}) => {
   const productPageData = await productPageQuery(params.slug);
-  const { menu, product } = productPageData?.data
+  const { menu, product, collection } = productPageData?.data
   // console.log("Product Page", productPageData?.data?.product?.variants.edges.map((item)=>{
   //   console.log("hhhhhhhhhh", item)
   // }))
   
-  console.log("Product Params", productPageData?.data)
+  console.log("Product Params", productPageData?.data?.collection?.products.edges)
     const images = [ 
         '/Variant-1-1.png',
         '/Variant-2.jpg',
@@ -29,7 +29,7 @@ const page = async ({params}) => {
             <ProductInfo product={product} />
           </ProductWrapper>
           <ProductDescription product={product}  />
-          <YouMayAlsoLike />
+          <YouMayAlsoLike collection={collection} />
         <Footer />
           </>
       )

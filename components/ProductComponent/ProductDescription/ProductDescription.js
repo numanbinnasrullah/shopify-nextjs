@@ -30,7 +30,7 @@ const ProductDescription = ({product}) => {
 
 
 <div className="tabs-container">
-      <div className="tabs">
+      <div className="tabs-description">
         <ul>
           <li onClick={() => showTab(0)} className={activeTab === 0 ? "active" : ""}>Description</li>
           <li onClick={() => showTab(1)} className={activeTab === 1 ? "active" : ""}>Product Specification</li>

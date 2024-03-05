@@ -125,22 +125,22 @@ ul.navmenu li a{
           margin: 100px auto;
           padding: 0px 10px;
         }
-        .tabs {
+        .tabs-description {
           width: 20%;
-          border-right: 1px solid #ccc; /* Vertical border between tabs and content */
+          border-right: 1px solid #ccc;
         }
-        .tabs ul {
+        .tabs-description ul {
           list-style-type: none;
           /* padding: 10px; */
           margin: 0;
         }
-        .tabs li {
+        .tabs-description li {
           cursor: pointer;
           padding: 10px;
           position: relative; /* Positioning for the line */
           transition: all 0.3s ease; /* Smooth transition */
         }
-        .tabs li::before {
+        .tabs-description li::before {
           content: "";
           position: absolute;
           top: 50%;
@@ -152,18 +152,18 @@ ul.navmenu li a{
           opacity: 0; /* Initially hide the line */
           transition: opacity 0.4s ease, left 0.4s ease; /* Smooth transition for opacity and left position */
         }
-        .tabs li.active {
+        .tabs-description li.active {
           font-weight: bold; /* Make text bold when active */
           transform: translateX(5px); /* Move tab slightly to the right when active */
           font-size: 15px;
         }
-        .tabs li:hover {
+        .tabs-description li:hover {
           font-weight: bold; /* Make text bold on hover */
           transform: translateX(5px); /* Move tab slightly to the right on hover */
           font-size: 15px;
         }
-        .tabs li:hover::before,
-        .tabs li.active::before {
+        .tabs-description li:hover::before,
+        .tabs-description li.active::before {
           opacity: 1; /* Show the line on hover or when active */
           left: -30px; /* Move the line further to the left when active */
         }
@@ -192,7 +192,7 @@ ul.navmenu li a{
           table tbody tr th{
             width: 30% !important;
           }
-          .tabs {
+          .tabs-description {
             width: auto;
             border-right: none;
             border-bottom: 1px solid #ccc; /* Horizontal border between tabs for small screens */
