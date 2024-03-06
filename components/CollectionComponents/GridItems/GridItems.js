@@ -3,11 +3,17 @@ import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
 const GridItems = async({collection}) => {
-
+    collection?.products?.edges?.map((item, index)=>{
+        console.log("item", item.node.variants.edges)
+        item.node.variants.edges.map((item, index)=>{
+            console.log("item1", item.node)
+        })
+    })
+    
   return (
     
     <div className="right block w-full">
-        <SidebarToggler />
+        <SidebarToggler collection={collection} />
    
     <div class="block w-full mb-[60px]">
         <div class="block w-full max-w-[1440px] mx-auto">
@@ -16,6 +22,13 @@ const GridItems = async({collection}) => {
                     
             {
                 collection?.products?.edges?.map((item, index)=>{
+                    const prices = item?.node?.variants?.edges.map((item, index) => item?.node?.price?.amount);
+                    const compareAtPrices = item?.node?.variants?.edges.map((item, index) => item?.node?.compareAtPrice?.amount);
+                    const uniquePrices = [...new Set(prices)].sort((a, b) => a - b);
+                    const uniqueComparePrices = [...new Set(compareAtPrices)].sort((a, b) => a - b);
+                    const lowestPrice = uniquePrices[0];
+                    const lowestComparePrice = uniqueComparePrices[0];
+                    console.log("LowestCompareprices", lowestComparePrice)
                     return  <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
                     <div class="product-content block w-full">
                         <div class="product-imgbox block w-full h-full">
@@ -65,24 +78,25 @@ const GridItems = async({collection}) => {
                                         <span class="text-lg">1 review</span>
                                     </div>
                                 </div>
-                                {
+                                {/* {
+                                    
                                     item?.node?.variants?.edges.map((item, index)=>{
                                         return <div class="price-box block w-full">
                                         <div class="price-box-content flex w-full max-w-fit items-center">
-                                            <span class="text-sm font-medium">{item?.node?.price?.amount}</span>
+                                            <span class="text-sm font-medium">£{lowestPrice} </span>
                                             <span class="text-sm font-medium px-1">-</span>
-                                            <span class="text-sm font-medium">{item?.node?.compareAtPrice?.amount}</span>
+                                            <span class="text-sm font-medium">£{  item?.node?.compareAtPrice?.amount}</span>
                                         </div>
                                     </div>
                                     })
-                                }
-                                {/* <div class="price-box block w-full">
+                                } */}
+                                <div class="price-box block w-full">
                                     <div class="price-box-content flex w-full max-w-fit items-center">
-                                        <span class="text-sm font-medium">£11.99</span>
+                                        <span class="text-sm font-medium">£{lowestPrice}</span>
                                         <span class="text-sm font-medium px-1">-</span>
-                                        <span class="text-sm font-medium">£18.99</span>
+                                        <span class="text-sm font-medium">${lowestComparePrice}</span>
                                     </div>
-                                </div> */}
+                                </div>
                                 <div class="so block w-full pt-4 absolute -bottom-11 left-0">
                                     <div class="so-content grid md:grid-cols-2 items-center w-full">
                                         <a href="#" class="block w-full max-w-fit"><span class="block w-full max-w-fit font-semibold text-sm sm:text-base lg:text-[1.16vw] xl:text-sm uppercase">Select options</span></a>

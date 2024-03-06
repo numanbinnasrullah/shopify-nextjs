@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 
-const SidebarToggler = () => {
+const SidebarToggler = ({collection}) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
@@ -33,7 +33,7 @@ const SidebarToggler = () => {
                     
                     <div class="counter w-full max-w-fit hidden md:block">
                         <div class="counter-content block w-full">
-                            <span class="text-xs mr-14 text-[#161619]">2 Products</span>
+                            <span class="text-xs mr-14 text-[#161619]">{collection?.products.edges.length} Products</span>
                         </div>
                     </div>
                     

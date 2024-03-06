@@ -11,7 +11,7 @@ import collectionPageQuery from '@/graphql/collection'
 const page = async ({params}) => {
   const collectionPageData = await collectionPageQuery(params.slug)
   const { menu, collection } = collectionPageData?.data
-//   console.log("Collection Page Data", collectionPageData?.data?.collection?.products.edges);
+  // console.log("Collection Page Data", collectionPageData?.data?.collection);
 
   return (
       <>
@@ -20,7 +20,7 @@ const page = async ({params}) => {
                 <CollectionDescription collection={collection} />
                 <div class="block w-full">
                     <div class="flex flex-col lg:flex-row">
-                        <Filters />
+                        <Filters collection={collection} />
                         <GridItems collection={collection} />
                     </div>
                 </div>

@@ -12,6 +12,13 @@ const YouMayAlsoLike = ({collection}) => {
             <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[15px] md:gap-[28px] mb-[35px]">
             {
                 collection?.products.edges.map((item, index)=>{
+                    const prices = item?.node?.variants?.edges.map((item, index) => item?.node?.price?.amount);
+                    const compareAtPrices = item?.node?.variants?.edges.map((item, index) => item?.node?.compareAtPrice?.amount);
+                    const uniquePrices = [...new Set(prices)].sort((a, b) => a - b);
+                    const uniqueComparePrices = [...new Set(compareAtPrices)].sort((a, b) => a - b);
+                    const lowestPrice = uniquePrices[0];
+                    const lowestComparePrice = uniqueComparePrices[0];
+                    console.log("LowestCompareprices", lowestComparePrice)
                     return <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
                     <div class="product-content block w-full">
                         <div class="product-imgbox block w-full h-full">
@@ -61,7 +68,7 @@ const YouMayAlsoLike = ({collection}) => {
                                         <span class="text-lg">1 review</span>
                                     </div>
                                 </div>
-                                {
+                                {/* {
                                     item?.node?.variants?.edges.map((item, index)=>{
                                         return <div class="price-box block w-full">
                                         <div class="price-box-content flex w-full max-w-fit items-center">
@@ -71,14 +78,14 @@ const YouMayAlsoLike = ({collection}) => {
                                         </div>
                                     </div>
                                     })
-                                }
-                                {/* <div class="price-box block w-full">
+                                } */}
+                                <div class="price-box block w-full">
                                     <div class="price-box-content flex w-full max-w-fit items-center">
-                                        <span class="text-sm font-medium">£11.99</span>
+                                        <span class="text-sm font-medium">£{lowestPrice}</span>
                                         <span class="text-sm font-medium px-1">-</span>
-                                        <span class="text-sm font-medium">£18.99</span>
+                                        <span class="text-sm font-medium">${lowestComparePrice}</span>
                                     </div>
-                                </div> */}
+                                </div>
                                 <div class="so block w-full pt-4 absolute -bottom-11 left-0">
                                     <div class="so-content grid md:grid-cols-2 items-center w-full">
                                         <a href="#" class="block w-full max-w-fit"><span class="block w-full max-w-fit font-semibold text-sm sm:text-base lg:text-[1.16vw] xl:text-sm uppercase">Select options</span></a>

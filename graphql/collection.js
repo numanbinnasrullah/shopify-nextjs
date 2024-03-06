@@ -42,9 +42,16 @@ const collectionPageQuery = async(collectionSlug) => {
                       }
                     }
                   }
-                  variants(first: 1) {
+                  variants(first: 100) {
                     edges {
                       node {
+                        id
+                        title
+                        quantityAvailable
+                        image {
+                          id
+                          url
+                        }
                         compareAtPrice {
                           amount
                           currencyCode
@@ -53,6 +60,7 @@ const collectionPageQuery = async(collectionSlug) => {
                           amount
                           currencyCode
                         }
+                        sku
                       }
                     }
                   }
