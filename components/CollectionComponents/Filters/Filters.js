@@ -1,6 +1,65 @@
 import React from 'react'
 
-const Filters = () => {
+
+const checkVariants = (title, sizesSet, colorsSet, choicesSet) => {
+
+    const titleParts = title.split("/");
+    const size = titleParts[0]?.trim();
+    const color = titleParts[1]?.trim();
+    const choice = titleParts[2]?.trim();
+    if (size) {
+        sizesSet.add(size);
+    }
+    if (color) {
+        colorsSet.add(color);
+    }
+    if (choice) {
+        choicesSet.add(choice);
+    }
+    
+  };
+
+const Filters = ({collection}) => {
+    
+    let sizesSet = new Set();
+    let colorsSet = new Set();
+    let choicesSet = new Set();
+
+    const filterVariants = (collection?.products?.edges || []).flatMap((item) =>
+    (item.node.variants.edges || []).map((variant) => variant.node)
+    );
+    
+    filterVariants.forEach((variant) => {
+        checkVariants(variant?.title, sizesSet, colorsSet, choicesSet);
+    });
+    let sizes = [...sizesSet];
+    let colors = [...colorsSet];
+    let choices = [...choicesSet];
+
+    console.log("Sizes:", sizes);
+    console.log("Colors:", colors);
+    console.log("Choices:", choices);
+
+    // filterVariants.forEach(variant => {
+        
+    //     const { sizes, colors, choices } = checkVariants(title, variant);
+    //     sizes1 = [...new Set([...sizes1, ...sizes])];
+    //     colors1 = [...new Set([...colors1, ...colors])];
+    //     choices1 = [...new Set([...choices1, ...choices])];
+    // });
+    
+    // collection?.products.edges.forEach((item, index)=>{
+    //    item?.node?.variants?.edges.forEach((variant, index)=>{
+    //     const { title } = variant.node;
+    //     const { sizes, colors, choices } = checkVariants(title, variants);
+    //     sizes1 = [...new Set([...sizes1, ...sizes])];
+    //     colors1 = [...new Set([...colors1, ...colors])];
+    //     choices1 = [...new Set([...choices1, ...choices])];
+    //    })
+    // })
+
+    
+   
   return (
     <div class="filter-box hidden lg:block w-full max-w-[360px] pr-10">
     <div class="filter-box-content block w-full h-full">

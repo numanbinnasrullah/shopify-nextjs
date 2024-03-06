@@ -3,12 +3,12 @@ import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
 const GridItems = async({collection}) => {
-    collection?.products?.edges?.map((item, index)=>{
-        console.log("item", item.node.variants.edges)
-        item.node.variants.edges.map((item, index)=>{
-            console.log("item1", item.node)
-        })
-    })
+    // collection?.products?.edges?.map((item, index)=>{
+    //     console.log("item", item.node.variants.edges)
+    //     item.node.variants.edges.map((item, index)=>{
+    //         console.log("item1", item.node)
+    //     })
+    // })
     
   return (
     
