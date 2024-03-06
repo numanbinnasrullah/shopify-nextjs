@@ -18,7 +18,7 @@ const YouMayAlsoLike = ({collection}) => {
                     const uniqueComparePrices = [...new Set(compareAtPrices)].sort((a, b) => a - b);
                     const lowestPrice = uniquePrices[0];
                     const lowestComparePrice = uniqueComparePrices[0];
-                    console.log("LowestCompareprices", lowestComparePrice)
+                  
                     return <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
                     <div class="product-content block w-full">
                         <div class="product-imgbox block w-full h-full">
