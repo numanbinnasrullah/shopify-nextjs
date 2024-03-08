@@ -1,3 +1,4 @@
+import Header from "@/components/Header/Header";
 import cartPageQuery from "@/graphql/cart";
 
 
@@ -6,7 +7,10 @@ const CartPage = async () => {
     const { menu } = cartPageData?.data
     console.log("CartPage", cartPageData?.data)
   return (
-    <div>CartPage</div>
+    <>
+      <Header menu={menu} /> 
+      Cart page...
+    </>
   )
 }
 
