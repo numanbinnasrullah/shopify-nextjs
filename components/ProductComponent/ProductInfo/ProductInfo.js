@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ProductGallery from "../ProductGallery/ProductGallery";
+import Link from "next/link";
 
 const checkVariants = (title, variants) => {
     let sizes = [];
@@ -57,7 +58,9 @@ const ProductInfo = ({product}) => {
     const [selectedImage, setSelectedImage] = useState("")
     const [quantityAvailable, setQuantityAvailable] = useState("")
     const [productCount, setProductCount] = useState(1)
-    console.log("Sizes:", selectedSize);
+    const [selectedVariantForCart, setSelectedVariantForCart] = useState(null)
+
+    console.log("Selected Variant11111111111:", selectedVariantForCart);
 
      const handleColorChange = (event) => {
         const selectColor = event.target.value;
@@ -128,6 +131,7 @@ const ProductInfo = ({product}) => {
             const selectedVariant = variants.find(
                 (variant) => variant.node.title.includes(selectedTitle)
             );
+            console.log("selectedVariant", selectedVariant);
         
             console.log("Selected Variant Price:", selectedVariant); // Selected variant ko check karein
             setSelectedPrice(selectedVariant?.node?.price?.amount);
@@ -139,6 +143,8 @@ const ProductInfo = ({product}) => {
             console.log("Selected Image", selectedImage?.node?.image?.url);
 
             setQuantityAvailable(selectedVariant?.node.quantityAvailable)
+
+            setSelectedVariantForCart(selectedVariant?.node?.id)
         };
         
 
@@ -331,7 +337,7 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 <div class="btn-wrapper block w-full">
-                    <a href="#" class="flex cursor-pointer justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px]">Add to basket</a>
+                    <Link href="/cart" class="flex cursor-pointer justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px]">Add to basket</Link>
                 </div>
 
             </div>
