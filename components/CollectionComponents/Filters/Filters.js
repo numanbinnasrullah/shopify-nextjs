@@ -36,9 +36,9 @@ const Filters = ({collection}) => {
     let colors = [...colorsSet];
     let choices = [...choicesSet];
 
-    console.log("Sizes:", sizes);
-    console.log("Colors:", colors);
-    console.log("Choices:", choices);
+    // console.log("Sizes:", sizes);
+    // console.log("Colors:", colors);
+    // console.log("Choices:", choices);
 
     // filterVariants.forEach(variant => {
         

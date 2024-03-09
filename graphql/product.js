@@ -22,7 +22,7 @@ const productPageQuery = async (productSlug) => {
           title
           description
           handle
-          images(first: 5) {
+          images(first: 200) {
             edges {
               node {
                 id

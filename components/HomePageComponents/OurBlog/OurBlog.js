@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const OurBlog = async({blog}) => {
     // console.log("Blogs====>", blog?.articles?.edges)
-    const fetchBlogs = await blogs();
+    // const fetchBlogs = await blogs();
     // fetchBlogs.map((item, index) =>{
     //     console.log("articles :", item.node.articles.edges)
     //     item.node.articles.edges.map((item, index)=>{

@@ -55,21 +55,21 @@ const ProductInfo = ({product}) => {
     const [selectedSize, setSelectedSize] = useState(sizes1[0]);
     const [selectedChoice, setSelectedChoice] = useState(choices1[0]);
     const [selectedPrice, setSelectedPrice] = useState('');
-    const [selectedImage, setSelectedImage] = useState("")
+    const [selectedImageId, setSelectedImageId] = useState("")
     const [quantityAvailable, setQuantityAvailable] = useState("")
     const [productCount, setProductCount] = useState(1)
     const [selectedVariantForCart, setSelectedVariantForCart] = useState(null)
 
-    console.log("Selected Variant11111111111:", selectedVariantForCart);
+    console.log("Selected image from state ==>:", selectedImageId);
 
      const handleColorChange = (event) => {
         const selectColor = event.target.value;
-        console.log("ffffff", selectColor)
+        // console.log("ffffff", selectColor)
         setSelectedColor(selectColor);
-        console.log("ffffff", selectColor)
+        // console.log("ffffff", selectColor)
         // Find sizes and choices for selected color
         const { sizes, choices } = getSizesAndChoicesForColor(selectColor);
-        console.log("size return", sizes)
+        // console.log("size return", sizes)
         
         // Update selected size and choice based on the first option of each list
         setSelectedSize(sizes[0] || '');
@@ -81,7 +81,7 @@ const ProductInfo = ({product}) => {
     };
 
     const getSizesAndChoicesForColor = (color) => {
-        console.log('getSizesAndChoicesForColor', color);
+        // console.log('getSizesAndChoicesForColor', color);
         const filteredVariants = variants.filter(variant => {
             const titleParts = variant.node.title.split("/");
             if (titleParts.length === 1) {
@@ -91,7 +91,7 @@ const ProductInfo = ({product}) => {
                 return titleParts[1].trim() === color;
             }
         });
-        console.log("Check result", filteredVariants);
+        // console.log("Check result", filteredVariants);
         let sizes = [];
         let choices = [];
     
@@ -114,9 +114,9 @@ const ProductInfo = ({product}) => {
        
      
         const getSelectedVariantPrice = (size, color, choice) => {
-            console.log("Compareddddd ====> :", size, color, choice);
-            console.log("Compare1 ====> :", selectedSize, selectedColor, selectedChoice);
-            console.log("Variantsdddddddddd:", variants);
+            // console.log("Compareddddd ====> :", size, color, choice);
+            // console.log("Compare1 ====> :", selectedSize, selectedColor, selectedChoice);
+            // console.log("Variantsdddddddddd:", variants);
         
             let selectedTitle = "";
         
@@ -133,14 +133,14 @@ const ProductInfo = ({product}) => {
             );
             console.log("selectedVariant", selectedVariant);
         
-            console.log("Selected Variant Price:", selectedVariant); // Selected variant ko check karein
+            // console.log("Selected Variant Price:", selectedVariant); 
             setSelectedPrice(selectedVariant?.node?.price?.amount);
         
             const selectedImage = variants.find(
                 (item) => item.node.image.id === selectedVariant?.node?.image?.id
             );
-            setSelectedImage(selectedImage?.node?.image?.url);
-            console.log("Selected Image", selectedImage?.node?.image?.url);
+            setSelectedImageId(selectedVariant?.node?.image?.id);
+             console.log("Selected Image", selectedVariant?.node?.image?.id);
 
             setQuantityAvailable(selectedVariant?.node.quantityAvailable)
 
@@ -151,7 +151,7 @@ const ProductInfo = ({product}) => {
     // Function to handle size selection
     const handleSizeChange = (event) => {
         const selectSize = event.target.value;
-        console.log("Ab size select hua ", selectSize)
+        // console.log("Ab size select hua ", selectSize)
         setSelectedSize(selectSize);
         
         // Update selected price
@@ -180,17 +180,17 @@ const ProductInfo = ({product}) => {
     };
 
     useEffect(() => {
-        console.log("Compare1111 ====> :", selectedSize, selectedColor, selectedChoice);
+        // console.log("Compare1111 ====> :", selectedSize, selectedColor, selectedChoice);
         // Set default price on component mount
         getSelectedVariantPrice( selectedSize, selectedColor, selectedChoice);
-       console.log("Check get", selectedPrice)
+    //    console.log("Check get", selectedPrice)
       
     }, []);
 
 
   return (
     <>
-        <ProductGallery variants={variants} selectedColor={selectedColor} selectedImage={selectedImage}  />
+        <ProductGallery variants={variants} selectedColor={selectedColor} selectedImageId={selectedImageId} product={product} />
     <div class="right block w-full px-[18px] md:px-10 lg:px-0">
     <div class="right-content block w-full lg:max-w-[600px]">
         <h1 class="text-2xl md:text-[32px] text-[#161619] mb-2">{product?.title}</h1>
