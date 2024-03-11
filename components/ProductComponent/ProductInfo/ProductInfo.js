@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ProductGallery from "../ProductGallery/ProductGallery";
 import Link from "next/link";
+import Modal from "@/components/modal/modal";
 
 const checkVariants = (title, variants) => {
     let sizes = [];
@@ -59,6 +60,16 @@ const ProductInfo = ({product}) => {
     const [quantityAvailable, setQuantityAvailable] = useState("")
     const [productCount, setProductCount] = useState(1)
     const [selectedVariantForCart, setSelectedVariantForCart] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleAddToBasketClick = () => {
+      setIsModalOpen(true);
+    };
+  
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
+  
 
     console.log("Selected image from state ==>:", selectedImageId);
 
@@ -187,6 +198,20 @@ const ProductInfo = ({product}) => {
       
     }, []);
 
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+          if (!event.target.closest('.modal')) {
+            setIsModalOpen(false);
+          }
+        };
+    
+        document.body.addEventListener('click', handleOutsideClick);
+    
+        return () => {
+          document.body.removeEventListener('click', handleOutsideClick);
+        };
+      }, []);
+    
 
   return (
     <>
@@ -327,7 +352,7 @@ const ProductInfo = ({product}) => {
                                 </svg>
                             </button>
                             {productCount}
-                            <button class="block py-5 px-2 w-full max-w-fit cursor-pointer increment" onClick={handleProductCountIncrease}>
+                            <button class="block py-5 px-2 w-full max-w-fit cursor-pointer " onClick={handleProductCountIncrease}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
@@ -337,7 +362,7 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 <div class="btn-wrapper block w-full">
-                    <Link href="/cart" class="flex cursor-pointer justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px]">Add to basket</Link>
+                    <button  onClick={handleAddToBasketClick} className="flex justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px]">Add to basket</button>
                 </div>
 
             </div>
@@ -368,6 +393,10 @@ const ProductInfo = ({product}) => {
         </div>
     </div>
 </div>
+
+
+
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
     </>
       
   )
