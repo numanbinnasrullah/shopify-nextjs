@@ -1,79 +1,53 @@
 'use client'
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
 
 const ProductGallery = ({ product, selectedImageId }) => {
     const [selectImage, setSelectImage] = useState(null);
-    
+    const sliderRef = useRef(null);
+
     const changeImage = (image) => {
         setSelectImage(image);
     };
 
-useEffect(()=>{
-    const filteredImage = product?.images?.edges.find(item => item.node.id === selectedImageId);
-    if(filteredImage){
-        setSelectImage(filteredImage?.node?.originalSrc);
-    }
-},[selectedImageId, product?.images?.edges])
-
-    //     const [variantImages, setVariantImages] = useState([]);
-    //     // console.log("selectedImage " ,selectedImage)
-
-
-    // if (filteredImage?.length > 0) {
-    //     const imageURL = filteredImage.map(item => item.node.originalSrc); 
-    //     setSelectImage(imageURL)
-    //     console.log("Image URLs:", imageURL);
-    // } else {
-    //     console.log("No images found for the selected ID");
-    // }
-  
-
-    // useEffect(() => {
-    //     // Initialize an empty array to store all variant images
-    //     let allVariantImages = [];
-    
-    //     // Iterate through variants to collect images for each color
-    //     variants.forEach((variant) => {
-    //         const imageUrl = variant?.node?.image?.url;
-    //         // Add image URL to the array if it's not already present
-    //         if (!allVariantImages.includes(imageUrl)) {
-    //             allVariantImages.push(imageUrl);
-    //         }
-    //     });
-    
-    //     // Set the collected variant images
-    //     setVariantImages(allVariantImages);
-    //     setSelectImage(selectedImage);
-    // }, [variants, selectedImage]);
-    
+    useEffect(() => {
+        const filteredImage = product?.images?.edges.find(item => item.node.id === selectedImageId);
+        if (filteredImage) {
+            setSelectImage(filteredImage.node.originalSrc);
+            // Automatically scroll to the selected thumbnail image
+            const imageIndex = product.images.edges.findIndex(item => item.node.id === selectedImageId);
+            if (sliderRef.current) {
+                sliderRef.current.scrollTo(0, imageIndex * 85); // Assuming each thumbnail has a height of 100px
+            }
+        }
+    }, [selectedImageId, product?.images?.edges]);
 
     return (
-    <>
-            <div class="left block w-full">
-                <div class="left-content block lg:flex w-full lg:gap-[10px]">
-                    <div class="slider-left hidden lg:block w-full max-w-[12%]">
-                        <div class="slider-left-content block w-full ">
-                            <div class="slide block w-full mb-2 max-h-[580px] overflow-y-scroll hide-scrollbar">
-                                <div class="imgbox block w-full max-w-[80px]">
-                                    {product?.images?.edges.map((item, index) => (
+        <>
+            <div className="left block w-full">
+                <div className="left-content block lg:flex w-full lg:gap-[10px]">
+                    <div className="slider-left hidden lg:block w-full max-w-[12%]">
+                        <div className="slider-left-content block w-full ">
+                            <div ref={sliderRef} className="slide block w-full max-h-[580px] overflow-y-scroll hide-scrollbar">
+                                <div className="imgbox block w-full max-w-[80px]">
+                                {product?.images?.edges.map((thumbUrl, index) => (
                                         <img
                                             key={index}
-                                            src={item.node.originalSrc}
+                                            src={thumbUrl.node.originalSrc}
                                             alt={`Thumbnail ${index}`}
-                                            className="block w-full h-full object-contain mb-2 cursor-pointer"
-                                            onClick={() => changeImage(item.node.originalSrc)}
+                                            className={`block w-full h-full object-contain mb-2 cursor-pointer ${thumbUrl.node.id === selectedImageId ? 'selected' : ''}`}
+                                            style={{ border: thumbUrl.node.id === selectedImageId ? '2px solid black' : 'none' }}
+                                            onClick={() => changeImage(thumbUrl.node.originalSrc)}
                                         />
                                     ))}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="slider-right main-product-image-wrapper block w-full lg:max-w-[88%]">
-                        <div class="slider-right-content main-product-image-wrapper-content block w-full slider-for">
-                            <div class="slide block w-full">
-                                <div class="imgbox block w-full">
-                                {selectImage && <img src={selectImage} alt="Main Product" className="block w-full h-full object-contain" />}
+                    <div className="slider-right main-product-image-wrapper block w-full lg:max-w-[88%]">
+                        <div className="slider-right-content main-product-image-wrapper-content block w-full ">
+                            <div className="slide block w-full">
+                                <div className="imgbox block w-full">
+                                    {selectImage && <img src={selectImage} alt="Main Product" className="block w-full h-full object-contain" />}
                                 </div>
                             </div>
                         </div>
@@ -84,4 +58,4 @@ useEffect(()=>{
     )
 }
 
-export default ProductGallery
+export default ProductGallery;

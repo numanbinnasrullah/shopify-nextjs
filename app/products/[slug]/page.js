@@ -10,10 +10,10 @@ const page = async ({params}) => {
   const productPageData = await productPageQuery(params.slug);
   const { menu, product, collection } = productPageData?.data
 
-  // console.log("Product Params", productPageData?.data?.product?.images?.edges.map((item,index)=>item.node.originalSrc))
-  // productPageData?.data?.product?.variants.edges.map((item, index)=>{
-  //   console.log("variant", item.node.image)
-  // })
+  console.log("Product Params", productPageData?.data?.product?.images?.edges)
+  productPageData?.data?.product?.variants.edges.map((item, index)=>{
+    console.log("variant", item.node)
+  })
       return (
         <>
         <Header menu={menu} /> 
