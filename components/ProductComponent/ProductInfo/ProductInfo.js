@@ -396,7 +396,8 @@ const ProductInfo = ({product}) => {
 
 
 
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal} product={product} selectedImageId={selectedImageId} />
+    
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal} product={product} selectedImageId={selectedImageId} selectedPrice={selectedPrice} selectedSize={selectedSize} />
     </>
       
   )

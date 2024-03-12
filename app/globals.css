@@ -236,7 +236,7 @@ ul.navmenu li a{
 
         /* Modal Styles */
 .modal-container {
-  width: 28%;
+  /* width: 28%; */
   position: fixed;
   bottom: 20px;
   right: 20px;

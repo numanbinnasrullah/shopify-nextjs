@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 
-const Modal = ({ isOpen, onClose, product, selectedImageId }) => {
+const Modal = ({ isOpen, onClose, product, selectedImageId, selectedPrice, selectedSize }) => {
   const [selectImage, setSelectImage] = useState(null);
   useEffect(() => {
     const filteredImage = product?.images?.edges.find(item => item?.node?.id === selectedImageId);
@@ -23,15 +23,20 @@ const Modal = ({ isOpen, onClose, product, selectedImageId }) => {
         <div className="modal-container modal-overlay" onClick={onClose}>
           <div className="modal">
             {/* Modal content */}
-            <h2>Modal Title</h2>
-            <div className="flex mt-5 justify-around ">
+            
+            <div className="text-center bg-slate-200 p-3">Added to your cart</div>
+            <div className="flex mt-5 justify-start space-x-8">
               <span>{selectImage &&  <img src={selectImage} width={100} /> }</span>
-              <span>{product?.title}</span>
+              <div className="flex flex-col space-y-1">
+              <div>{product?.title}</div>
+              <div>{selectedPrice}</div>
+              <div>{selectedSize}</div>
+              </div>
             </div>
-            <div class="btn-wrapper  w-full mt-5 flex justify-around">
-                    <button  className="flex justify-center items-center w-[45%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">View Cart</button>
+            <div class="btn-wrapper  w-full mt-5 flex space-x-8">
+                    <button  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">View Cart</button>
 
-                    <button  className="flex justify-center items-center w-[45%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">Checkout</button>
+                    <button  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">Checkout</button>
                 </div>
             
             {/* <button  onClick={onClose}>Close</button> */}
