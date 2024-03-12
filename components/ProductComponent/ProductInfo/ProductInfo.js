@@ -32,7 +32,7 @@ const checkVariants = (title, variants) => {
          sizes = Array.from(
             new Set(variants.map((variant) => variant.node.title))
           );
-          console.log("Just Sizes", sizes)
+        //   console.log("Just Sizes", sizes)
     }
     return { sizes, colors, choices };
   };
@@ -71,7 +71,7 @@ const ProductInfo = ({product}) => {
     };
   
 
-    console.log("Selected image from state ==>:", selectedImageId);
+    // console.log("Selected image from state ==>:", selectedImageId);
 
      const handleColorChange = (event) => {
         const selectColor = event.target.value;
@@ -151,7 +151,7 @@ const ProductInfo = ({product}) => {
                 (item) => item.node.image.id === selectedVariant?.node?.image?.id
             );
             setSelectedImageId(selectedVariant?.node?.image?.id);
-             console.log("Selected Image", selectedVariant?.node?.image?.id);
+            //  console.log("Selected Image", selectedVariant?.node?.image?.id);
 
             setQuantityAvailable(selectedVariant?.node.quantityAvailable)
 
@@ -396,7 +396,7 @@ const ProductInfo = ({product}) => {
 
 
 
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal} product={product} selectedImageId={selectedImageId} />
     </>
       
   )
