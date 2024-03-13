@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+import { useState } from "react";
 
 
 const checkVariants = (title, sizesSet, colorsSet, choicesSet) => {
@@ -20,7 +22,27 @@ const checkVariants = (title, sizesSet, colorsSet, choicesSet) => {
   };
 
 const Filters = ({collection}) => {
-    
+  const [sizesOpen, setSizesOpen] = useState(false);
+  const [colorsOpen, setColorsOpen] = useState(true);
+
+  const toggleSizes = () => {
+    setSizesOpen(!sizesOpen);
+    // Close the colors section if it was open
+    // if (colorsOpen) {
+    //   setColorsOpen(false);
+    // }
+  };
+
+  const toggleColors = () => {
+    setColorsOpen(!colorsOpen);
+    // Close the sizes section if it was open
+    // if (sizesOpen) {
+    //   setSizesOpen(false);
+    // }
+  };
+  
+
+
     let sizesSet = new Set();
     let colorsSet = new Set();
     let choicesSet = new Set();
@@ -36,9 +58,9 @@ const Filters = ({collection}) => {
     let colors = [...colorsSet];
     let choices = [...choicesSet];
 
-    // console.log("Sizes:", sizes);
-    // console.log("Colors:", colors);
-    // console.log("Choices:", choices);
+    console.log("Sizes:", sizes);
+    console.log("Colors:", colors);
+    console.log("Choices:", choices);
 
     // filterVariants.forEach(variant => {
         
@@ -66,11 +88,11 @@ const Filters = ({collection}) => {
 
         <div class="variant-box block w-full py-5">
             <div class="variant-box-content block w-full">
-                <div class="heading-box block w-full mb-[18px]">
-                    <h2 class="text-xl text-[#161619] font-medium">Color</h2>
+                <div class="heading-box block w-full mb-[40px]">
+                    {/* <h2 class="text-xl text-[#161619] font-medium">Color</h2> */}
                 </div>
                 <div class="variants block w-full">
-                    <div class="content flex w-full flex-wrap gap-4">
+                    {/* <div class="content flex w-full flex-wrap gap-4">
 
                         <span class="block w-full max-w-fit text-[#838889] border border-[#838889] py-1 px-4 cursor-pointer">Charcoal</span>
                         <span class="block w-full max-w-fit text-[#838889] border border-[#838889] py-1 px-4 cursor-pointer">Ochre</span>
@@ -88,7 +110,93 @@ const Filters = ({collection}) => {
                         <span class="block w-full max-w-fit text-[#838889] border border-[#838889] py-1 px-4 cursor-pointer">Teal</span>
                         <span class="block w-full max-w-fit text-[#838889] border border-[#838889] py-1 px-4 cursor-pointer">White</span>
 
-                    </div>
+                    </div> */}
+
+<div className="max-w-lg mx-auto">
+
+      <div className=" border-b border-gray-200">
+        <div className="py-4 border-b border-gray-200">
+          <button
+            className="flex justify-between items-center w-full text-lg font-medium focus:outline-none"
+            onClick={toggleColors}
+          >
+            <span>Sizes</span>
+            <svg
+              className={`h-6 w-6 transition-transform  ${
+                colorsOpen ? 'transform rotate-180' : ''
+              }`}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.293 12.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414l-3.5-3.5a1 1 0 010-1.414l3.5-3.5a1 1 0 011.414 1.414l-4 4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+          {colorsOpen  && (
+            <div className="mt-2">
+              {sizes.map((size, index) => (
+                <label key={index} className="block mb-2">
+                  <input type="checkbox" className="form-checkbox text-blue-500 cursor-pointer" />
+                  <span className="ml-2 cursor-pointer">{size}</span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
+
+
+    <div className="max-w-lg mx-auto">
+
+<div className=" border-b border-gray-200">
+  <div className="py-4 border-b border-gray-200">
+    <button
+      className="flex justify-between items-center w-full text-lg font-medium focus:outline-none"
+      onClick={toggleSizes}
+    >
+      <span>Colors</span>
+      <svg
+        className={`h-6 w-6 transition-transform  ${
+          sizesOpen ? 'transform rotate-180' : ''
+        }`}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fillRule="evenodd"
+          d="M9.293 12.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414l-3.5-3.5a1 1 0 010-1.414l3.5-3.5a1 1 0 011.414 1.414l-4 4a1 1 0 010-1.414z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </button>
+    {sizesOpen  && (
+      <div className="mt-2">
+        {colors.map((size, index) => (
+          <label key={index} className="block mb-2">
+            <input type="checkbox" className="form-checkbox text-blue-500 cursor-pointer" />
+            <span className="ml-2 cursor-pointer">{size}</span>
+          </label>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
                 </div>
             </div>
         </div>

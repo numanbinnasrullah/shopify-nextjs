@@ -11,7 +11,7 @@ import collectionPageQuery from '@/graphql/collection'
 const page = async ({params}) => {
   const collectionPageData = await collectionPageQuery(params.slug)
   const { menu, collection } = collectionPageData?.data
-  // console.log("Collection Page Data", collectionPageData?.data?.collection);
+  console.log("Collection Page Data", collectionPageData?.data?.collection);
 
   return (
       <>
