@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import GridItems from "../GridItems/GridItems";
 
 
 const checkVariants = (title, sizesSet, colorsSet, choicesSet) => {
@@ -26,8 +27,8 @@ const Filters = ({ collection }) => {
   const [selectedColors, setSelectedColors] = useState([]);
   const [sizesOpen, setSizesOpen] = useState(true);
   const [colorsOpen, setColorsOpen] = useState(false);
-  console.log("selected Sizes", selectedSizes)
-  console.log("selected colors", selectedColors)
+  // console.log("selected Sizes", selectedSizes)
+  // console.log("selected colors", selectedColors)
   const handleSizeChange = (size) => {
     if (selectedSizes.includes(size)) {
       setSelectedSizes(selectedSizes.filter((s) => s !== size));
@@ -86,7 +87,8 @@ const Filters = ({ collection }) => {
 
 
   return (
-    <div class="filter-box hidden lg:block w-full max-w-[300px] pr-10">
+    <>
+<div class="filter-box hidden lg:block w-full max-w-[300px] pr-10">
       <div class="filter-box-content block w-full h-full">
 
         <div class="variant-box block w-full py-5">
@@ -96,50 +98,52 @@ const Filters = ({ collection }) => {
             </div>
             <div class="variants block w-full">
 
+              {
+              sizes.length > 0 && <div className="max-w-lg mx-auto">
 
-              <div className="max-w-lg mx-auto">
-
-                <div className=" border-b border-gray-200">
-                  <div className="py-4 border-b border-gray-200">
-                    <button
-                      className="flex justify-between items-center w-full text-lg font-medium focus:outline-none"
-                      onClick={toggleSizes}
+              <div className=" border-b border-gray-200">
+                <div className="py-4 border-b border-gray-200">
+                  <button
+                    className="flex justify-between items-center w-full text-lg font-medium focus:outline-none"
+                    onClick={toggleSizes}
+                  >
+                    <span>Sizes</span>
+                    <svg
+                      className={`h-6 w-6 transition-transform  ${sizesOpen ? 'transform rotate-180' : ''
+                        }`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
                     >
-                      <span>Sizes</span>
-                      <svg
-                        className={`h-6 w-6 transition-transform  ${sizesOpen ? 'transform rotate-180' : ''
-                          }`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M9.293 12.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414l-3.5-3.5a1 1 0 010-1.414l3.5-3.5a1 1 0 011.414 1.414l-4 4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    {sizesOpen && (
-                      <div className="mt-2">
-                        {sizes.map((size, index) => (
-                          <label key={index} className="block mb-2">
-                            <input type="checkbox" 
-                            className="form-checkbox text-blue-500 cursor-pointer"
-                            checked={selectedSizes.includes(size)}
-                            onChange={() => handleSizeChange(size)} />
-                            <span className="ml-2 cursor-pointer">{size}</span>
-                          </label>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                      <path
+                        fillRule="evenodd"
+                        d="M9.293 12.293a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414l-3.5-3.5a1 1 0 010-1.414l3.5-3.5a1 1 0 011.414 1.414l-4 4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  {sizesOpen && (
+                    <div className="mt-2">
+                      {sizes.map((size, index) => (
+                        <label key={index} className="block mb-2">
+                          <input type="checkbox" 
+                          className="form-checkbox text-blue-500 cursor-pointer"
+                          checked={selectedSizes.includes(size)}
+                          onChange={() => handleSizeChange(size)} />
+                          <span className="ml-2 cursor-pointer">{size}</span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
+            </div>
+              }
+              
 
 
-
-              <div className="max-w-lg mx-auto">
+              {
+                colors.length > 0 &&  <div className="max-w-lg mx-auto">
 
                 <div className=" border-b border-gray-200">
                   <div className="py-4 border-b border-gray-200">
@@ -179,6 +183,8 @@ const Filters = ({ collection }) => {
                 </div>
               </div>
 
+              }
+             
 
 
 
@@ -227,6 +233,12 @@ const Filters = ({ collection }) => {
 
       </div>
     </div>
+
+
+
+    <GridItems collection={collection} selectedSizes={selectedSizes} selectedColors={selectedColors} />
+    </>
+    
   )
 }
 

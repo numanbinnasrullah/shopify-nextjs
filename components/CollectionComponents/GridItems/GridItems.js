@@ -1,14 +1,61 @@
-
+'use client'
 import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
-const GridItems = async({collection}) => {
+const GridItems = ({collection, selectedSizes, selectedColors}) => {
+    console.log("selectedColors", selectedColors)
     // collection?.products?.edges?.map((item, index)=>{
-    //     console.log("item", item.node.variants.edges)
+    //     // console.log("item", item.node.variants.edges)
     //     item.node.variants.edges.map((item, index)=>{
-    //         console.log("item1", item.node)
+    //         console.log("item1", item.node.title.split("/")[0].trim() )
     //     })
     // })
+
+    // const filteredProducts = collection?.products?.edges?.filter(product => {
+    //     return product.node.variants.edges.some(variant => {
+    //         const variantTitle = variant.node.title.split("/")[0].trim();
+    //         return selectedSizes.includes(variantTitle);
+    //     });
+    // });
+    // console.log("Filtered products", filteredProducts)
+    
+    const filteredProducts = collection?.products?.edges?.filter(product => {
+        const variants = product.node.variants.edges;
+
+        // Check karein ke product ke variants mein se koi bhi size aur color match karta hai ya nahi
+        const matchesSize = variants.some(variant => {
+            const variantTitle = variant.node.title.split("/")[0].trim();
+            // Agar variantTitle empty hai ya nahi hai toh uska length check karein
+            if (variantTitle && variantTitle.length > 0) {
+                return selectedSizes.includes(variantTitle);
+            }
+            return false; // Agar title empty hai toh false return karein
+        });
+
+        const matchesColor = variants.some(variant => {
+            const canSplit = variant.node.title.includes("/");
+            if(canSplit){
+                const variantTitle = variant.node.title.split("/")[1]?.trim(); // Use optional chaining to handle undefined case
+                // Agar variantTitle empty hai ya nahi hai toh uska length check karein
+                if (variantTitle && variantTitle.length > 0) {
+                    return selectedColors.includes(variantTitle);
+                }
+                return false;
+            } else {
+                const variantTitle = variant.node.title
+                if (variantTitle && variantTitle.length > 0) {
+                    return selectedColors.includes(variantTitle);
+                }
+                return false;
+            }
+            // Agar title empty hai toh false return karein
+        });
+
+        // Return karein true agar product ka size aur color dono match karte hain, ya phir sirf size ya sirf color match hota hai
+        return (matchesSize && matchesColor) || (matchesSize && !selectedColors.length) || (!selectedSizes.length && matchesColor);
+    });
+
+    console.log("Matches ", filteredProducts);
     
   return (
     
