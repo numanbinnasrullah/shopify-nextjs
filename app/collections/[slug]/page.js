@@ -9,18 +9,19 @@ import collectionPageQuery from '@/graphql/collection'
 
 
 const page = async ({params}) => {
-  const collectionPageData = await collectionPageQuery(params.slug)
+  const collectionPageData = await collectionPageQuery(params.slug, "")
+  console.log("Collection Page Data", collectionPageData?.data?.collection?.products);
   const { menu, collection } = collectionPageData?.data
-//   console.log("Collection Page Data", collectionPageData?.data?.collection);
 
   return (
       <>
           <Header menu={menu} />
             <CollectionWrapper>
+            
                 <CollectionDescription collection={collection} />
                 <div class="block w-full">
                     <div class="flex flex-col lg:flex-row">
-                        <Filters collection={collection} />
+                        <Filters collection={collection}  slug={params.slug} />
                         {/* <GridItems collection={collection} /> */}
                     </div>
                 </div>

@@ -1,8 +1,14 @@
 import { graphql } from "./graphql";
 
-const collectionPageQuery = async(collectionSlug) => {
+const collectionPageQuery = async(collectionSlug, filtersOpt) => {
+  // filtersOpt?.map((filter)=> {
+  //   console.log("Filter BBBBB", filter)
+  // })
+
+  console.log("Collection query filters", filtersOpt)
+
     const query = `
-    query collectionPageQuery($slug:String!) {
+    query collectionPageQuery($slug:String!,$filter: [ProductFilter!] ) {
         menu(handle: "main-menu") {
           id
           items {
@@ -21,18 +27,38 @@ const collectionPageQuery = async(collectionSlug) => {
         collection(handle: $slug) {
             title
             description
+            handle
             products(first: 12) {
+              filters {
+                id
+                label
+                type
+                values {
+                  id
+                  label
+                  count
+                  input
+                }
+              }
               edges {
                 node {
                   id
                   title
                   description
                   handle
+                  images(first:100) {
+                    edges {
+                      node {
+                        id
+                        originalSrc
+                      }
+                    }
+                  }
                   featuredImage {
                     id
                     url
                   }
-                  media(first: 2) {
+                  media(first: 100) {
                     edges {
                       node {
                         previewImage {
@@ -68,19 +94,48 @@ const collectionPageQuery = async(collectionSlug) => {
               }
             }
           }
+          
 
+
+          filteroptions: collection(handle: $slug) {
+            ...CollectionFields
+          }
 
 
       }
 
 
-     
-      
+      fragment CollectionFields on Collection {
+           id
+           title
+           handle
+           products(first: 100, filters:$filter ) {
+           
+            edges {
+              node {
+                handle
+                variants(first: 10) {
+                  edges {
+                    node {
+                      selectedOptions {
+                        name
+                        value
+                      }
+                    }
+                  }
+                }
+              }
+            }
+           }
+      }
+
       
     `
 
     const variables = {
-        slug: collectionSlug
+        "slug": collectionSlug,
+        "filter": [{ "variantOption": { "name": "Color", "value":"Pink"  } }, { "variantOption": { "name": "Color", "value":"red"  } }]
+        
       };
   
     const Query = { query, variables }
