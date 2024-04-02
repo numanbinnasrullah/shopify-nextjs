@@ -3,19 +3,6 @@ import { graphql } from "./graphql";
 const productPageQuery = async (productSlug) => {
     const query = `
     query productPageQuery($slug: String!, $youmayalsolike:String,) {
-        menu(handle: "main-menu") {
-          id
-          items {
-            id
-            title
-            url
-            items {
-              id
-              title
-              url 
-            }
-          }
-        }
 
         product(handle: $slug) {
             id

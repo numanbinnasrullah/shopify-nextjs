@@ -2,8 +2,8 @@
 
 import filtersQuery from "@/graphql/filters";
 
-export async function getSelectedFilters(receiveFilters) {
-    console.log("Filtered Productssaddddddddddddddd");
+export async function getSelectedFilter(receiveFilters) {
+    
   try {
     const res = await filtersQuery("curtains", receiveFilters);
     console.log("Filtered Products", res?.data?.collection?.products?.edges);

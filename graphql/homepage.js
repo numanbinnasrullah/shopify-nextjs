@@ -3,19 +3,6 @@ import { graphql } from "./graphql";
 const homePageQuery = async() => {
     const query = `
     query HomePageQuery($handle1: String!, $handle2: String!, $handle3: String!, $slug:String, $newArrivalCollection1: String!, $newArrivalCollection2: String!, $newArrivalCollection3: String!, $mainblog: String!) {
-        menu(handle: "main-menu") {
-            id
-            items {
-              id
-              title
-              url
-              items {
-                id
-                title
-                url 
-              }
-            }
-            }
     
         collection1: collection(handle: $handle1) {
           ...CollectionFields

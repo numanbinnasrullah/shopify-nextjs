@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import GridItems from "../GridItems/GridItems";
 import { useRouter } from "next/navigation";
-import { getSelectedFilters } from "./filteractions";
+import { getSelectedFilter, getSelectedFilters } from "./filteractions";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
@@ -30,7 +30,7 @@ const FilterClient = ({ collection, getSelected }) => {
   // console.log("collection filter Price", collection?.products)
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [selectedColors, setSelectedColors] = useState([]);
-
+  
   //   if (selectedSizes.length > 0 || selectedColors.length > 0) {
   //     collectionPageQuery(slug, selectedSizes, selectedColors);
   //  }
@@ -55,22 +55,25 @@ const FilterClient = ({ collection, getSelected }) => {
 
 
   const handleSizeChange = (size) => {
+    console.log("handle size", size)
     setSelectedSizes((prevSelectedSizes) => {
       const newSelectedSizes = prevSelectedSizes.includes(size)
         ? prevSelectedSizes.filter((selectedSize) => selectedSize !== size)
         : [...prevSelectedSizes, size];
-  
+        window.location.reload(); 
       updateUrl({ size: newSelectedSizes, color: selectedColors });
       return newSelectedSizes;
     });
-  };
+  }
   
   const handleColorChange = (color) => {
+
+
     setSelectedColors((prevSelectedColors) => {
       const newSelectedColors = prevSelectedColors.includes(color)
         ? prevSelectedColors.filter((selectedColor) => selectedColor !== color)
         : [...prevSelectedColors, color];
-  
+        window.location.reload(); 
       updateUrl({ size: selectedSizes, color: newSelectedColors });
       return newSelectedColors;
     });
@@ -80,27 +83,34 @@ const FilterClient = ({ collection, getSelected }) => {
 
   const updateUrl = ({ size, color }) => {
     const params = new URLSearchParams(window.location.search);
-
+  
     // Clear existing size and color parameters
     params.delete("filter.size");
     params.delete("filter.color");
-
+  
     // Add new size parameters
-    size.forEach((size) => {
-      params.append("filter.size", size);
+    size.forEach((sizeItem) => {
+      console.log("Sizes select ", sizeItem);
+      // Check if size contains "x" or is a single word
+      if (sizeItem.includes("x") || !/\s/.test(sizeItem)) {
+        // If size contains "x" or is a single word, add it directly to params
+        params.append("filter.size", sizeItem);
+      } else {
+        // If size is in the format of "Super King" or similar, add it with space
+        const encodedSize = encodeURIComponent(size);
+        params.append("filter.size", encodedSize);
+      }
     });
-
+  
     // Add new color parameters
     color.forEach((color) => {
       params.append("filter.color", color);
     });
-    
-
-    // Construct the new URL
-    const url = `${collection.handle}/?${params.toString().replace(/\+/g, "")}`;
-
-    // Push the updated URL
-    router.push(url, undefined, { shallow: true });
+  
+    // Construct the new URL without page reload
+    const newUrl = `?${params.toString().replace(/\+/g, "")}`;
+    console.log("new URL", newUrl)
+    history.pushState(null, '', newUrl);
   };
 
 useEffect(() => {
@@ -108,7 +118,13 @@ useEffect(() => {
   const urlParams = new URLSearchParams(queryString);
 
   // Get selected sizes and colors from URL parameters
-  const sizesFromUrl = urlParams.getAll('filter.size').map(size => size.replace('x', ' x '));
+  const sizesFromUrl = urlParams.getAll('filter.size').map(size => {
+    if ( size.includes('x')) {
+      return  size.replace('x', ' x ')
+    } else {
+      return  decodeURIComponent(size.replace('%20', ' '))
+    }
+});
   const colorsFromUrl = urlParams.getAll('filter.color');
   
   console.log("sizesFromUrl", sizesFromUrl);
@@ -142,53 +158,53 @@ useEffect(() => {
 
   // }, []);
 
-  useEffect(() => {
-    const fetchData = () => {
-      if (selectedSizes.length > 0 || selectedColors.length > 0) {
-        const filters = [];
+  // useEffect(() => {
+  //   const fetchData = () => {
+  //     if (selectedSizes.length > 0 || selectedColors.length > 0) {
+  //       const filters = [];
 
-        // Construct filter options for sizes
-        selectedSizes.forEach(size => {
-          filters.push({ variantOption: { name: "Size", value: size } });
-        });
+  //       // Construct filter options for sizes
+  //       selectedSizes.forEach(size => {
+  //         filters.push({ variantOption: { name: "Size", value: size } });
+  //       });
 
-        // Construct filter options for colors
-        selectedColors.forEach(color => {
-          filters.push({ variantOption: { name: "Color", value: color } });
-        });
+  //       // Construct filter options for colors
+  //       selectedColors.forEach(color => {
+  //         filters.push({ variantOption: { name: "Color", value: color } });
+  //       });
 
-        return Promise.resolve(getSelectedFilters(JSON.stringify(filters)))
-          .then(ab => {
-            console.log("ab", ab);
-            // Do something with the resolved value 'ab'
-          })
-          .catch(error => {
-            // Handle any errors
-            console.error("Error:", error);
-          });
-        // const params = new URLSearchParams();
-        // selectedSizes.forEach((size) => params.append("size", size));
-        // selectedColors.forEach((color) => params.append("color", color));
-        // router.push({ pathname: router.pathname, query: params.toString() });
-        // const res = await collectionPageQuery(slug, filters);
-        // console.log("Filters Res", res)
+  //       return Promise.resolve(getSelectedFilter(JSON.stringify(filters)))
+  //         .then(ab => {
+  //           console.log("ab", ab);
+  //           // Do something with the resolved value 'ab'
+  //         })
+  //         .catch(error => {
+  //           // Handle any errors
+  //           console.error("Error:", error);
+  //         });
+  //       // const params = new URLSearchParams();
+  //       // selectedSizes.forEach((size) => params.append("size", size));
+  //       // selectedColors.forEach((color) => params.append("color", color));
+  //       // router.push({ pathname: router.pathname, query: params.toString() });
+  //       // const res = await collectionPageQuery(slug, filters);
+  //       // console.log("Filters Res", res)
 
-      } else {
-        const filters = [];
-        console.log(" Else Filters", filters);
-        return Promise.resolve(getSelectedFilters(JSON.stringify(filters)))
-          .then(() => {
-            // Do something when the promise is resolved
-          })
-          .catch(error => {
-            // Handle any errors
-            console.error("Error:", error);
-          });
-      }
-    };
+  //     } else {
+  //       const filters = [];
+  //       console.log(" Else Filters", filters);
+  //       return Promise.resolve(getSelectedFilter(JSON.stringify(filters)))
+  //         .then(() => {
+  //           // Do something when the promise is resolved
+  //         })
+  //         .catch(error => {
+  //           // Handle any errors
+  //           console.error("Error:", error);
+  //         });
+  //     }
+  //   };
 
-    fetchData();
-  }, [selectedSizes, selectedColors, getSelected]);
+  //   fetchData();
+  // }, [selectedSizes, selectedColors, getSelected]);
 
   const handleRangeChange = (range) => {
     setSelectedRange(range);
@@ -206,6 +222,8 @@ useEffect(() => {
       setSelectedRange([priceData.price.min, priceData.price.max]);
     }
   }, [collection]);
+
+  
 
   return (
     <>
@@ -248,6 +266,7 @@ useEffect(() => {
                                 className="form-checkbox text-blue-500 cursor-pointer"
                                 checked={selectedSizes.includes(value.label)}
                                 onChange={() => handleSizeChange(value.label)}
+                                
                               />
                               <span className="ml-2 cursor-pointer">{value.label}</span>
                              

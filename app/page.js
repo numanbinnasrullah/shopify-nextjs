@@ -17,14 +17,14 @@ export default async function Home() {
     // homePage.data.menu.items
   return (
     <>
-      <Header menu={menu} />
+      {/* <Header menu={menu} /> */}
       <HeroBanner />
       <RichText />
       <FeaturedCollections featuredCollections={[collection1, collection2, collection3]} />
       <BestSellers collection={collection} />
       <MainCollections newArrivalCollection1={newArrivalCollection1} newArrivalCollection2={newArrivalCollection2} newArrivalCollection3={newArrivalCollection3} />
       <OurBlog blog={blog} />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

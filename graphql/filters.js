@@ -2,7 +2,7 @@ import { graphql } from "./graphql";
 
 const filtersQuery = async(collectionSlug, filter ) => {
     console.log("Filter query console", collectionSlug)
-    console.log("Filter query console", filter)
+    // console.log("Filter query console", filter)
     const query = `
     query collectionPageQuery($slug:String!, $filter: [ProductFilter!]) {
 
@@ -84,7 +84,7 @@ const filtersQuery = async(collectionSlug, filter ) => {
 
     
     `
-console.log("btgbvtgb",filter )
+// console.log("btgbvtgb",filter )
     const variables = {
       "slug": collectionSlug,
       "filter": JSON.parse(filter)

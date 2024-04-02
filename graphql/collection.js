@@ -5,25 +5,11 @@ const collectionPageQuery = async(collectionSlug, filtersOpt) => {
   //   console.log("Filter BBBBB", filter)
   // })
 
-  console.log("Collection query filters", filtersOpt)
+  // console.log("Collection query filters", filtersOpt)
 
     const query = `
     query collectionPageQuery($slug:String!,$filter: [ProductFilter!] ) {
-        menu(handle: "main-menu") {
-          id
-          items {
-            id
-            title
-            url
-            items {
-              id
-              title
-              url 
-            }
-          }
-        }
-
-
+      
         collection(handle: $slug) {
             title
             description

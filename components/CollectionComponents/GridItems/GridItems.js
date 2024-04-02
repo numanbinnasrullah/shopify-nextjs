@@ -4,8 +4,8 @@ import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
 const GridItems = async({collection, getSelectedFilters}) => {
-    const  s=  await getSelectedFilters
-    console.log("filteredProducts12345", s)
+    
+    
     // console.log("filteredProducts12345", JSON.parse(filteredProducts))
     // const [filteredProducts, setFilteredProducts] = useState([]);
     // console.log("collection", collection)
