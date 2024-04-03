@@ -84,7 +84,7 @@ const filtersQuery = async(collectionSlug, filter ) => {
 
     
     `
-// console.log("btgbvtgb",filter )
+// console.log("btgbvtgb",filter ) 
     const variables = {
       "slug": collectionSlug,
       "filter": JSON.parse(filter)
