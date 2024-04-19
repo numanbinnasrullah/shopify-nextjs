@@ -1,7 +1,7 @@
 import { graphql } from "./graphql";
 
 const filtersQuery = async(collectionSlug, filter ) => {
-    console.log("Filter query console", collectionSlug)
+    console.log("Filter query console", filter)
     // console.log("Filter query console", filter)
     const query = `
     query collectionPageQuery($slug:String!, $filter: [ProductFilter!]) {
@@ -74,6 +74,12 @@ const filtersQuery = async(collectionSlug, filter ) => {
                   }
                 }
               }
+            }
+            pageInfo {
+              hasPreviousPage
+              hasNextPage
+              startCursor
+              endCursor
             }
           }
         }

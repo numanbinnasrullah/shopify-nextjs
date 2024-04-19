@@ -6,7 +6,7 @@ import FilterClient from "./filterClient";
 
 
 
-const Filters = async({ collection, filteroptions , slug}) => {
+const Filters = async({ collection, filteroptions , slug, initialcheck}) => {
    async function getSelectedFilter() {
     'use server'
     // try {
@@ -25,7 +25,7 @@ const Filters = async({ collection, filteroptions , slug}) => {
     <>
       <div class="filter-box hidden lg:block w-full max-w-[300px] pr-10">
        {/* <FilterClient collection={collection} /> */}
-       <FilterClient collection={collection} getSelected={getSelectedFilter} />
+       <FilterClient collection={collection} getSelected={getSelectedFilter} initialcheck={initialcheck} />
 
       </div>
 

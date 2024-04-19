@@ -13,68 +13,90 @@ import filtersQuery from '@/graphql/filters'
 
 
 const page = async ({params, searchParams }) => {
-  console.log("Initial searchParams:", searchParams);
-
-  // Initialize variantOptions
-  const variantOptions = [];
-
-  // Loop through each key-value pair in searchParams
-  for (const key in searchParams) {
-    if (searchParams.hasOwnProperty(key)) {
-      let values = searchParams[key];
-      console.log("Values", values);
-  
-      if (!Array.isArray(values)) {
-        values = [values]; // Convert to array if not already an array
-      }
-      console.log("Values 234", values);
-  
-      // Loop through each value in the array
-      values.forEach(value => {
-        // Ensure value is not undefined
-        if (value !== undefined) {
-          if ( value.includes('x')) {
-             const simplevalue =  value.replace('x', ' x ')
-             const variantOption = { "variantOption": { "name": key.replace('filter.', ''), "value": simplevalue } };
-          // Push the variant option object to the variantOptions array
-             variantOptions.push(variantOption);
-          } else {
-            const decodedValue =  decodeURIComponent(value.replace('%20', ' '))
-            const variantOption = { "variantOption": { "name": key.replace('filter.', ''), "value": decodedValue } };
-            // Push the variant option object to the variantOptions array
-            variantOptions.push(variantOption); 
-          }
-          
-          // Construct the variant option object with the desired structure
-          // const variantOption = { "variantOption": { "name": key.replace('filter.', ''), "value": value } };
-          // Push the variant option object to the variantOptions array
-          // variantOptions.push(variantOption);
-        }
-      });
-    }
+// Initialize variantOptions
+const variantOptions = [];
+let priceRange = {};
+  console.log("Search param", searchParams)
+// Function to add variant option to variantOptions array
+const addVariantOption = (name, value) => {
+  if(value.includes('x')){
+    console.log("Valueeeeeee include ", value)
+    const valueX =   value.replace('x', ' x ')
+    const variantOption = { "variantOption": { "name": name, "value": valueX } };
+    variantOptions.push(variantOption);
+  } else {
+    const variantOption = { "variantOption": { "name": name, "value": value } };
+    variantOptions.push(variantOption);
   }
+};
 
-  console.log("Parent======", variantOptions);
+// Function to add price range to variantOptions array
+const addPriceRange = (min, max) => {
+  priceRange = { "price": { "min": min, "max": max } };
+  variantOptions.push(priceRange);
+};
 
-  // Debugging: Log searchParams and variantOptions for further investigation
-  console.log("searchParams:", searchParams);
-  console.log("variantOptions:", variantOptions);
+// Fetch size, color, and price from URL and add them to variantOptions array
+for (const key in searchParams) {
+  if (searchParams.hasOwnProperty(key)) {
+    let values = searchParams[key];
+    console.log("Values", values)
+    if (!Array.isArray(values)) {
+      values = [values]; // Convert to array if not already an array
+    }
+
+    values.forEach(value => {
+    
+        console.log("Value above switch", key)
+        switch (key) {
+          
+          case 'filter.size':
+            // Add size variant option
+            addVariantOption('Size', value);
+            break;
+          case 'filter.color':
+            // Add color variant option
+            addVariantOption('Color', value);
+            break;
+          case 'filter.gt-price':
+            // Greater than price
+            priceRange.min = parseFloat(value);
+            break;
+          case 'filter.lt-price':
+            // Less than price
+            priceRange.max = parseFloat(value);
+            break;
+          default:
+            break;
+        }
+      
+    });
+  }
+}
+console.log("variantOptionsssssssss  ",  variantOptions)
+// Add price range to variantOptions array if it's defined
+if (priceRange.min !== undefined && priceRange.max !== undefined) {
+  addPriceRange(priceRange.min, priceRange.max);
+}
 
   let collectionPageData;
+   let initialcheck ;
   if ( variantOptions.length > 0) {
+    initialcheck = false
     // Call filtersQuery if searchParams has values and variantOptions have been populated
     collectionPageData = await filtersQuery(params.slug, JSON.stringify(variantOptions) );
-    console.log("Filtered Producst", collectionPageData)
+    console.log("Filtered Products", collectionPageData?.data?.collection?.products?.edges)
   } else {
+    initialcheck = true
     // Otherwise, fall back to collectionPageQuery
     collectionPageData = await collectionPageQuery(params.slug, "");
-    console.log("Collection data  aya hy",collectionPageData )
+    console.log("Collection data  aya hy",collectionPageData?.data?.collection?.products )
   }
 
   // const collectionPageData = await collectionPageQuery(params.slug, "")
 //   console.log("Collection Page Data", collectionPageData?.data?.collection?.products);
   const { collection } = collectionPageData?.data
-
+console.log("initail check", initialcheck)
   return (
       <>
           {/* <Header menu={menu} /> */}
@@ -83,7 +105,7 @@ const page = async ({params, searchParams }) => {
                 <CollectionDescription collection={collection} />
                 <div class="block w-full">
                     <div class="flex flex-col lg:flex-row">
-                        <Filters collection={collection}  slug={params.slug} />
+                        <Filters collection={collection}  slug={params.slug} initialcheck={initialcheck} />
                         {/* <Filter collection={collection} slug={params.slug} /> */}
                         {/* <GridItems collection={collection} /> */}
                     </div>

@@ -78,7 +78,14 @@ const collectionPageQuery = async(collectionSlug, filtersOpt) => {
                   }
                 }
               }
+              pageInfo {
+                hasPreviousPage
+                hasNextPage
+                startCursor
+                endCursor
+              }
             }
+
           }
           
 
@@ -120,7 +127,7 @@ const collectionPageQuery = async(collectionSlug, filtersOpt) => {
 
     const variables = {
         "slug": collectionSlug,
-        "filter": [{ "variantOption": { "name": "Color", "value":"Pink"  } }, { "variantOption": { "name": "Color", "value":"red"  } }]
+        "filter": [{ "variantOption": { "name": "Color", "value":"Pink"  }, "price": { "min": 35.0, "max": 40.0 } }]
         
       };
   
