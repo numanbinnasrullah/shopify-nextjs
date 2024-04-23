@@ -15,6 +15,7 @@ import filtersQuery from '@/graphql/filters'
 const page = async ({params, searchParams }) => {
 // Initialize variantOptions
 const variantOptions = [];
+let paginate = ""
 let priceRange = {};
   console.log("Search param", searchParams)
 // Function to add variant option to variantOptions array
@@ -66,6 +67,12 @@ for (const key in searchParams) {
             // Less than price
             priceRange.max = parseFloat(value);
             break;
+          case 'nextPage':
+              paginate = JSON.stringify(value);
+              break;
+          case 'previousPage':
+             paginate = JSON.stringify(value);
+          break;
           default:
             break;
         }
@@ -73,7 +80,7 @@ for (const key in searchParams) {
     });
   }
 }
-console.log("variantOptionsssssssss  ",  variantOptions)
+console.log("variantOptionsssssssss  ",  paginate)
 // Add price range to variantOptions array if it's defined
 if (priceRange.min !== undefined && priceRange.max !== undefined) {
   addPriceRange(priceRange.min, priceRange.max);
@@ -85,11 +92,17 @@ if (priceRange.min !== undefined && priceRange.max !== undefined) {
     initialcheck = false
     // Call filtersQuery if searchParams has values and variantOptions have been populated
     collectionPageData = await filtersQuery(params.slug, JSON.stringify(variantOptions) );
+    if(paginate){
+      collectionPageData = await filtersQuery(params.slug, JSON.stringify(variantOptions), paginate );
+    }
     console.log("Filtered Products", collectionPageData?.data?.collection?.products?.edges)
   } else {
     initialcheck = true
     // Otherwise, fall back to collectionPageQuery
     collectionPageData = await collectionPageQuery(params.slug, "");
+    if(paginate){
+      collectionPageData = await collectionPageQuery(params.slug, paginate);
+    }
     console.log("Collection data  aya hy",collectionPageData?.data?.collection?.products )
   }
 

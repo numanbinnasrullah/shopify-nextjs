@@ -1,11 +1,11 @@
-
+'use client'
 
 import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
-const GridItems = async({collection, getSelectedFilters}) => {
+const GridItems = ({collection, getSelectedFilters}) => {
         console.log("GridItems",collection?.products?.pageInfo )
-    
+       
     // console.log("filteredProducts12345", JSON.parse(filteredProducts))
     // const [filteredProducts, setFilteredProducts] = useState([]);
     // console.log("collection", collection)
@@ -61,8 +61,33 @@ const GridItems = async({collection, getSelectedFilters}) => {
     // });
 
 
-
+const NextPage = () => {
+    const params = new URLSearchParams(window.location.search);
+    if(collection?.products?.pageInfo?.hasNextPage){
+        console.log("ye tab chalna hy ")
+        params.delete("nextPage");
+        params.delete("previousPage");
+        params.append("nextPage", `nextPage+${collection?.products?.pageInfo?.endCursor}` );
+        const newUrl = `?${params.toString().replace(/\+/g, "")}`;
+        history.pushState(null, '', newUrl);
+        window.location.reload(); 
+    }
+    
+}
   
+const PreviousPage = () => {
+  const params = new URLSearchParams(window.location.search);
+  if(collection?.products?.pageInfo?.hasPreviousPage){
+      console.log("ye tab chalna hy ")
+      params.delete("nextPage");
+      params.delete("previousPage");
+      params.append("previousPage", `previousPage+${collection?.products?.pageInfo?.startCursor}` );
+      const newUrl = `?${params.toString().replace(/\+/g, "")}`;
+      history.pushState(null, '', newUrl);
+      window.location.reload(); 
+  }
+  
+}
     
   return (
     
@@ -225,37 +250,48 @@ const GridItems = async({collection, getSelectedFilters}) => {
     </li>
   </ul>
 </nav> */}
+
 <div className="flex items-center justify-center">
 <nav aria-label="Page navigation example text-center">
   <ul class="flex items-center -space-x-px h-10 text-base">
     <li>
-      <a href="#" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+    <button href="#" class={`flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white 
+       ${!collection?.products?.pageInfo?.hasPreviousPage ? 'disabled' : ''} `} 
+       style={{ cursor: !collection?.products?.pageInfo?.hasPreviousPage ? 'not-allowed' : 'pointer' }} 
+        onClick={ collection?.products?.pageInfo?.hasPreviousPage  ? PreviousPage : ''}
+      >
         <span class="sr-only">Previous</span>
         <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
         </svg>
-      </a>
+      </button>
     </li>
-    <li>
+    {/* <li>
       <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
     </li>
     <li>
       <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-    </li>
+    </li> */}
     
     
     
     <li>
-      <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+      <button href="#" class={`flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white 
+       ${!collection?.products?.pageInfo?.hasNextPage ? 'disabled' : ''} `} 
+       style={{ cursor: !collection?.products?.pageInfo?.hasNextPage ? 'not-allowed' : 'pointer' }} 
+        onClick={ collection?.products?.pageInfo?.hasNextPage  ? NextPage : ''}
+      >
         <span class="sr-only">Next</span>
-        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10" >
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
         </svg>
-      </a>
+      </button>
     </li>
   </ul>
 </nav>
 </div>
+
+
 
 
 

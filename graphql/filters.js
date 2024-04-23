@@ -1,17 +1,17 @@
 import { graphql } from "./graphql";
 
-const filtersQuery = async(collectionSlug, filter ) => {
-    console.log("Filter query console", filter)
+const filtersQuery = async(collectionSlug, filter, paginate ) => {
+    console.log("Filter query console", paginate)
     // console.log("Filter query console", filter)
     const query = `
-    query collectionPageQuery($slug:String!, $filter: [ProductFilter!]) {
+    query collectionPageQuery($slug:String!, $filter: [ProductFilter!], $nextPage: String,) {
 
 
 
       collection(handle: $slug) {
           title
           description
-          products(first: 12, filters: $filter) {
+          products(first: 2, filters: $filter, after:$nextPage,) {
             filters {
               id
               label
@@ -95,6 +95,9 @@ const filtersQuery = async(collectionSlug, filter ) => {
       "slug": collectionSlug,
       "filter": JSON.parse(filter)
       };
+      if (paginate) {
+        variables["nextPage"] = paginate; 
+      }
   
     const Query = { query, variables }
     const res = await graphql(Query);

@@ -18,8 +18,10 @@ const FilterClient = ({ collection, getSelected, initialcheck }) => {
   const priceFilter = collection?.products?.filters?.find((filter) =>
   filter.label.includes("Price")
   );
-  console.log("priceFilter", priceFilter)
+  console.log("priceFilter", priceFilter?.values[0].input)
+  
   const priceData = JSON.parse(priceFilter?.values[0].input);
+  
   const maxiumun_Value = priceData?.price?.max
   const minimum_value = priceData?.price?.min
   // const maxi = 50
