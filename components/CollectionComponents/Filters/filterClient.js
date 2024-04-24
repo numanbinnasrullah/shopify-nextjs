@@ -121,7 +121,8 @@ console.log("Stored Minimum Value:", storedMinimumValue);
     // Clear existing size and color parameters
     params.delete("filter.size");
     params.delete("filter.color");
-  
+    params.delete("nextPage");
+    params.delete("previousPage");
     // Add new size parameters
     size.forEach((sizeItem) => {
       console.log("Sizes select ", sizeItem);
@@ -376,8 +377,10 @@ useEffect(() => {
       receiveFilter = receiveFilter.replace(/\s/g, '');
       console.log("removeFilter", receiveFilter)
     }
+   
     const params = new URLSearchParams(window.location.search);
-    console.log("filterType", filterType)
+    console.log("filterType", params.get("nextPage"))
+    
     // Determine the key to delete based on the filter type (size or color)
     const filterKey = 'filter.' + filterType; // Use the filterType parameter
   
@@ -386,7 +389,10 @@ useEffect(() => {
     console.log("currentFilters", filterKey )
     // Remove the clicked filter value from the list of current filters
     const updatedFilters = currentFilters.filter(filter => filter !== receiveFilter);
-  
+   
+      params.delete("nextPage");
+      params.delete("previousPage");
+    
     // Construct the new URL parameters without the clicked filter value
     let newParams = '';
     if (updatedFilters.length > 0) {
@@ -407,7 +413,9 @@ useEffect(() => {
     // Optionally, you can update the browser's history to reflect the new URL
     window.history.pushState({}, '', window.location.pathname + newParams);
     window.location.reload(); // Reload the page
-
+    
+    // params.delete("nextPage");
+    // params.delete("previousPage");
   };
 
 
