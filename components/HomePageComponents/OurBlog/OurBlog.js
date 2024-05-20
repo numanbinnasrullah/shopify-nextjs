@@ -23,7 +23,7 @@ const OurBlog = async({blog}) => {
                     {
                         blog?.articles?.edges?.map((item, index) =>{
                             return <>
-                                <div class="block w-full xl:px-5">
+                                <div class="block w-full xl:px-5" key={index}>
                                 <div class="block w-full  md:max-w-[425px] mx-auto">
                                     <div class="block w-full md:max-w-[425px] mb-6">
                                         <Link href={`blogs/${item?.node?.handle}`} class="block w-full"><img src={item?.node?.image?.url} class="block w-full object-contain" width="auto" height="auto" alt="Blog Image" /></Link>

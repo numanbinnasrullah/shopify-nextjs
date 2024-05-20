@@ -15,12 +15,12 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
  
   console.log("Collection Page console",slug, collection?.products?.filters)
   // console.log("retrieveFilterResponse", retrieveFilterResponse)
-  collection?.products?.filters?.filter(filter => filter.label.includes('Price')).map((filter, index) => (
-    filter.values.map((value, index) => {
-      // console.log("Filter Price is here", value.input)
-    })
-  )
-  )
+  // collection?.products?.filters?.filter(filter => filter.label.includes('Price')).map((filter, index) => (
+  //   filter.values.map((value, index) => {
+  //     // console.log("Filter Price is here", value.input)
+  //   })
+  // )
+  // )
   const priceFilter = collection?.products?.filters?.find((filter) =>
   filter.label.includes("Price")
   );
@@ -481,7 +481,7 @@ useEffect(() => {
             </div>
             {selectedSizes && selectedSizes.map((item, index)=>{
               return <> 
-              <div class="flex gap-2">
+              <div class="flex gap-2" key={index}>
                   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24" className="cursor-pointer"  onClick={()=>RemoveFilter(item , 'size')}>
                   <path d="M12 3A9 9 0 1 0 12 21A9 9 0 1 0 12 3Z" opacity=".3"></path><path d="M12,22C6.5,22,2,17.5,2,12C2,6.5,6.5,2,12,2c5.5,0,10,4.5,10,10C22,17.5,17.5,22,12,22z M12,4c-4.4,0-8,3.6-8,8s3.6,8,8,8 s8-3.6,8-8S16.4,4,12,4z"></path><path d="M11 6.3H13V17.6H11z" transform="rotate(-45.001 12 12)"></path><path d="M6.3 11H17.6V13H6.3z" transform="rotate(-45.001 12 12)"></path>
                   </svg> <span > {item} </span>
@@ -491,7 +491,7 @@ useEffect(() => {
 
             {selectedColors && selectedColors.map((item, index)=>{
               return <> 
-              <div class="flex gap-2">
+              <div class="flex gap-2" key={index}>
                   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24" className="cursor-pointer"  onClick={()=>RemoveFilter(item , 'color')}>
                   <path d="M12 3A9 9 0 1 0 12 21A9 9 0 1 0 12 3Z" opacity=".3"></path><path d="M12,22C6.5,22,2,17.5,2,12C2,6.5,6.5,2,12,2c5.5,0,10,4.5,10,10C22,17.5,17.5,22,12,22z M12,4c-4.4,0-8,3.6-8,8s3.6,8,8,8 s8-3.6,8-8S16.4,4,12,4z"></path><path d="M11 6.3H13V17.6H11z" transform="rotate(-45.001 12 12)"></path><path d="M6.3 11H17.6V13H6.3z" transform="rotate(-45.001 12 12)"></path>
                   </svg> <span > {item} </span>

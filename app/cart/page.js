@@ -141,7 +141,7 @@ const CartPage =  () => {
           {
             retrieveResponse?.data?.res?.data?.cart?.lines?.edges?.map((item, i)=>{
               return(
-                <div className="flex w-[100%] justify-evenly  items-center   p-4 mb-2">
+                <div className="flex w-[100%] justify-evenly  items-center   p-4 mb-2" key={i}>
                   <div className="w-[40%] flex space-x-2">
                     {/* {
                       item?.node?.merchandise?.product?.images?.edges?.map((item, i)=>{

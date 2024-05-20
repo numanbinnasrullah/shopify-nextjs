@@ -113,13 +113,13 @@ const PreviousPage = () => {
                     const lowestPrice = uniquePrices[0];
                     const lowestComparePrice = uniqueComparePrices[0];
                     
-                    return  <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto">
+                    return  <div class="product block w-full transition-all duration-150 ease-linear col-span-1 md:col-auto" key={index}>
                     <div class="product-content block w-full">
                         <div class="product-imgbox block w-full h-full">
                             <Link href={`/products/${item?.node?.handle}`} class="block w-full h-full leading-[0] relative">
                                 {
                                     item?.node?.media?.edges?.map((item, index)=>{
-                                        return index === 1 && <img src={item?.node?.previewImage?.url} class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />
+                                        return index === 1 && <img src={item?.node?.previewImage?.url} class="block w-full object-contain transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" key={index} />
                                     })
                                 }
                                 <img src={item?.node?.featuredImage?.url} class="block w-full object-contain absolute top-0 left-0 transition-all duration-150 ease-linear" width="auto" height="auto" alt="Product Image" />

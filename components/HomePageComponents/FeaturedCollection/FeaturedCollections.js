@@ -17,7 +17,7 @@ const FeaturedCollections = async({ featuredCollections}) => {
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {
                     featuredCollections?.map((item, index)=>{
-                        return <div class="block w-full px-3 tabs">
+                        return <div class="block w-full px-3 tabs" key={index}>
                         <div class="block w-full mx-auto overflow-hidden">
                             <Link href={`/collections/${item?.handle}`} class="transition-all duration-150">
                                 <div class="block w-full md:max-w-[440px] mx-auto mb-2 relative">
