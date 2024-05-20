@@ -194,7 +194,7 @@ useEffect(() => {
   // Update selectedSizes and selectedColors states with values from URL
   setSelectedSizes(sizesFromUrl);
   setSelectedColors(colorsFromUrl);
-  // sendFilterdata(filtersdata)
+  
 
 }, []);
   
