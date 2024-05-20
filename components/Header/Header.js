@@ -9,7 +9,7 @@ const Header = ({menu}) => {
     return (
         <HomepageWrapper>
             <Logo />
-            <Menu menu={menu} />
+            <Menu  />
             <HeaderIcons />
             <Sidebar />
         </HomepageWrapper>
