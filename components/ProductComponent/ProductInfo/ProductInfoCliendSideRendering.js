@@ -281,7 +281,7 @@ const ProductInfoCliendSideRendering = ({product}) => {
                 </div>
 
                 <div class="btn-wrapper block w-full">
-                    <a href="#" class="flex cursor-pointer justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px]">Add to basket</a>
+                    <a href="#" class="flex cursor-pointer justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px]">Add to baske</a>
                 </div>
 
             </div>

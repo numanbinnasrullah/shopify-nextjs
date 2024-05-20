@@ -25,7 +25,7 @@ const Filter = ({ collection, slug }) => {
         setColorsOpen((prevColorsOpen) => !prevColorsOpen);
     };
 
-    ; const handleSizeChange = (size) => {
+     const handleSizeChange = (size) => {
         setSelectedSizes((prevSelectedSizes) => {
             const newSelectedSizes = prevSelectedSizes.includes(size)
                 ? prevSelectedSizes.filter((selectedSize) => selectedSize !== size)
@@ -119,7 +119,7 @@ const Filter = ({ collection, slug }) => {
                                                                     type="checkbox"
                                                                     className="form-checkbox text-blue-500 cursor-pointer"
                                                                     checked={selectedSizes.includes(value.label)}
-                                                                    onChange={() => handleSizeChange(value.label)}
+                                                                    // onChange={() => handleSizeChange(value.label)}
                                                                 />
                                                                 <span className="ml-2 cursor-pointer">{value.label}</span>
 

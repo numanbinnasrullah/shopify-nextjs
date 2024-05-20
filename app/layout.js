@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import menuQuery from "@/graphql/menu";
 import Footer from "@/components/Footer/Footer";
+import ReduxProvider from "@/utils/reduxProvider";
+
 
 
 
@@ -17,7 +19,7 @@ export default async function RootLayout({ children }) {
 
   const mainmenu = await menuQuery(); 
   const { menu } = mainmenu?.data
-  console.log("just Menu Read", mainmenu)
+  
 
   return (
     <html lang="en">
@@ -32,9 +34,11 @@ export default async function RootLayout({ children }) {
     
       </head>
       <body className={inter.className}>
+        <ReduxProvider>
          <Header menu={menu} />
           {children}
          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );

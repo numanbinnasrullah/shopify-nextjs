@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 
@@ -34,9 +35,9 @@ const Modal = ({ isOpen, onClose, product, selectedImageId, selectedPrice, selec
               </div>
             </div>
             <div class="btn-wrapper  w-full mt-5 flex space-x-8">
-                    <button  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">View Cart</button>
+            <Link href="/cart"  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">View Cart</Link>
 
-                    <button  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">Checkout</button>
+                    <Link href="/cart"  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">Checkout</Link>
                 </div>
             
             {/* <button  onClick={onClose}>Close</button> */}

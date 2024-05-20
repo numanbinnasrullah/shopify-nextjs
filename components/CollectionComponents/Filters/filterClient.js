@@ -2,16 +2,22 @@
 
 import { useEffect, useState } from "react";
 import GridItems from "../GridItems/GridItems";
-import { useRouter } from "next/navigation";
 import { getSelectedFilter, getSelectedFilters } from "./filteractions";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { usePathname } from 'next/navigation'
+import { useFilterRequestMutation } from "@/store/services/filterService";
 
 
-const FilterClient = ({ collection, getSelected, initialcheck }) => {
+const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOptions }) => {
+ 
+  const [sendFilterdata, retrieveFilterResponse] =  useFilterRequestMutation();
+ 
+  console.log("Collection Page console",slug, collection?.products?.filters)
+  // console.log("retrieveFilterResponse", retrieveFilterResponse)
   collection?.products?.filters?.filter(filter => filter.label.includes('Price')).map((filter, index) => (
     filter.values.map((value, index) => {
-      console.log("Filter Price is here", value.input)
+      // console.log("Filter Price is here", value.input)
     })
   )
   )
@@ -27,22 +33,22 @@ const FilterClient = ({ collection, getSelected, initialcheck }) => {
   // const maxi = 50
   // const mini = 10
   // console.log("maxxx",mini,maxi)
-  console.log("initiakcheck", initialcheck)
+  // console.log("initiakcheck", initialcheck)
   if(initialcheck){
     localStorage.setItem('maximumValue', JSON.stringify(maxiumun_Value));
   localStorage.setItem('minimumValue', JSON.stringify(minimum_value));
   }
 
   
-  console.log("mlppoolm",typeof(priceData?.price?.max))
+  // console.log("mlppoolm",typeof(priceData?.price?.max))
   
 
   const storedMaximumValue = JSON.parse(localStorage.getItem('maximumValue'));
   const storedMinimumValue = JSON.parse(localStorage.getItem('minimumValue'));
 
 // Now you can use storedMaximumValue and storedMinimumValue as needed
-console.log("Stored Maximum Value:", storedMaximumValue);
-console.log("Stored Minimum Value:", storedMinimumValue);
+// console.log("Stored Maximum Value:", storedMaximumValue);
+// console.log("Stored Minimum Value:", storedMinimumValue);
 
   //   const priceFilter = collection?.products?.filters?.find(filter => filter.label.includes('Price'));
   // let minPrice = 0;
@@ -70,16 +76,17 @@ console.log("Stored Minimum Value:", storedMinimumValue);
   const [maxPrice, setMaxPrice] = useState(storedMaximumValue);
   const [afterminPrice, setafterminPrice] = useState(storedMinimumValue);
   const [aftermaxPrice, setaftermaxPrice] = useState(storedMaximumValue);
-  console.log("max Priceeeeeeeee", maxPrice)
+  // console.log("max Priceeeeeeeee", maxPrice)
   const [selectedRange, setSelectedRange] = useState([minPrice, maxPrice]);
   const [checkrange , setCheckRange] = useState(false) // Initialize with 0 to 100 range
   const [timer, setTimer] = useState(null);
-  console.log("Use Effect chlaa mnmnm", selectedRange)
+  const [result, setResult] = useState([]);
+
+  // console.log("Use Effect chlaa mnmnm", selectedRange)
   // console.log("minPrice", minPrice)
   // console.log("maxPrice", maxPrice)
   // console.log("selectedRange", selectedRange)
 
-  const router = useRouter();
 
   const toggleSizes = () => {
     setSizesOpen((prevSizesOpen) => !prevSizesOpen);
@@ -97,6 +104,7 @@ console.log("Stored Minimum Value:", storedMinimumValue);
         ? prevSelectedSizes.filter((selectedSize) => selectedSize !== size)
         : [...prevSelectedSizes, size];
         updateUrl({ size: newSelectedSizes, color: selectedColors });
+        // sendFilterdata(filtersdata)
         window.location.reload(); 
       return newSelectedSizes;
     });
@@ -148,26 +156,45 @@ console.log("Stored Minimum Value:", storedMinimumValue);
     history.pushState(null, '', newUrl);
   };
 
+
 useEffect(() => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
 
   // Get selected sizes and colors from URL parameters
   const sizesFromUrl = urlParams.getAll('filter.size').map(size => {
-    console.log("size hghghg", size)
+    console.log("size get ker lea hy url sy", size)
     if ( size.includes('x')) {
       return  size.replace('x', ' x ')
     } else {
       return  decodeURIComponent(size.replace('%20', ' '))
     }
 });
+// var variantOptions = [];
+
+//  if (sizesFromUrl.length > 0) {
+//   let formattedResult = sizesFromUrl.map(size => ({
+//     variantOption: {
+//       name: 'Size',
+//       value: size
+//     }
+//   }));
+  // variantOptions.push(formattedResult);
+//   console.log("sizesFromUrl cvcvcv", formattedResult);
+  
+//   formattedResult.map((item,i ) => {
+//     console.log("11223344",item)
+//     const filtersdata = {slug, item}
+//     sendFilterdata(filtersdata)
+//   })
+// }
   const colorsFromUrl = urlParams.getAll('filter.color');
   
-  console.log("sizesFromUrl cvcvcv", sizesFromUrl);
-
+//   const filtersdata = {slug, variantOptions}
   // Update selectedSizes and selectedColors states with values from URL
   setSelectedSizes(sizesFromUrl);
   setSelectedColors(colorsFromUrl);
+  // sendFilterdata(filtersdata)
 
 }, []);
   
@@ -308,7 +335,7 @@ useEffect(() => {
   useEffect(() => {
    
   const params = new URLSearchParams(window.location.search);
-  console.log("params",params);
+  // console.log("params",params);
     if(params.size > 0){
       const minPriceParam = Number(params.get("filter.gt-price"))
       const maxPriceParam = Number(params.get("filter.lt-price"))

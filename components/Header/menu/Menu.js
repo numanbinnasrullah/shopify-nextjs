@@ -1,7 +1,11 @@
+"use client"
 import { fetchMenus } from '@/graphql/getMenus';
+import { useGetMenuQuery } from '@/store/services/homePageService';
 import Link from 'next/link';
 
-const Menu = async ({menu}) => {
+const Menu =  ({menu}) => {
+  const {data} =  useGetMenuQuery();
+  console.log("read Menu From Toolkit", data?.res?.data?.menu)
   // const getMenus = await fetchMenus();
   // console.log("Get Menus", menu)
 
@@ -26,7 +30,7 @@ const Menu = async ({menu}) => {
 
 
       <div className="hidden xl:block w-full max-w-[60%]">
-        <ul className="navmenu flex w-full h-full items-center justify-center gap-2 flex-wrap">
+        <ul className="navmenu flex w-full h-full items-center justify-center gap-2 flex-wrap ">
           {menu?.items?.map(mainItem => ( 
             <li key={mainItem?.id} className="py-12 px-3 cursor-pointer relative">
              

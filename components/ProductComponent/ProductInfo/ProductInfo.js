@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import ProductGallery from "../ProductGallery/ProductGallery";
 import Link from "next/link";
 import Modal from "@/components/modal/modal";
+// import cartCreateQuery from "@/graphql/cartcreate";
+import { useCartCreateMutation, useUpdateExistingCartMutation } from "@/store/services/cartService";
+import { useDispatch } from "react-redux";
+import { setBaskitCounterValue } from "@/store/reducers/cartReducer";
 
 const checkVariants = (title, variants) => {
     let sizes = [];
@@ -38,7 +42,13 @@ const checkVariants = (title, variants) => {
   };
 
 const ProductInfo = ({product}) => {
-    
+    console.log("ProductInfo", product)
+    const [createCart, responseCreate] = useCartCreateMutation();
+    const [updateCart, responseUpdate] = useUpdateExistingCartMutation();
+    console.log("Cart Create response",responseCreate)
+    console.log("Cart Update response",responseUpdate)
+    const cartIdExist = localStorage.getItem('cartId')
+    console.log("Localstorage cart id ******",cartIdExist )
     const variants = product?.variants?.edges || [];
     let colors1 = [];
     let sizes1 = [];
@@ -61,10 +71,61 @@ const ProductInfo = ({product}) => {
     const [productCount, setProductCount] = useState(1)
     const [selectedVariantForCart, setSelectedVariantForCart] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCartCreated, setIsCartCreated] = useState(false);
+    console.log("selectedVariantForCart", selectedVariantForCart);
+    const dispatch = useDispatch()
 
+    const createCartData = {
+        variantID: selectedVariantForCart,
+        quantity: productCount
+    }
+    const updateCartData = {
+        variantID: selectedVariantForCart,
+        cartId: cartIdExist,
+        quantity: productCount
+    }
     const handleAddToBasketClick = () => {
-      setIsModalOpen(true);
+        setIsModalOpen(true);
+        if (cartIdExist) {
+            console.log("Id exists in localStorage, updating cart...");
+            updateCart(updateCartData);
+        } else {
+            console.log("Creating new cart...");
+            createCart(createCartData);
+        }
+        // dispatch(setBaskitCounterValue(productCount))
     };
+    useEffect(() => {
+        if (responseCreate?.isSuccess) {
+            const counterSum = responseCreate?.data?.res?.data?.cartCreate?.cart?.lines?.edges?.reduce((sum, item) => sum + item.node.quantity, 0);
+            console.log("Product count updated*****",counterSum)
+
+            dispatch(setBaskitCounterValue(counterSum));
+        }
+    }, [responseCreate?.isSuccess]);
+
+    useEffect(() => {
+         if (responseUpdate?.isSuccess) {
+             const counterSum = responseUpdate?.data?.res?.data?.cartLinesAdd?.cart?.lines?.edges?.reduce((sum, item) => sum + item.node.quantity, 0);
+             console.log("Product count updated 12211",counterSum)
+
+             dispatch(setBaskitCounterValue(counterSum));
+         }
+     }, [responseUpdate?.isSuccess]);
+
+    useEffect(() => {
+        if (responseCreate.isSuccess) {
+            const cartId = responseCreate.data?.res?.data?.cartCreate?.cart?.id;
+            setIsCartCreated(true);
+            localStorage.setItem('cartId', cartId);
+        }
+    }, [responseCreate.isSuccess]);
+
+    useEffect(() => {
+        if (responseUpdate.isSuccess) {
+            console.log("Cart updated successfully");
+        }
+    }, [responseUpdate.isSuccess]);
   
     const handleCloseModal = () => {
       setIsModalOpen(false);
@@ -72,6 +133,19 @@ const ProductInfo = ({product}) => {
   
 
     // console.log("Selected image from state ==>:", selectedImageId);
+
+       // Function to handle size selection
+       const handleSizeChange = (event) => {
+        const selectSize = event.target.value;
+        console.log("Ab size select hua ", selectSize)
+        setSelectedSize(selectSize);
+        
+        // Update selected price
+        getSelectedVariantPrice( selectSize, selectedColor, selectedChoice);
+        console.log("selected color ", selectedColor)
+        
+        
+        };
 
      const handleColorChange = (event) => {
         const selectColor = event.target.value;
@@ -81,10 +155,11 @@ const ProductInfo = ({product}) => {
         // Find sizes and choices for selected color
         const { sizes, choices } = getSizesAndChoicesForColor(selectColor);
         // console.log("size return", sizes)
-        
+
+        setSelectedSize(sizes.includes(selectedSize) ? selectedSize : sizes[0]);
         // Update selected size and choice based on the first option of each list
-        setSelectedSize(sizes[0] || '');
-        setSelectedChoice(choices[0] || '');
+        setSelectedChoice(choices1[0] || '');
+
 
         // Update selected price
         getSelectedVariantPrice( selectedSize, selectColor, selectedChoice);
@@ -146,29 +221,23 @@ const ProductInfo = ({product}) => {
         
             // console.log("Selected Variant Price:", selectedVariant); 
             setSelectedPrice(selectedVariant?.node?.price?.amount);
-        
-            const selectedImage = variants.find(
-                (item) => item.node.image.id === selectedVariant?.node?.image?.id
-            );
             setSelectedImageId(selectedVariant?.node?.image?.id);
-            //  console.log("Selected Image", selectedVariant?.node?.image?.id);
+            
+            // const selectedImage = variants.find(
+            //     (item) => item.node.image.id === selectedVariant?.node?.image?.id
+            // );
+            // // setSelectedImageId(selectedVariant?.node?.image?.id);
+            // setSelectedImageId(selectedImage?.node?.image?.id);
+            //  console.log("Selected Image", selectedImage);
 
             setQuantityAvailable(selectedVariant?.node.quantityAvailable)
 
             setSelectedVariantForCart(selectedVariant?.node?.id)
+            
         };
         
 
-    // Function to handle size selection
-    const handleSizeChange = (event) => {
-        const selectSize = event.target.value;
-        // console.log("Ab size select hua ", selectSize)
-        setSelectedSize(selectSize);
-        
-        // Update selected price
-         getSelectedVariantPrice( selectSize, selectedColor, selectedChoice);
-        
-    };
+ 
 
     // Function to handle choice selection
     const handleChoiceChange = (event) => {
@@ -362,7 +431,7 @@ const ProductInfo = ({product}) => {
                 </div>
 
                 <div class="btn-wrapper block w-full">
-                    <button  onClick={handleAddToBasketClick} className="flex justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px]">Add to basket</button>
+                    <button  onClick={handleAddToBasketClick} className={`flex justify-center items-center w-full capitalize bg-[#161619] text-white text-sm text-center h-[60px] ${quantityAvailable <= 0 ? 'bg-gray-400 cursor-not-allowed' : ''}`} disabled={quantityAvailable <= 0}>{quantityAvailable <= 0 ? "Out of stock": "Add to basket"}</button>
                 </div>
 
             </div>

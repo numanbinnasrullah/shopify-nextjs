@@ -1,40 +1,28 @@
+'use client'
+import { useGetCollectionMutation } from "@/store/services/collectionService";
 import GridItems from "../GridItems/GridItems";
-import collectionPageQuery from "@/graphql/collection";
-import filtersQuery from "@/graphql/filters";
 import FilterClient from "./filterClient";
-// import { getSelectedFilter } from "./filteractions";
+import { useEffect } from "react";
 
 
-
-const Filters = async({ collection, filteroptions , slug, initialcheck}) => {
-   async function getSelectedFilter() {
-    'use server'
-    // try {
-    //   const res = await filtersQuery(slug, receiveFilters);
-    //   console.log("Filtered ProductswwwE", res?.data?.collection?.products?.edges)
-    //   return res?.data?.collection || [];
-    // } catch (error) {
-    //   console.error("Error fetching filtered products:", error);
-    //   return [];
-    // }
+const Filters =  ({ collection, slug, initialcheck, variantOptions}) => {
+  const [getCollection, getCollectionRes] =  useGetCollectionMutation();
+  console.log("Get Collection Try", getCollectionRes?.data?.res?.data?.collection)
+  var collectionData = {
+    slug: slug
   }
-
-  const aa = await getSelectedFilter()
-  console.log("aaaaaa", aa)
+  useEffect(()=>{
+    getCollection(collectionData)
+  },[])
   return (
     <>
       <div class="filter-box hidden lg:block w-full max-w-[300px] pr-10">
-       {/* <FilterClient collection={collection} /> */}
-       <FilterClient collection={collection} getSelected={getSelectedFilter} initialcheck={initialcheck} />
-
+       <FilterClient collection={collection}  initialcheck={initialcheck} slug={slug} variantOptions={variantOptions} />
       </div>
-
-
-
       <GridItems collection={collection}    />
     </>
 
   )
 }
 
-export default Filters
+export default Filters;
