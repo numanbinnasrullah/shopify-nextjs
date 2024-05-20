@@ -190,7 +190,7 @@ useEffect(() => {
 // }
   const colorsFromUrl = urlParams.getAll('filter.color');
   
-//   const filtersdata = {slug, variantOptions}
+
   // Update selectedSizes and selectedColors states with values from URL
   setSelectedSizes(sizesFromUrl);
   setSelectedColors(colorsFromUrl);
