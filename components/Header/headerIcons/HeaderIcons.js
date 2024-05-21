@@ -2,13 +2,15 @@
 import { setBaskitCounterValue } from "@/store/reducers/cartReducer"
 import { useRetrieveCartMutation } from "@/store/services/cartService"
 import Link from "next/link"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 
 const HeaderIcons = () => {
     const dispatch = useDispatch()
-    const cartId = JSON.stringify(localStorage.getItem('cartId'))
+   
+    // const cartId = JSON.stringify(localStorage.getItem('cartId'))
+    const [cartId, setCartId] = useState("")
     const {baskitCounter} = useSelector( state => state.cartReducer)
     const [sendVariantId, retrieveResponse] =  useRetrieveCartMutation();
     console.log("Cart Counter Value77777", baskitCounter)
@@ -25,6 +27,12 @@ const HeaderIcons = () => {
     //     sendVariantId(cartId)
     //     dispatch(setBaskitCounterValue(counterSum))
     // },[])
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedCartId = localStorage.getItem('cartId');
+            setCartId(JSON.stringify(storedCartId));
+        }
+    }, []);
     useEffect(() => {
         sendVariantId(cartId)
     }, []) // Add cartId to dependency array
