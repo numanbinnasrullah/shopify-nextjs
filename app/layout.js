@@ -30,7 +30,7 @@ export default  function RootLayout({ children }) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     
-    <script src={process.env.BASE_URL+"/script.js"}  />
+    {/* <script src={process.env.BASE_URL+"/script.js"}  /> */}
     
       </head>
       <body className={inter.className}>
