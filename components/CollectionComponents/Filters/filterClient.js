@@ -37,8 +37,10 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
   // console.log("maxxx",mini,maxi)
   // console.log("initiakcheck", initialcheck)
   if(initialcheck){
-    localStorage.setItem('maximumValue', JSON.stringify(maxiumun_Value));
-  localStorage.setItem('minimumValue', JSON.stringify(minimum_value));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('maximumValue', JSON.stringify(maxiumun_Value));
+      localStorage.setItem('minimumValue', JSON.stringify(minimum_value));
+    }
   }
 
   
@@ -152,8 +154,16 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
       params.append("filter.color", color);
     });
   
-    // Construct the new URL without page reload
-    const newUrl = `?${params.toString().replace(/\+/g, "")}`;
+    try {
+      if (params && params instanceof URLSearchParams) {
+        const decodedParams = decodeURIComponent(params.toString());
+        const newUrl = `?${decodedParams.replace(/\+/g, "")}`;
+        console.log("new URL", newUrl);
+      }
+    } catch (error) {
+      console.error("Error generating new URL:", error);
+    }
+    // const newUrl = `?${params.toString().replace(/\+/g, "")}`;
     console.log("new URL", newUrl)
     history.pushState(null, '', newUrl);
   };
