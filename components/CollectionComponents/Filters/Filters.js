@@ -5,6 +5,7 @@ import FilterClient from "./filterClient";
 import { useEffect } from "react";
 
 
+
 const Filters =  ({ collection, slug, initialcheck, variantOptions}) => {
   const [getCollection, getCollectionRes] =  useGetCollectionMutation();
   console.log("Get Collection Try", getCollectionRes?.data?.res?.data?.collection)
@@ -20,6 +21,7 @@ const Filters =  ({ collection, slug, initialcheck, variantOptions}) => {
        <FilterClient collection={collection}  initialcheck={initialcheck} slug={slug} variantOptions={variantOptions} />
       </div>
       <GridItems collection={collection}    />
+      
     </>
 
   )

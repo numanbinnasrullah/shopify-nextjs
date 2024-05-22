@@ -25,8 +25,10 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
   filter.label.includes("Price")
   );
   console.log("priceFilter", priceFilter?.values[0].input)
-  
-  const priceData = JSON.parse(priceFilter?.values[0].input);
+  let priceData;
+  if(priceFilter?.values[0].input){
+    priceData = JSON.parse(priceFilter?.values[0].input);
+  }
   
   const maxiumun_Value = priceData?.price?.max
   const minimum_value = priceData?.price?.min
@@ -191,7 +193,7 @@ useEffect(() => {
   const colorsFromUrl = urlParams.getAll('filter.color');
   
 
-  
+  // Update selectedSizes and selectedColors states with values from URL
   setSelectedSizes(sizesFromUrl);
   setSelectedColors(colorsFromUrl);
   

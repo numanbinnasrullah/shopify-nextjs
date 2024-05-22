@@ -47,7 +47,10 @@ const ProductInfo = ({product}) => {
     const [updateCart, responseUpdate] = useUpdateExistingCartMutation();
     console.log("Cart Create response",responseCreate)
     console.log("Cart Update response",responseUpdate)
-    const cartIdExist = localStorage.getItem('cartId')
+    let cartIdExist;
+    if (typeof window !== 'undefined') {
+        cartIdExist = localStorage.getItem('cartId')
+    }
     console.log("Localstorage cart id ******",cartIdExist )
     const variants = product?.variants?.edges || [];
     let colors1 = [];

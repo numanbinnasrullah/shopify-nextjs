@@ -65,7 +65,7 @@ const GridItems = ({collection, getSelectedFilters}) => {
 const NextPage = () => {
     const params = new URLSearchParams(window.location.search);
     if(collection?.products?.pageInfo?.hasNextPage){
-        console.log("ye tab chalna hy ")
+        
         params.delete("nextPage");
         params.delete("previousPage");
         params.append("nextPage", `nextPage+${collection?.products?.pageInfo?.endCursor}` );
@@ -79,7 +79,7 @@ const NextPage = () => {
 const PreviousPage = () => {
   const params = new URLSearchParams(window.location.search);
   if(collection?.products?.pageInfo?.hasPreviousPage){
-      console.log("ye tab chalna hy ")
+      
       params.delete("nextPage");
       params.delete("previousPage");
      
