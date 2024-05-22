@@ -153,10 +153,10 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
     color.forEach((color) => {
       params.append("filter.color", color);
     });
-    let convertToStr = params.toString()
+  
     try {
       if (params && params instanceof URLSearchParams) {
-        const decodedParams = decodeURIComponent(convertToStr);
+        const decodedParams = decodeURIComponent(params.toString());
         const newUrl = `?${decodedParams.replace(/\+/g, "")}`;
         console.log("new URL", newUrl);
       }
@@ -480,29 +480,29 @@ useEffect(() => {
 
 
   
-  const RemovePriceFilter = (gtPrice, ltPrice) => {
-    if (typeof window !== 'undefined') {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        console.log("filterType", ltPrice);
-  
-        // Remove the parameter from the URL parameters
-        params.delete(gtPrice);
-        params.delete(ltPrice);
-  
-        // Construct the new URL parameters
-        const newParams = params.toString();
-  
-        // Optionally, you can update the browser's history to reflect the new URL
-        window.history.pushState({}, '', window.location.pathname + '?' + newParams);
-        window.location.reload();
-      } catch (error) {
-        console.error("Error in RemovePriceFilter function:", error);
-      }
-    } else {
-      console.error("RemovePriceFilter function is running in a non-browser environment");
+const RemovePriceFilter = (gtPrice, ltPrice) => {
+  if (typeof window !== 'undefined') {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      console.log("filterType", ltPrice);
+
+      // Remove the parameter from the URL parameters
+      params.delete(gtPrice);
+      params.delete(ltPrice);
+
+      // Construct the new URL parameters
+      const newParams = params.toString();
+
+      // Optionally, you can update the browser's history to reflect the new URL
+      window.history.pushState({}, '', window.location.pathname + '?' + newParams);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error in RemovePriceFilter function:", error);
     }
-  };
+  } else {
+    console.error("RemovePriceFilter function is running in a non-browser environment");
+  }
+};
   
   
   
