@@ -156,7 +156,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
   
     try {
       if (params && params instanceof URLSearchParams) {
-        const decodedParams = decodeURIComponent(params);
+        const decodedParams = decodeURIComponent(params.toString());
         const newUrl = `?${decodedParams.replace(/\+/g, "")}`;
         console.log("new URL", newUrl);
       }
@@ -292,10 +292,10 @@ useEffect(() => {
         params.append("filter.gt-price", range[0]);
         params.append("filter.lt-price", range[1]);
   
-        const newUrl = `?${params}`;
+        const newUrl = `?${params.toString()}`;
         console.log("newUrl", newUrl);
   
-        history.pushState(null, '', newUrl);
+        window.history.pushState(null, '', newUrl);
       } catch (error) {
         console.error("Error in updateURL function:", error);
       }
@@ -480,29 +480,21 @@ useEffect(() => {
 
 
   
-const RemovePriceFilter = (gtPrice, ltPrice) => {
-  if (typeof window !== 'undefined') {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      console.log("filterType", ltPrice);
-
-      // Remove the parameter from the URL parameters
-      params.delete(gtPrice);
-      params.delete(ltPrice);
-
-      // Construct the new URL parameters
-      const newParams = params;
-
-      // Optionally, you can update the browser's history to reflect the new URL
-      window.history.pushState({}, '', window.location.pathname + '?' + newParams);
-      window.location.reload();
-    } catch (error) {
-      console.error("Error in RemovePriceFilter function:", error);
-    }
-  } else {
-    console.error("RemovePriceFilter function is running in a non-browser environment");
+  const RemovePriceFilter = (gtPrice, ltPrice) => {
+    const params = new URLSearchParams(window.location.search);
+    console.log("filterType", ltPrice)
+  
+    // Remove the parameter from the URL parameters
+    params.delete(gtPrice);
+    params.delete(ltPrice);
+  
+    // Construct the new URL parameters
+    const newParams = params.toString();
+  
+    // Optionally, you can update the browser's history to reflect the new URL
+    window.history.pushState({}, '', window.location.pathname + '?' + newParams);
+    window.location.reload();
   }
-};
   
   
   

@@ -69,7 +69,7 @@ const NextPage = () => {
         params.delete("nextPage");
         params.delete("previousPage");
         params.append("nextPage", `nextPage+${collection?.products?.pageInfo?.endCursor}` );
-        const newUrl = `?${params.replace(/\+/g, "")}`;
+        const newUrl = `?${params.toString().replace(/\+/g, "")}`;
         history.pushState(null, '', newUrl);
         window.location.reload(); 
     }
@@ -84,7 +84,7 @@ const PreviousPage = () => {
       params.delete("previousPage");
      
       params.append("previousPage", `previousPage+${collection?.products?.pageInfo?.startCursor}` );
-      const newUrl = `?${params.replace(/\+/g, "")}`;
+      const newUrl = `?${params.toString().replace(/\+/g, "")}`;
       history.pushState(null, '', newUrl);
       
       window.location.reload();
