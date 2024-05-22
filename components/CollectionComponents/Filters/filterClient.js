@@ -156,7 +156,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
   
     try {
       if (params && params instanceof URLSearchParams) {
-        const decodedParams = decodeURIComponent(params.toString());
+        const decodedParams = decodeURIComponent(params);
         const newUrl = `?${decodedParams.replace(/\+/g, "")}`;
         console.log("new URL", newUrl);
       }
@@ -292,7 +292,7 @@ useEffect(() => {
         params.append("filter.gt-price", range[0]);
         params.append("filter.lt-price", range[1]);
   
-        const newUrl = `?${params.toString()}`;
+        const newUrl = `?${params}`;
         console.log("newUrl", newUrl);
   
         history.pushState(null, '', newUrl);
@@ -491,7 +491,7 @@ const RemovePriceFilter = (gtPrice, ltPrice) => {
       params.delete(ltPrice);
 
       // Construct the new URL parameters
-      const newParams = params.toString();
+      const newParams = params;
 
       // Optionally, you can update the browser's history to reflect the new URL
       window.history.pushState({}, '', window.location.pathname + '?' + newParams);

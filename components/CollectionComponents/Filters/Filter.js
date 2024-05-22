@@ -66,7 +66,7 @@ const Filter = ({ collection, slug }) => {
             params.append("filter.color", color);
         });
 
-        let convertToStr = params.toString()
+        let convertToStr = params
         // Construct the new URL
         const url = `${collection.handle}/?${convertToStr.replace(/\+/g, "")}`;
 
