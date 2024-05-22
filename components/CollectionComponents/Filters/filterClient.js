@@ -281,19 +281,40 @@ useEffect(() => {
   //   fetchData();
   // }, [selectedSizes, selectedColors, getSelected]);
 
-
-  //  Function to update URL with debouncing
-   const updateURL = (range) => {
-    const params = new URLSearchParams(window.location.search);
-    console.log("updateURL", params.get("lt-price"))
-    params.delete("filter.gt-price");
-    params.delete("filter.lt-price");
-    params.append("filter.gt-price", range[0]);
-    params.append("filter.lt-price", range[1]);
-    const newUrl = `?${params.toString()}`;
-    console.log("newUrl", newUrl)
-    history.pushState(null, '', newUrl);
+  const updateURL = (range) => {
+    if (typeof window !== 'undefined') {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        console.log("updateURL", params.get("lt-price"));
+  
+        params.delete("filter.gt-price");
+        params.delete("filter.lt-price");
+        params.append("filter.gt-price", range[0]);
+        params.append("filter.lt-price", range[1]);
+  
+        const newUrl = `?${params.toString()}`;
+        console.log("newUrl", newUrl);
+  
+        history.pushState(null, '', newUrl);
+      } catch (error) {
+        console.error("Error in updateURL function:", error);
+      }
+    } else {
+      console.error("updateURL function is running in a non-browser environment");
+    }
   };
+  //  Function to update URL with debouncing
+  //  const updateURL = (range) => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   console.log("updateURL", params.get("lt-price"))
+  //   params.delete("filter.gt-price");
+  //   params.delete("filter.lt-price");
+  //   params.append("filter.gt-price", range[0]);
+  //   params.append("filter.lt-price", range[1]);
+  //   const newUrl = `?${params.toString()}`;
+  //   console.log("newUrl", newUrl)
+  //   history.pushState(null, '', newUrl);
+  // };
 
   // Function to handle range change
   const handleRangeChange = (range) => {
