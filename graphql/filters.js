@@ -196,7 +196,7 @@ const filtersQuery = async(collectionSlug, filter, paginate ) => {
   // console.log("btgbvtgb",filter ) 
       const variables = {
         "slug": collectionSlug,
-        "filter": JSON.parse(filter)
+        "filter": filter
         };
         if (paginate.includes('nextPage')) {
           variables["nextPage"] = paginate.split('+')[1].trim();
