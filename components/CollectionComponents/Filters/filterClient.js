@@ -153,10 +153,10 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
     color.forEach((color) => {
       params.append("filter.color", color);
     });
-  
+    let convertToStr = params.toString()
     try {
       if (params && params instanceof URLSearchParams) {
-        const decodedParams = decodeURIComponent(params.toString());
+        const decodedParams = decodeURIComponent(convertToStr);
         const newUrl = `?${decodedParams.replace(/\+/g, "")}`;
         console.log("new URL", newUrl);
       }

@@ -66,9 +66,9 @@ const Filter = ({ collection, slug }) => {
             params.append("filter.color", color);
         });
 
-
+        let convertToStr = params.toString()
         // Construct the new URL
-        const url = `${collection.handle}/?${params.toString().replace(/\+/g, "")}`;
+        const url = `${collection.handle}/?${convertToStr.replace(/\+/g, "")}`;
 
         // Push the updated URL
         router.push(url, undefined, { shallow: true });
