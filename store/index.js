@@ -22,6 +22,6 @@ const Store = configureStore({
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(homePageService.middleware, cartPageService.middleware, filtersService.middleware, collectionService.middleware),
 },
-console.log("Store wala console"));
+);
 setupListeners(Store.dispatch);
 export default Store;

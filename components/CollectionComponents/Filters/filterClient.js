@@ -128,7 +128,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
 
 
 
-  const updateUrl = ({ size, color }) => {
+  const updateUrl = ({  size = [], color = [] } ) => {
     const params = new URLSearchParams(window.location.search);
   
     // Clear existing size and color parameters
@@ -157,14 +157,15 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
   
     try {
       if (params && params instanceof URLSearchParams) {
-        const decodedParams = decodeURIComponent(params);
+        const decodedParams = decodeURIComponent(params.toString());
+        console.log("Numan", decodedParams)
         const newUrl = `?${decodedParams.replace(/\+/g, "")}`;
         console.log("new URL", newUrl);
       }
     } catch (error) {
       console.error("Error generating new URL:", error);
     }
-    // const newUrl = `?${params.toString().replace(/\+/g, "")}`;
+    const newUrl = `?${params.toString().replace(/\+/g, "")}`;
     console.log("new URL", newUrl)
     history.pushState(null, '', newUrl);
   };
@@ -293,7 +294,7 @@ useEffect(() => {
         params.append("filter.gt-price", range[0]);
         params.append("filter.lt-price", range[1]);
   
-        const newUrl = `?${params}`;
+        const newUrl = `?${params.toString()}`;
         console.log("newUrl", newUrl);
   
         window.history.pushState(null, '', newUrl);
@@ -490,7 +491,7 @@ useEffect(() => {
     params.delete(ltPrice);
   
     // Construct the new URL parameters
-    const newParams = params;
+    const newParams = params.toString();
   
     // Optionally, you can update the browser's history to reflect the new URL
     window.history.pushState({}, '', window.location.pathname + '?' + newParams);
