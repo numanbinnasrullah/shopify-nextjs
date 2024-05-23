@@ -165,7 +165,11 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
     } catch (error) {
       console.error("Error generating new URL:", error);
     }
-    const newUrl = `?${params.toString().replace(/\+/g, "")}`;
+    let newUrl;
+    if(params){
+       newUrl = `?${params.toString().replace(/\+/g, "")}`;
+
+    }
     console.log("new URL", newUrl)
     history.pushState(null, '', newUrl);
   };
@@ -293,8 +297,11 @@ useEffect(() => {
         params.delete("filter.lt-price");
         params.append("filter.gt-price", range[0]);
         params.append("filter.lt-price", range[1]);
-  
-        const newUrl = `?${params.toString()}`;
+        let newUrl;
+        if(params){
+
+          newUrl = `?${params.toString()}`;
+        }
         console.log("newUrl", newUrl);
   
         window.history.pushState(null, '', newUrl);
