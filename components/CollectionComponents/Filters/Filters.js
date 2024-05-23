@@ -17,10 +17,10 @@ const Filters =  ({ collection, slug, initialcheck, variantOptions}) => {
   },[])
   return (
     <>
-      <div class="filter-box hidden lg:block w-full max-w-[300px] pr-10">
+      {/* <div class="filter-box hidden lg:block w-full max-w-[300px] pr-10">
        <FilterClient collection={collection}  initialcheck={initialcheck} slug={slug} variantOptions={variantOptions} />
       </div>
-      <GridItems collection={collection}    />
+      <GridItems collection={collection}    /> */}
       
     </>
 
