@@ -9,10 +9,9 @@ import { useDispatch } from "react-redux";
 
 const CartPage =  () => {
   const dispatch = useDispatch()
-  let cartId
-  if (typeof window !== 'undefined') {
-   cartId = JSON.stringify(localStorage.getItem('cartId'))
-  }
+  const localStorage = typeof window !== `undefined` ? window.localStorage : null
+  let cartId = JSON.stringify(localStorage.getItem('cartId'))
+  
   // console.log("Localstorage",cartId )
   const [sendVariantId, retrieveResponse] =  useRetrieveCartMutation();
   const [RemoveItem, removeItemresponse] =  useRomoveItemfromCartMutation();
