@@ -116,20 +116,24 @@ const ProductInfo = ({product}) => {
          }
      }, [responseUpdate?.isSuccess]);
 
-    useEffect(() => {
-        if (responseCreate.isSuccess) {
-            const cartId = responseCreate.data?.res?.data?.cartCreate?.cart?.id;
-            setIsCartCreated(true);
-            try {
-                    if (typeof window !== 'undefined') {
-                    localStorage.setItem('cartId', "cartId");
-                    }
-                } catch (error) {
-                    console.error('Error while setting cart Id in localStorage:', error);
-                }
-            
+     useEffect(() => {
+        // Initialize localStorage with a dummy value if not already set
+        if (typeof window !== 'undefined' && !localStorage.getItem('cartId')) {
+          localStorage.setItem('cartId', 'dummy_cart_id');
         }
-    }, [responseCreate.isSuccess]);
+    
+        if (responseCreate.isSuccess) {
+          const cartId = responseCreate.data?.res?.data?.cartCreate?.cart?.id;
+          setIsCartCreated(true);
+          try {
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('cartId', cartId);
+            }
+          } catch (error) {
+            console.error('Error while setting cart Id in localStorage:', error);
+          }
+        }
+      }, [responseCreate.isSuccess]);
 
     useEffect(() => {
         if (responseUpdate.isSuccess) {
