@@ -128,7 +128,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
 
 
 
-  const updateUrl = ({  size = [], color = [] } ) => {
+  const updateUrl = ({ size, color }) => {
     const params = new URLSearchParams(window.location.search);
   
     // Clear existing size and color parameters
@@ -491,7 +491,11 @@ useEffect(() => {
     params.delete(ltPrice);
   
     // Construct the new URL parameters
-    const newParams = params.toString();
+    let newParams
+    if(params){
+       newParams = params.toString();
+
+    }
   
     // Optionally, you can update the browser's history to reflect the new URL
     window.history.pushState({}, '', window.location.pathname + '?' + newParams);
