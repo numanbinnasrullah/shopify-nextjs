@@ -5,12 +5,13 @@ import { setBaskitCounterValue } from "@/store/reducers/cartReducer";
 import { useRetrieveCartMutation, useRomoveItemfromCartMutation,  useUpdateExistingItemInCartMutation } from "@/store/services/cartService";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
+var localStorage = require('localStorage')
 
 const CartPage =  () => {
   const dispatch = useDispatch()
-  const localStorage = typeof window !== `undefined` ? window.localStorage : null
-  let cartId = JSON.stringify(localStorage.getItem('cartId'))
+
+  
+  const cartId = JSON.stringify(localStorage.getItem('cartId'))
   
   // console.log("Localstorage",cartId )
   const [sendVariantId, retrieveResponse] =  useRetrieveCartMutation();
