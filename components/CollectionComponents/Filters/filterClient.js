@@ -45,11 +45,12 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
 
   
   // console.log("mlppoolm",typeof(priceData?.price?.max))
-  
-
-  const storedMaximumValue = JSON.parse(localStorage.getItem('maximumValue'));
-  const storedMinimumValue = JSON.parse(localStorage.getItem('minimumValue'));
-
+  let storedMaximumValue;
+  let storedMinimumValue;
+  if (typeof window !== 'undefined') {
+    storedMaximumValue = JSON.parse(localStorage.getItem('maximumValue'));
+    storedMinimumValue = JSON.parse(localStorage.getItem('minimumValue'));
+  }
 // Now you can use storedMaximumValue and storedMinimumValue as needed
 // console.log("Stored Maximum Value:", storedMaximumValue);
 // console.log("Stored Minimum Value:", storedMinimumValue);
