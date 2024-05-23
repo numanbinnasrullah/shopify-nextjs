@@ -1,7 +1,7 @@
 'use client'
 import { useGetCollectionMutation } from "@/store/services/collectionService";
-import GridItems from "../GridItems/GridItems";
-import FilterClient from "./filterClient";
+// import GridItems from "../GridItems/GridItems";
+// import FilterClient from "./filterClient";
 import { useEffect } from "react";
 
 
