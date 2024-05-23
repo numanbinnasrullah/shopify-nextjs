@@ -122,7 +122,7 @@ const ProductInfo = ({product}) => {
             setIsCartCreated(true);
             try {
                     if (typeof window !== 'undefined') {
-                    localStorage.setItem('cartId', cartId);
+                    localStorage.setItem('cartId', "cartId");
                     }
                 } catch (error) {
                     console.error('Error while setting cart Id in localStorage:', error);
