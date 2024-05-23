@@ -11,7 +11,7 @@ const CartPage =  () => {
   const dispatch = useDispatch()
 
   
-  const cartId = JSON.stringify(localStorage.getItem('cartId'))
+  const cartId = JSON.stringify(window.localStorage.getItem('cartId'))
   
   // console.log("Localstorage",cartId )
   const [sendVariantId, retrieveResponse] =  useRetrieveCartMutation();
