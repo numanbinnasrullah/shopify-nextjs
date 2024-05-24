@@ -118,9 +118,9 @@ const ProductInfo = ({product}) => {
 
      useEffect(() => {
         // Initialize localStorage with a dummy value if not already set
-        if (typeof window !== 'undefined' && !localStorage.getItem('cartId')) {
-          localStorage.setItem('cartId', 'dummy_cart_id');
-        }
+        // if (typeof window !== 'undefined' && !localStorage.getItem('cartId')) {
+        //   localStorage.setItem('cartId', 'dummy_cart_id');
+        // }
     
         if (responseCreate.isSuccess) {
           const cartId = responseCreate.data?.res?.data?.cartCreate?.cart?.id;
