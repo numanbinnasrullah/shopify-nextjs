@@ -3,7 +3,7 @@ import { fetchMenus } from '@/graphql/getMenus';
 import { useGetMenuQuery } from '@/store/services/homePageService';
 import Link from 'next/link';
 
-const Menu =  () => {
+const Menu =  ({menu}) => {
   const {data} =  useGetMenuQuery();
   console.log("read Menu From Toolkit", data?.res?.data?.menu)
   // const getMenus = await fetchMenus();
@@ -31,7 +31,7 @@ const Menu =  () => {
 
       <div className="hidden xl:block w-full max-w-[60%]">
         <ul className="navmenu flex w-full h-full items-center justify-center gap-2 flex-wrap ">
-          {data?.res?.data?.menu?.items?.map(mainItem => ( 
+          {menu?.items?.map(mainItem => ( 
             <li key={mainItem?.id} className="py-12 px-3 cursor-pointer relative">
              
               <Link href={`/collections/${getLastUrlPart(mainItem?.url)}`} className="bedding block w-full max-w-fit text-base xl:text-[0.8vw] relative">
