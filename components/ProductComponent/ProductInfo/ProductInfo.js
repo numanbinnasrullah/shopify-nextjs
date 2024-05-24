@@ -125,13 +125,7 @@ const ProductInfo = ({product}) => {
         if (responseCreate.isSuccess) {
           const cartId = responseCreate.data?.res?.data?.cartCreate?.cart?.id;
           setIsCartCreated(true);
-          try {
-            if (typeof window !== 'undefined') {
               localStorage.setItem('cartId', cartId);
-            }
-          } catch (error) {
-            console.error('Error while setting cart Id in localStorage:', error);
-          }
         }
       }, [responseCreate.isSuccess]);
 
