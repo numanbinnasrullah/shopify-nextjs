@@ -94,6 +94,27 @@ const PreviousPage = () => {
 }
 
 
+// Function to remove previousPage parameter if on the first page
+const removePreviousPageIfFirstPage = () => {
+  const params = new URLSearchParams(window.location.search);
+  const isOnFirstPage = !collection?.products?.pageInfo?.hasPreviousPage;
+
+  if (isOnFirstPage) {
+    // Remove the previousPage parameter
+    params.delete('previousPage');
+
+    // Update the URL without reloading the page
+    const newUrl = `?${params.toString().replace(/\+/g, "")}`;
+    history.replaceState(null, '', newUrl);
+  }
+};
+
+// Call the function on page load
+window.addEventListener('load', () => {
+  removePreviousPageIfFirstPage();
+});
+
+
     
   return (
     

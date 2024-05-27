@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const filtersService = createApi({
     reducerPath: 'filters',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://shopify-nextjs-mu-nine.vercel.app/api/',
+        baseUrl: 'http://localhost:3000/api/',
     }),
     endpoints: (builder) => ({
         filterRequest: builder.mutation({
