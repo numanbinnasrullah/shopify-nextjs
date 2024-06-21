@@ -1,5 +1,4 @@
 "use client"
-import { fetchMenus } from '@/graphql/getMenus';
 import { useGetMenuQuery } from '@/store/services/homePageService';
 import Link from 'next/link';
 

@@ -4,7 +4,7 @@ const menuQuery = async() => {
   // console.log("Menu ki GraphQL")
     const query = `
     query HomePageQuery{
-        menu(handle: "main-menu") {
+        menu(handle: "${process.env.Nav_Menu}") {
             id
             items {
               id

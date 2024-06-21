@@ -9,7 +9,7 @@ const productPageQuery = async (productSlug) => {
           title
           description
           handle
-          images(first: 200) {
+          images(first: ${process.env.Collection_Media_Limit}) {
             edges {
               node {
                 id
@@ -17,7 +17,7 @@ const productPageQuery = async (productSlug) => {
               }
             }
           }
-          variants(first: 100) {
+          variants(first: ${process.env.Collection_Variants_Limit}) {
             edges {
               node {
                 id
@@ -52,7 +52,7 @@ const productPageQuery = async (productSlug) => {
                   id
                   url
                 }
-                media(first: 2) {
+                media(first: ${process.env.Collection_Media_Limit}) {
                   edges {
                     node {
                       previewImage {
@@ -62,7 +62,7 @@ const productPageQuery = async (productSlug) => {
                     }
                   }
                 }
-                variants(first: 1) {
+                variants(first: ${process.env.Collection_Variants_Limit}) {
                   edges {
                     node {
                       compareAtPrice {
@@ -87,7 +87,7 @@ const productPageQuery = async (productSlug) => {
 
     const variables = {
         slug: productSlug,
-        "youmayalsolike": "curtains",
+        "youmayalsolike": process.env.youmayalsolike,
     };
 
     try {

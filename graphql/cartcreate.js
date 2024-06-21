@@ -36,7 +36,7 @@ const cartCreateQuery = async (variantID, quantity) => {
         id
         createdAt
         updatedAt
-        lines(first: 10) {
+        lines(first: ${process.env.Cart_Lines}) {
           edges {
             node {
               id
@@ -54,11 +54,7 @@ const cartCreateQuery = async (variantID, quantity) => {
             }
           }
         }
-        buyerIdentity {
-          deliveryAddressPreferences {
-            __typename
-          }
-        }
+
         attributes {
           key
           value

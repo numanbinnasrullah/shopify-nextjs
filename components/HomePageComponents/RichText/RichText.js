@@ -12,8 +12,8 @@ const RichText = () => {
                         <div class="block w-full max-w-[45px] mx-auto mb-2">
                             <img src="/s-1.png" class="block w-full" width="auto" height="auto" alt="Stripe Image" />
                         </div>
-                        <h4 class="block w-full text-center font-semibold text-lg sm:text-xl md:text-2xl">Delivered to your door</h4>
-                        <span class="block w-full text-center text-[#161619] text-xs sm:text-sm md:text-base ">Free Shipping Over £75</span>
+                        <h4 class="block w-full text-center font-semibold text-lg sm:text-xl md:text-2xl">{process.env.Rich_Text_1}</h4>
+                        <span class="block w-full text-center text-[#161619] text-xs sm:text-sm md:text-base ">{process.env.Rich_Text_2}</span>
                     </div>
                 </div>
 
@@ -22,8 +22,8 @@ const RichText = () => {
                         <div class="block w-full max-w-[45px] mx-auto mb-2">
                             <img src="/s-2.png" class="block w-full" width="auto" height="auto" alt="Stripe Image" />
                         </div>
-                        <h4 class="block w-full text-center font-semibold text-lg sm:text-xl md:text-2xl">Sublime Customer Services</h4>
-                        <span class="block w-full text-center text-[#161619] text-xs sm:text-sm md:text-base ">Dedicated to Your Satisfaction</span>
+                        <h4 class="block w-full text-center font-semibold text-lg sm:text-xl md:text-2xl">{process.env.Rich_Text_3}</h4>
+                        <span class="block w-full text-center text-[#161619] text-xs sm:text-sm md:text-base ">{process.env.Rich_Text_4}</span>
                     </div>
                 </div>
 
@@ -32,8 +32,8 @@ const RichText = () => {
                         <div class="block w-full max-w-[45px] mx-auto mb-2">
                             <img src="/s-3.png" class="block w-full" width="auto" height="auto" alt="Stripe Image" />
                         </div>
-                        <h4 class="block w-full text-center font-semibold text-lg sm:text-xl md:text-2xl">Money Back Guarantee</h4>
-                        <span class="block w-full text-center text-[#161619] text-xs sm:text-sm md:text-base ">30 Days Return Accepted</span>
+                        <h4 class="block w-full text-center font-semibold text-lg sm:text-xl md:text-2xl">{process.env.Rich_Text_5}</h4>
+                        <span class="block w-full text-center text-[#161619] text-xs sm:text-sm md:text-base ">{process.env.Rich_Text_6}</span>
                     </div>
                 </div>
 

@@ -9,13 +9,13 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
   
       if(paginate && paginate.includes('nextPage')){
         const query = `
-    query collectionPageQuery($slug:String!,$filter: [ProductFilter!], $nextPage: String) {
+    query collectionPageQuery($slug:String!, $nextPage: String) {
       
         collection(handle: $slug) {
             title
             description
             handle
-            products(first: 1,  after:$nextPage) {
+            products(first: ${process.env.Collection_Products_Limit},  after:$nextPage) {
               filters {
                 id
                 label
@@ -33,7 +33,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                   title
                   description
                   handle
-                  images(first:100) {
+                  images(first:${process.env.Collection_Media_Limit}) {
                     edges {
                       node {
                         id
@@ -45,7 +45,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                     id
                     url
                   }
-                  media(first: 100) {
+                  media(first: ${process.env.Collection_Media_Limit}) {
                     edges {
                       node {
                         previewImage {
@@ -55,7 +55,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                       }
                     }
                   }
-                  variants(first: 100) {
+                  variants(first: ${process.env.Collection_Variants_Limit}) {
                     edges {
                       node {
                         id
@@ -91,37 +91,11 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
           
 
 
-          filteroptions: collection(handle: $slug) {
-            ...CollectionFields
-          }
-
+      
 
       }
 
 
-      fragment CollectionFields on Collection {
-           id
-           title
-           handle
-           products(first: 100, filters:$filter ) {
-           
-            edges {
-              node {
-                handle
-                variants(first: 10) {
-                  edges {
-                    node {
-                      selectedOptions {
-                        name
-                        value
-                      }
-                    }
-                  }
-                }
-              }
-            }
-           }
-      }
 
       
       
@@ -140,13 +114,13 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
     return res
       } else if(paginate && paginate.includes('previousPage')) {
         const query = `
-    query collectionPageQuery($slug:String!,$filter: [ProductFilter!],  $previousPage: String) {
+    query collectionPageQuery($slug:String!,  $previousPage: String) {
       
         collection(handle: $slug) {
             title
             description
             handle
-            products(last: 1,  before: $previousPage) {
+            products(last: ${process.env.Collection_Products_Limit},  before: $previousPage) {
               filters {
                 id
                 label
@@ -164,7 +138,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                   title
                   description
                   handle
-                  images(first:100) {
+                  images(first:${process.env.Collection_Media_Limit}) {
                     edges {
                       node {
                         id
@@ -176,7 +150,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                     id
                     url
                   }
-                  media(first: 100) {
+                  media(first: ${process.env.Collection_Media_Limit}) {
                     edges {
                       node {
                         previewImage {
@@ -186,7 +160,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                       }
                     }
                   }
-                  variants(first: 100) {
+                  variants(first: ${process.env.Collection_Variants_Limit}) {
                     edges {
                       node {
                         id
@@ -222,37 +196,12 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
           
 
 
-          filteroptions: collection(handle: $slug) {
-            ...CollectionFields
-          }
+
 
 
       }
 
 
-      fragment CollectionFields on Collection {
-           id
-           title
-           handle
-           products(first: 100, filters:$filter ) {
-           
-            edges {
-              node {
-                handle
-                variants(first: 10) {
-                  edges {
-                    node {
-                      selectedOptions {
-                        name
-                        value
-                      }
-                    }
-                  }
-                }
-              }
-            }
-           }
-      }
 
       
     `
@@ -272,13 +221,13 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
       } else {
 
         const query = `
-        query collectionPageQuery($slug:String!,$filter: [ProductFilter!]) {
+        query collectionPageQuery($slug:String!) {
           
             collection(handle: $slug) {
                 title
                 description
                 handle
-                products(first: 1) {
+                products(first: ${process.env.Collection_Products_Limit}) {
                   filters {
                     id
                     label
@@ -296,7 +245,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                       title
                       description
                       handle
-                      images(first:100) {
+                      images(first:${process.env.Collection_Media_Limit}) {
                         edges {
                           node {
                             id
@@ -308,7 +257,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                         id
                         url
                       }
-                      media(first: 100) {
+                      media(first: ${process.env.Collection_Media_Limit}) {
                         edges {
                           node {
                             previewImage {
@@ -318,7 +267,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                           }
                         }
                       }
-                      variants(first: 100) {
+                      variants(first: ${process.env.Collection_Variants_Limit}) {
                         edges {
                           node {
                             id
@@ -354,37 +303,12 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
               
     
     
-              filteroptions: collection(handle: $slug) {
-                ...CollectionFields
-              }
-    
+         
     
           }
     
     
-          fragment CollectionFields on Collection {
-               id
-               title
-               handle
-               products(first: 100, filters:$filter ) {
-               
-                edges {
-                  node {
-                    handle
-                    variants(first: 10) {
-                      edges {
-                        node {
-                          selectedOptions {
-                            name
-                            value
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-               }
-          }
+    
     
           
         `
@@ -406,47 +330,6 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
       }
 
       
-    
-// if (paginate) {
-//       variables["moreProduct"] = paginate;
-//     }
-    // const variables = {
-    //     "slug": collectionSlug
-    //   };
-    //   if (paginate.includes('nextPage')) {
-    //     variables["nextPage"] = paginate.split('+')[1].trim();
-    //   }  else if(paginate.includes('previousPage')){
-    //     variables["previousPage"] = paginate.split('+')[1].trim();
-    //   }
-      // if (paginate) {
-      //   if (paginate.startsWith('nextPage')) {
-      //     variables["nextPage"] = paginate.split('+')[1].trim();
-      //   } else if (paginate.startsWith('previousPage')) {
-      //     variables["previousPage"] = paginate.split(':')[1].trim();
-      //   }
-      // }
-
-
-  //   // Set the variables object
-  // let variables = {
-  //   "slug": collectionSlug,
-   
-  // };
-
-  // // Check if paginate is provided and not empty
-  // if (paginate) {
-  //   variables["nextPage"] = paginate; // Assign paginate value to moreProduct
-  // }
-
-  // // Remove moreProduct from variables if it's null
-  // if (!variables["moreProduct"]) {
-  //   delete variables["moreProduct"];
-  // }
-  
-    // const Query = { query, variables }
-    // const res = await graphql(Query);
-    // return res
-    
 }
 
 export default collectionPageQuery;

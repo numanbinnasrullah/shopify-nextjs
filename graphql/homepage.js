@@ -2,25 +2,25 @@ import { graphql } from "./graphql";
 
 const homePageQuery = async() => {
     const query = `
-    query HomePageQuery($handle1: String!, $handle2: String!, $handle3: String!, $slug:String, $newArrivalCollection1: String!, $newArrivalCollection2: String!, $newArrivalCollection3: String!, $mainblog: String!) {
+    query HomePageQuery($Home_Collection_1: String!, $Home_Collection_2: String!, $Home_Collection_3: String!, $Home_Best_Sellers:String, $Home_Collection_New_Arrivals_1: String!, $Home_Collection_New_Arrivals_2: String!, $Home_Collection_New_Arrivals_3: String!, $Home_Blog: String!) {
     
-        collection1: collection(handle: $handle1) {
+        collection1: collection(handle: $Home_Collection_1) {
           ...CollectionFields
         }
       
-        collection2: collection(handle: $handle2) {
+        collection2: collection(handle: $Home_Collection_2) {
           ...CollectionFields
         }
       
-        collection3: collection(handle: $handle3) {
+        collection3: collection(handle: $Home_Collection_3) {
           ...CollectionFields
         }
         
     
-        collection(handle: $slug) {
+        collection(handle: $Home_Best_Sellers) {
             title
             description
-            products(first: 3) {
+            products(first: ${process.env.Collection_Products_Limit}) {
               edges {
                 node {
                   id
@@ -31,7 +31,7 @@ const homePageQuery = async() => {
                     id
                     url
                   }
-                  media(first: 2) {
+                  media(first: ${process.env.Collection_Media_Limit}) {
                     edges {
                       node {
                         previewImage {
@@ -41,7 +41,7 @@ const homePageQuery = async() => {
                       }
                     }
                   }
-                  variants(first: 1) {
+                  variants(first: ${process.env.Collection_Variants_Limit}) {
                     edges {
                       node {
                         compareAtPrice {
@@ -61,20 +61,20 @@ const homePageQuery = async() => {
           }
 
 
-          newArrivalCollection1: collection(handle: $newArrivalCollection1) {
+          Home_Collection_New_Arrivals_1: collection(handle: $Home_Collection_New_Arrivals_1) {
             ...CollectionFields
           }
         
-          newArrivalCollection2: collection(handle: $newArrivalCollection2) {
+          Home_Collection_New_Arrivals_2: collection(handle: $Home_Collection_New_Arrivals_2) {
             ...CollectionFields
           }
         
-          newArrivalCollection3: collection(handle: $newArrivalCollection3) {
+          Home_Collection_New_Arrivals_3: collection(handle: $Home_Collection_New_Arrivals_3) {
             ...CollectionFields
           }
     
         
-          blog(handle: $mainblog) {
+          blog(handle: $Home_Blog) {
             id
             handle
             articles(first:3) {
@@ -106,14 +106,14 @@ const homePageQuery = async() => {
       
     `
     const variables = {
-      "handle1": "kitchen",
-      "handle2": "bedding",
-      "handle3": "curtains",
-      "slug": "kitchen",
-      "newArrivalCollection1": "rugs",
-      "newArrivalCollection2": "women",
-      "newArrivalCollection3": "velvet-curtains",
-      "mainblog" : "bedding"
+      "Home_Collection_1": process.env.Home_Collection_1,
+      "Home_Collection_2": process.env.Home_Collection_2,
+      "Home_Collection_3": process.env.Home_Collection_3,
+      "Home_Best_Sellers": process.env.Home_Best_Sellers,
+      "Home_Collection_New_Arrivals_1": process.env.Home_Collection_New_Arrivals_1,
+      "Home_Collection_New_Arrivals_2": process.env.Home_Collection_New_Arrivals_2,
+      "Home_Collection_New_Arrivals_3": process.env.Home_Collection_New_Arrivals_3,
+      "Home_Blog" : process.env.Home_Blog
     };
     const Query = { query, variables }
     const res = await graphql(Query);

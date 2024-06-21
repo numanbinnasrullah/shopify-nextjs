@@ -7,7 +7,7 @@ mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
     cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
           cart{
           id
-          lines(first: 10) {
+          lines(first: ${process.env.Cart_Lines}) {
             edges {
               node {
                 id
@@ -24,20 +24,7 @@ mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
                         amount
                         currencyCode
                       }
-                    product {
-                      title
-                      id
-                      images(first: 1) {
-                        edges {
-                          node {
-                            id
-                            url
-                            altText
-      
-                          }
-                        }
-                  }
-                    }
+                    
                   }
                 }
                 attributes {

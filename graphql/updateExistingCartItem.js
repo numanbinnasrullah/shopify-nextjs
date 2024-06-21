@@ -13,7 +13,7 @@ const updateExistingCartItemQuery = async (cartID, variantId,  quantity) => {
     ) {
       cart {
         id
-        lines(first: 10) {
+        lines(first: ${process.env.Cart_Lines}) {
           edges {
             node {
               id

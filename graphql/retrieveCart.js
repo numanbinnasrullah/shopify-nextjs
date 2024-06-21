@@ -10,7 +10,7 @@ const retrievecartQuery = async (input) => {
       id
       createdAt
       updatedAt
-      lines(first: 10) {
+      lines(first: ${process.env.Collection_Products_Limit}) {
         edges {
           node {
             id
@@ -72,24 +72,7 @@ const retrievecartQuery = async (input) => {
           currencyCode
         }
       }
-      buyerIdentity {
-        email
-        phone
-        customer {
-          id
-        }
-        countryCode
-        deliveryAddressPreferences {
-          ... on MailingAddress {
-            address1
-            address2
-            city
-            provinceCode
-            countryCodeV2
-            zip
-          }
-        }
-      }
+
     }
   }
   

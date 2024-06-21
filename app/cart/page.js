@@ -139,7 +139,8 @@ const CartPage =  () => {
           <ul className="flex w-[100%] justify-evenly items-center text-lg font-semibold p-4 border-b-[1px] mb-2">
             <li className="w-[40%]">Product</li>
             <li>Quantity</li>
-            <li>Total</li>
+            <li>Price</li>
+            <li>Remove</li>
           </ul>
           {
             retrieveResponse?.data?.res?.data?.cart?.lines?.edges?.map((item, i)=>{
@@ -187,9 +188,9 @@ const CartPage =  () => {
                                 </svg>
                             </button>
 
-                            <button onClick={()=>RemoveCartItems(item?.node?.id)}>
+                            {/* <button onClick={()=>RemoveCartItems(item?.node?.id)}>
                               {loadingItemId === item?.node?.id ? "Loading...!" : "Remove"}
-                            </button>
+                            </button> */}
                         </div>
                   }
                   
@@ -199,7 +200,11 @@ const CartPage =  () => {
                     {loadingItemId === item?.node?.id ? "Loading...!" : "Remove"}
                       </button>
                   </div> */}
-                  <div>{itemQuantities[item?.node?.id] * item?.node?.merchandise?.price?.amount}</div>
+                  <div>{ item?.node?.merchandise?.price?.amount}</div>
+                  <div>    <button className="font-bold	" onClick={()=>RemoveCartItems(item?.node?.id)}>
+                              {loadingItemId === item?.node?.id ? "Loading...!" : "X"}
+                            </button>
+                            </div>
               </div>
               )
             })
