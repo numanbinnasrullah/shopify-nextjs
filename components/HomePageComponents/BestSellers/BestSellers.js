@@ -1,7 +1,7 @@
 
 // import { fetchCollection } from "@/graphql/singleCollection";
 import Link from "next/link";
-
+import {bestSellers} from '../../../sections/homePageStaticContent'
 
 const BestSellers = async ({collection}) => {
     // const bestSellers = await fetchCollection("bedding")
@@ -23,8 +23,8 @@ const BestSellers = async ({collection}) => {
 
                         <div class="block w-full col-span-full md:col-auto">
                             <div class=" relative block w-full h-full pb-9 after:absolute after:bottom-0 after:left-0 after:w-5 after:h-[2px] after:bg-black">
-                                <h2 class="text-4xl md:text-[5.5vw]  lg:text-[5vw] 2xl:text-[66px]  leading-[1.1428571429] font-light mb-9">Explore Our Bestsellers</h2>
-                                <p class="text-base font-light text-[#161619]">Discover Comfort with our Luxurious Bedding Collections for Your Dreamy Haven</p>
+                                <h2 class="text-4xl md:text-[5.5vw]  lg:text-[5vw] 2xl:text-[66px]  leading-[1.1428571429] font-light mb-9">{bestSellers.heading}</h2>
+                                <p class="text-base font-light text-[#161619]">{bestSellers.text}</p>
                             </div>
                         </div>
                         {

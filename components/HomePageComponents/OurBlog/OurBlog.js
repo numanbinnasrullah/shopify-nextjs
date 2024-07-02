@@ -1,7 +1,7 @@
 import { blogs } from "@/graphql/blogs";
 import Link from "next/link";
 
-const OurBlog = async({blog}) => {
+const OurBlog = async({articles}) => {
     // console.log("Blogs====>", blog?.articles?.edges)
     // const fetchBlogs = await blogs();
     // fetchBlogs.map((item, index) =>{
@@ -21,7 +21,7 @@ const OurBlog = async({blog}) => {
                     <div class="grid gap-[40px] md:grid-cols-2 lg:grid-cols-3">
 
                     {
-                        blog?.articles?.edges?.map((item, index) =>{
+                        articles?.edges?.map((item, index) =>{
                             return <>
                                 <div class="block w-full xl:px-5" key={index}>
                                 <div class="block w-full  md:max-w-[425px] mx-auto">

@@ -1,5 +1,5 @@
 import Link from "next/link"
-
+import {newArrivals, signUp} from "../../../sections/homePageStaticContent";
 
 const MainCollections = ({newArrivalCollection1, newArrivalCollection2, newArrivalCollection3}) => {
     // console.log("New Arrivals ====>", newArrivalCollection1, newArrivalCollection2, newArrivalCollection3)
@@ -18,9 +18,9 @@ const MainCollections = ({newArrivalCollection1, newArrivalCollection2, newArriv
                                     <img src="/cl-1.png" class=" object-contain transition-all duration-1000 block w-full" width="auto" height="auto" alt="Stripe Image" />
                                     <div class="inner absolute top-0 left-0 block w-full h-full p-7 sm:p-[50px]">
                                         <div class="inner-content block w-full h-full">
-                                            <span class=" text-xs sm:text-xl">New Collection</span>
-                                            <h2 class="block w-full max-w-[280px] sm:max-w-[400px] lg:max-w-md  text-[24px] sm:text-[4.5vw] lg:text-[40px] font-semibold mb-[15px]">Start New Bedding Journey</h2>
-                                            <span class=" transition-all duration-150 ease-linear w-full max-w-[158px] border border-[#161619] text-[#161619] hover:border-[#7f8487] hover:text-[#7f8487] block text-center text-sm leading-[38px]">Explore Now</span>
+                                            <span class=" text-xs sm:text-xl">{newArrivals.sub_heading}</span>
+                                            <h2 class="block w-full max-w-[280px] sm:max-w-[400px] lg:max-w-md  text-[24px] sm:text-[4.5vw] lg:text-[40px] font-semibold mb-[15px]">{newArrivals.heading}</h2>
+                                            <span class=" transition-all duration-150 ease-linear w-full max-w-[158px] border border-[#161619] text-[#161619] hover:border-[#7f8487] hover:text-[#7f8487] block text-center text-sm leading-[38px]">{newArrivals.btn_text}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -29,8 +29,8 @@ const MainCollections = ({newArrivalCollection1, newArrivalCollection2, newArriv
 
                         <div class="block w-full">
                             <div class="block w-full">
-                                <h2 class="block w-full text-3xl md:text-4xl mb-[6px] leading-[1.55556]">Sign up</h2>
-                                <p class=" text-sm md:text-base text-[#161619] mb-4">to get exclusive deals and offers delivered straight to your inbox</p>
+                                <h2 class="block w-full text-3xl md:text-4xl mb-[6px] leading-[1.55556]">{signUp.heading}</h2>
+                                <p class=" text-sm md:text-base text-[#161619] mb-4">{signUp.text}</p>
                                 <div class="block w-full">
                                     <div class="flex gap-4 w-full">
                                         <input type="text" placeholder="Your Email Address" class="border border-black w-full text-sm px-4 leading-[3.43] outline-none placeholder:text-black" />

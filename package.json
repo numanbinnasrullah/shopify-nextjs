@@ -11,9 +11,12 @@
   "dependencies": {
     "@apollo/client": "^3.9.4",
     "@reduxjs/toolkit": "^2.2.3",
+    "cheerio": "^1.0.0-rc.12",
     "debounce": "^2.0.0",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
+    "html-to-text": "^9.0.5",
+    "jsdom": "^24.1.0",
     "localStorage": "^1.0.4",
     "next": "14.1.0",
     "rc-slider": "^10.5.0",

@@ -5,6 +5,10 @@ const productPageQuery = async (productSlug) => {
     query productPageQuery($slug: String!, $youmayalsolike:String,) {
 
         product(handle: $slug) {
+            seo {
+              description
+              title
+            }
             id
           title
           description

@@ -1,6 +1,6 @@
-import Image from "next/image"
-import Link from "next/link"
-
+import Image from "next/image";
+import Link from "next/link";
+import {HomePageAssets} from '../../../assets/homepageAssets'
 
 const Logo = () => {
   return (
@@ -15,7 +15,7 @@ const Logo = () => {
                 </div>
                 <div class="block w-full max-w-[50%] xl:max-w-[20%] shrink-0">
                     <div class="block w-full mx-auto xl:mx-0 max-w-[170px]">
-                        <Link href="/"><Image src={process.env.logo} width="170" height="45" /></Link>
+                        <Link href="/"><Image src={HomePageAssets.logo} width="170" height="45" /></Link>
                         
                         {/* <img src="Moonlight-Logo-Final.png" class="block w-full object-contain" width="auto" height="auto" alt="Image" /> */}
                     </div>

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 
 const Modal = ({ isOpen, onClose, product, selectedImageId, selectedPrice, selectedSize }) => {
+  const cartId = JSON.stringify(localStorage.getItem('cartId'))
+  console.log("Model wali id", cartId)
   const [selectImage, setSelectImage] = useState(null);
   useEffect(() => {
     const filteredImage = product?.images?.edges.find(item => item?.node?.id === selectedImageId);
@@ -17,7 +19,9 @@ const Modal = ({ isOpen, onClose, product, selectedImageId, selectedPrice, selec
         return null;
       }
 
-
+      const createCheckout = () => [
+        
+      ]
   return (
     <>
         {isOpen && (
@@ -37,8 +41,8 @@ const Modal = ({ isOpen, onClose, product, selectedImageId, selectedPrice, selec
             <div class="btn-wrapper  w-full mt-5 flex space-x-8">
             <Link href="/cart"  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">View Cart</Link>
 
-                    <Link href="/cart"  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">Checkout</Link>
-                </div>
+            <button onClick={createCheckout}  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px]">Checkout</button>
+            </div>
             
             {/* <button  onClick={onClose}>Close</button> */}
           </div>

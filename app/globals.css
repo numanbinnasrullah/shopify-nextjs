@@ -260,3 +260,43 @@ ul.navmenu li a{
   backdrop-filter: blur(1px); /* Apply blur effect to background */
   z-index: 999; /* Ensure overlay is below modal */
 }
+
+
+/*-----------------Blog Article -----------------------*/
+.blog-article{
+  max-width: 1100px;
+  margin: 20px auto;
+  line-height: 1.8;
+}
+.blog-article-title{
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  margin: 15px 0px;
+}
+.blog-article div div h2{
+  font-size: 23px;
+}
+.blog-article div div ol li strong{
+  font-size: 17px;
+}
+.blog-article div div p strong{
+  font-size: 18px;
+}
+
+
+
+/* ---------------------Static Pages --------------------- */
+.main-page{  
+   max-width: 900px;
+   margin: 20px auto;
+}
+.main-page h1{
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+.main-page div p{
+  margin-bottom: 15px;
+}

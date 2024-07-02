@@ -15,6 +15,10 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
             title
             description
             handle
+            seo {
+              description
+              title
+            }
             products(first: ${process.env.Collection_Products_Limit},  after:$nextPage) {
               filters {
                 id

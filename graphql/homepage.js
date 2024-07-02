@@ -2,7 +2,7 @@ import { graphql } from "./graphql";
 
 const homePageQuery = async() => {
     const query = `
-    query HomePageQuery($Home_Collection_1: String!, $Home_Collection_2: String!, $Home_Collection_3: String!, $Home_Best_Sellers:String, $Home_Collection_New_Arrivals_1: String!, $Home_Collection_New_Arrivals_2: String!, $Home_Collection_New_Arrivals_3: String!, $Home_Blog: String!) {
+    query HomePageQuery($Home_Collection_1: String!, $Home_Collection_2: String!, $Home_Collection_3: String!, $Home_Best_Sellers:String, $Home_Collection_New_Arrivals_1: String!, $Home_Collection_New_Arrivals_2: String!, $Home_Collection_New_Arrivals_3: String!) {
     
         collection1: collection(handle: $Home_Collection_1) {
           ...CollectionFields
@@ -74,23 +74,23 @@ const homePageQuery = async() => {
           }
     
         
-          blog(handle: $Home_Blog) {
-            id
-            handle
-            articles(first:3) {
-              edges {
-                node {
-                  id
-                  title
-                  handle
-                  content
-                  image {
-                    url
-                    }
-                  }
-                }
+           articles(first:3) {
+            edges {
+              node {
+                    id
+                    title
+                    handle
+                    content  
+                    image {
+                      url
+                    }   
               }
-          }
+            }
+            pageInfo{
+              hasNextPage
+              endCursor
+            }
+          } 
         
       }
       
@@ -113,7 +113,7 @@ const homePageQuery = async() => {
       "Home_Collection_New_Arrivals_1": process.env.Home_Collection_New_Arrivals_1,
       "Home_Collection_New_Arrivals_2": process.env.Home_Collection_New_Arrivals_2,
       "Home_Collection_New_Arrivals_3": process.env.Home_Collection_New_Arrivals_3,
-      "Home_Blog" : process.env.Home_Blog
+      // "Home_Blog" : process.env.Home_Blog
     };
     const Query = { query, variables }
     const res = await graphql(Query);

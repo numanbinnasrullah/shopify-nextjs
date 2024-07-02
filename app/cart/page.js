@@ -3,12 +3,15 @@ import Header from "@/components/Header/Header";
 import cartPageQuery from "@/graphql/cartcreate";
 import { setBaskitCounterValue } from "@/store/reducers/cartReducer";
 import { useRetrieveCartMutation, useRomoveItemfromCartMutation,  useUpdateExistingItemInCartMutation } from "@/store/services/cartService";
+import { useCartCheckoutMutation } from "@/store/services/checkoutService";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 var localStorage = require('localStorage')
 
 const CartPage =  () => {
   const dispatch = useDispatch()
+  const router = useRouter();
 
   
   const cartId = JSON.stringify(localStorage.getItem('cartId'))
@@ -17,9 +20,10 @@ const CartPage =  () => {
   const [sendVariantId, retrieveResponse] =  useRetrieveCartMutation();
   const [RemoveItem, removeItemresponse] =  useRomoveItemfromCartMutation();
   const [updateItemInCart, existingItemUpdateResponse] = useUpdateExistingItemInCartMutation();
+  const [createCheckOut, CheckoutResponse] = useCartCheckoutMutation();
   const [itemQuantities, setItemQuantities] = useState({});
   const [loadingItemId, setLoadingItemId] = useState(null); 
-  // console.log("Retrieve Response in component", retrieveResponse);
+  console.log("Checkout Response At Cart page", CheckoutResponse);
   // console.log("Update Existing Item in cart Page******", existingItemUpdateResponse);
   let counterSum = 0;
     // const { menu } = cartPageData?.data
@@ -57,7 +61,7 @@ const CartPage =  () => {
     useEffect(() => {
       if (retrieveResponse.isSuccess) {
         const initialQuantities = {};
-        retrieveResponse.data.res.data.cart.lines.edges.forEach(item => {
+        retrieveResponse?.data?.res?.data?.cart?.lines?.edges?.forEach(item => {
           initialQuantities[item.node.id] = item.node.quantity;
         });
         setItemQuantities(initialQuantities);
@@ -129,6 +133,25 @@ const CartPage =  () => {
 
       updateItemInCart(updateCartItemData);
     };
+
+    const createCheckout = () => {
+      console.log("Create Checkout id $$$", cartId)
+      createCheckOut(cartId)
+    }
+
+    useEffect(()=>{
+      if (CheckoutResponse.isSuccess) {
+        let redirectUrl = CheckoutResponse?.data?.res?.data?.cart?.checkoutUrl;
+  
+        // Remove double quotes from the URL if present
+        if (redirectUrl.startsWith('"') && redirectUrl.endsWith('"')) {
+          redirectUrl = redirectUrl.slice(1, -1);
+        }
+  
+        router.push(redirectUrl);
+      }
+    },[CheckoutResponse.isSuccess])
+
     
   return (
     <>
@@ -212,13 +235,16 @@ const CartPage =  () => {
          
         </div>
         <div className="w-[20%] mt-8">
-          <div className="w-[300px] h-[300px] border p-10 ">
+          <div className="w-[300px] h-[200px] border p-10 mb-4">
             <div className="flex justify-between">
             <span>Subtotal  </span> <span>{retrieveResponse?.data?.res?.data?.cart?.cost?.subtotalAmount?.amount}</span>
             </div>
             <div className="flex font-bold justify-between text-xl">
             <span>Total  </span> <span>{retrieveResponse?.data?.res?.data?.cart?.cost?.totalAmount?.amount}</span>
             </div>
+
+            <button onClick={createCheckout}  className="flex justify-center items-center w-[46%] capitalize bg-[#161619] text-white text-sm text-center h-[40px] mt-8">Checkout</button>
+
           </div>
         </div>
         </div>

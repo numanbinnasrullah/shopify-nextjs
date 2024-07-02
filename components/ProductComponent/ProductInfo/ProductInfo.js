@@ -122,10 +122,28 @@ const ProductInfo = ({ product }) => {
         //   localStorage.setItem('cartId', 'dummy_cart_id');
         // }
 
+        // if (responseCreate?.isSuccess) {
+        //     const cartId = responseCreate?.data?.res?.data?.cartCreate?.cart?.id;
+        //     setIsCartCreated(true);
+        //     localStorage.setItem('cartId', cartId);
+        // }
+
         if (responseCreate.isSuccess) {
             const cartId = responseCreate.data?.res?.data?.cartCreate?.cart?.id;
-            setIsCartCreated(true);
-            localStorage.setItem('cartId', cartId);
+            if (cartId) {
+                localStorage.setItem('cartId', cartId);
+                const currentTime = new Date().getTime();
+                localStorage.setItem('cartCreationTime', currentTime);
+
+                // 1 minute (60000 milliseconds) ke baad cartId ko remove karne ke liye setTimeout
+                setTimeout(() => {
+                    const storedCartCreationTime = localStorage.getItem('cartCreationTime');
+                    if (storedCartCreationTime && (new Date().getTime() - storedCartCreationTime >= 60000)) {
+                        localStorage.removeItem('cartId');
+                        localStorage.removeItem('cartCreationTime');
+                    }
+                }, 60000);
+            }
         }
     }, [responseCreate.isSuccess]);
 
