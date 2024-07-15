@@ -99,7 +99,7 @@ const Footer = () => {
                 <div class="block w-full mb-5 lg:mb-0">
                     <div class="flex items-center justify-center w-full gap-1 flex-wrap lg:flex-nowrap">
                     {paymentMethods.map((item) => (
-                            <div key={item.id} dangerouslySetInnerHTML={{ __html: item.svg }} />
+                            <div key={item.title} dangerouslySetInnerHTML={{ __html: item.svg }} />
                         ))}
                     </div>
                 </div>
@@ -108,7 +108,7 @@ const Footer = () => {
                     
                     {socialIcons.map((item) => (
                         <span class="block w-full max-w-[13px] fill-white">
-                        <div key={item.id} dangerouslySetInnerHTML={{ __html: item.svg }} />
+                        <div key={item.title} dangerouslySetInnerHTML={{ __html: item.svg }} />
                         </span>
                     ))}
 

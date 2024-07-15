@@ -112,7 +112,7 @@ const page = async ({params}) => {
 
       return (
         <>
-        {/* <head>
+        <head>
            
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "http://schema.org",
@@ -200,7 +200,7 @@ const page = async ({params}) => {
 
 
 
-      </head> */}
+      </head>
         {/* <Header menu={menu} />  */}
           <ProductWrapper>
             <ProductInfo product={product} />
