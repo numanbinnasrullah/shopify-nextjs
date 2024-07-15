@@ -23,7 +23,7 @@ const CartPage =  () => {
   const [createCheckOut, CheckoutResponse] = useCartCheckoutMutation();
   const [itemQuantities, setItemQuantities] = useState({});
   const [loadingItemId, setLoadingItemId] = useState(null); 
-  console.log("Checkout Response At Cart page", CheckoutResponse);
+  // console.log("Checkout Response At Cart page", CheckoutResponse);
   // console.log("Update Existing Item in cart Page******", existingItemUpdateResponse);
   let counterSum = 0;
     // const { menu } = cartPageData?.data
@@ -135,7 +135,7 @@ const CartPage =  () => {
     };
 
     const createCheckout = () => {
-      console.log("Create Checkout id $$$", cartId)
+      // console.log("Create Checkout id $$$", cartId)
       createCheckOut(cartId)
     }
 

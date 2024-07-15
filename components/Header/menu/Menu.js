@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Menu =  () => {
   const {data} =  useGetMenuQuery();
-  console.log("read Menu From Toolkit", data?.res?.data?.menu)
+  // console.log("read Menu From Toolkit", data?.res?.data?.menu)
   // const getMenus = await fetchMenus();
   // console.log("Get Menus", menu)
 

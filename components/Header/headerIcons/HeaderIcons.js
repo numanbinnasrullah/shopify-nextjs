@@ -15,7 +15,7 @@ const HeaderIcons = () => {
    
     const {baskitCounter} = useSelector( state => state.cartReducer)
     const [sendVariantId, retrieveResponse] =  useRetrieveCartMutation();
-    console.log("Cart Counter Value77777", baskitCounter)
+    // console.log("Cart Counter Value77777", baskitCounter)
     let counterSum = 0;
     // const b = retrieveResponse?.data?.res?.data?.cart?.lines?.edges?.map((item, i)=>{
     //     console.log("cart Item Quantity ",typeof(item.node.quantity))
@@ -35,7 +35,7 @@ const HeaderIcons = () => {
     }, []) // Add cartId to dependency array
 
    useEffect(() => {
-       console.log("Add cart countr some", counterSum)
+    //    console.log("Add cart countr some", counterSum)
         if (retrieveResponse.data?.res?.data?.cart?.lines?.edges) {
             const counterSum = retrieveResponse?.data?.res?.data?.cart?.lines?.edges?.reduce((sum, item) => sum + item.node.quantity, 0);
             dispatch(setBaskitCounterValue(counterSum));

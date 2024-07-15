@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
     const body = await request.json();
     const {slug, paginate} = body
-    console.log("Get Collection Backend Request", paginate)
+    // console.log("Get Collection Backend Request", paginate)
     // return NextResponse.json("Yes Get")
         var res ;
     try {
@@ -13,7 +13,7 @@ export async function POST(request) {
             if(paginate){
                 res = await collectionPageQuery(slug, paginate)
             }
-            console.log("Collection Fetch Successfully =====>>>>", res)
+            // console.log("Collection Fetch Successfully =====>>>>", res)
             return NextResponse.json({msg:"Collection fetched Successfully", res}, {status: 200})
        
         // return NextResponse.json({ error: "Please Login First" }, { status: 200 }, {"data": data});

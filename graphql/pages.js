@@ -1,7 +1,7 @@
 import { graphql } from './graphql'; // This is your GraphQL client setup file
 
 const pagesQuery = async (pageHandle) => {
-  console.log("page Handle:", pageHandle);
+  // console.log("page Handle:", pageHandle);
   const query = `
   query pages($slug: String!){
     page(handle: $slug) {

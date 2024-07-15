@@ -42,16 +42,16 @@ const checkVariants = (title, variants) => {
 };
 
 const ProductInfo = ({ product }) => {
-    console.log("ProductInfo", product)
+    // console.log("ProductInfo", product)
     const [createCart, responseCreate] = useCartCreateMutation();
     const [updateCart, responseUpdate] = useUpdateExistingCartMutation();
-    console.log("Cart Create response", responseCreate)
-    console.log("Cart Update response", responseUpdate)
+    // console.log("Cart Create response", responseCreate)
+    // console.log("Cart Update response", responseUpdate)
     let cartIdExist;
     if (typeof window !== 'undefined') {
         cartIdExist = localStorage.getItem('cartId')
     }
-    console.log("Localstorage cart id ******", cartIdExist)
+    // console.log("Localstorage cart id ******", cartIdExist)
     const variants = product?.variants?.edges || [];
     let colors1 = [];
     let sizes1 = [];
@@ -75,7 +75,7 @@ const ProductInfo = ({ product }) => {
     const [selectedVariantForCart, setSelectedVariantForCart] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isCartCreated, setIsCartCreated] = useState(false);
-    console.log("selectedVariantForCart", selectedVariantForCart);
+    // console.log("selectedVariantForCart", selectedVariantForCart);
     const dispatch = useDispatch()
 
     const createCartData = {
@@ -90,10 +90,10 @@ const ProductInfo = ({ product }) => {
     const handleAddToBasketClick = () => {
         setIsModalOpen(true);
         if (cartIdExist) {
-            console.log("Id exists in localStorage, updating cart...");
+            // console.log("Id exists in localStorage, updating cart...");
             updateCart(updateCartData);
         } else {
-            console.log("Creating new cart...");
+            // console.log("Creating new cart...");
             createCart(createCartData);
         }
         // dispatch(setBaskitCounterValue(productCount))
@@ -101,7 +101,7 @@ const ProductInfo = ({ product }) => {
     useEffect(() => {
         if (responseCreate?.isSuccess) {
             const counterSum = responseCreate?.data?.res?.data?.cartCreate?.cart?.lines?.edges?.reduce((sum, item) => sum + item.node.quantity, 0);
-            console.log("Product count updated*****", counterSum)
+            // console.log("Product count updated*****", counterSum)
 
             dispatch(setBaskitCounterValue(counterSum));
         }
@@ -110,7 +110,7 @@ const ProductInfo = ({ product }) => {
     useEffect(() => {
         if (responseUpdate?.isSuccess) {
             const counterSum = responseUpdate?.data?.res?.data?.cartLinesAdd?.cart?.lines?.edges?.reduce((sum, item) => sum + item.node.quantity, 0);
-            console.log("Product count updated 12211", counterSum)
+            // console.log("Product count updated 12211", counterSum)
 
             dispatch(setBaskitCounterValue(counterSum));
         }
@@ -163,12 +163,12 @@ const ProductInfo = ({ product }) => {
     // Function to handle size selection
     const handleSizeChange = (event) => {
         const selectSize = event.target.value;
-        console.log("Ab size select hua ", selectSize)
+        // console.log("Ab size select hua ", selectSize)
         setSelectedSize(selectSize);
 
         // Update selected price
         getSelectedVariantPrice(selectSize, selectedColor, selectedChoice);
-        console.log("selected color ", selectedColor)
+        // console.log("selected color ", selectedColor)
 
 
     };
@@ -243,7 +243,7 @@ const ProductInfo = ({ product }) => {
         const selectedVariant = variants.find(
             (variant) => variant.node.title.includes(selectedTitle)
         );
-        console.log("selectedVariant", selectedVariant);
+        // console.log("selectedVariant", selectedVariant);
 
         // console.log("Selected Variant Price:", selectedVariant); 
         setSelectedPrice(selectedVariant?.node?.price?.amount);

@@ -5,7 +5,7 @@ import SidebarToggler from "./SidebarToggler/SidebarToggler"
 import Link from "next/link";
 
 const GridItems = ({collection, getSelectedFilters}) => {
-        console.log("GridItems",collection?.products?.pageInfo )
+        // console.log("GridItems",collection?.products?.pageInfo )
        
     // console.log("filteredProducts12345", JSON.parse(filteredProducts))
     // const [filteredProducts, setFilteredProducts] = useState([]);

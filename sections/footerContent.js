@@ -29,8 +29,8 @@ export const informationMenu = {
       { name: "blog", url: "http://localhost:3000/collections/curtains" },
       { name: "about us", url: "/pages/about-us" },
       { name: "privacy policy", url: "/pages/privacy-policy" },
-      { name: "shipping & delivery", url: "#" },
-      { name: "sitemap", url: "#" }
+      { name: "shipping & delivery", url: "/pages/shipping-delivery" },
+      { name: "sitemap", url: "/pages/sitemap" }
     ]
   };
 
@@ -38,10 +38,10 @@ export const informationMenu = {
   export const customerService = {
     heading: "CUSTOMER SERVICE",
     links: [
-      { name: "Term & Conditions", url: "http://localhost:3000/collections/curtains" },
-      { name: "Refund & Return Policy", url: "#" },
-      { name: "Faq", url: "#" },
-      { name: "Contact Us", url: "#" }
+      { name: "Term & Conditions", url: "/pages/terms-conditions" },
+      { name: "Refund & Return Policy", url: "/pages/refund-return-policy" },
+      { name: "Faq", url: "/pages/faq" },
+      { name: "Contact Us", url: "/pages/contact-us" }
     ]
   };
 

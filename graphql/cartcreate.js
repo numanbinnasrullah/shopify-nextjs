@@ -1,7 +1,7 @@
 import { graphql } from './graphql'; // This is your GraphQL client setup file
 
 const cartCreateQuery = async (variantID, quantity) => {
-  console.log("CartCreate Input:", variantID, quantity);
+  // console.log("CartCreate Input:", variantID, quantity);
   const query = `
   mutation AddToCart($variantID: ID!, $proquantity:Int) {
     cartCreate(

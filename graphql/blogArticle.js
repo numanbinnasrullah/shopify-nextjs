@@ -1,7 +1,7 @@
 import { graphql } from './graphql'; // This is your GraphQL client setup file
 
 const blogArticleQuery = async (articleHandle) => {
-  console.log("Article Handle:", articleHandle);
+  // console.log("Article Handle:", articleHandle);
   const query = `
     query blogArticle($acticleHandle: String!){
         articles(first:1,  ) {
@@ -11,6 +11,10 @@ const blogArticleQuery = async (articleHandle) => {
                     articleByHandle(handle: $acticleHandle){
                         id
                         title
+                        seo {
+                          description
+                          title
+                        }
                         contentHtml 
                         image {
                         url

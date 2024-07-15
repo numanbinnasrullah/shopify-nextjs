@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const ProductDescription = ({product}) => {
-  console.log("product seo ", product)
+  // console.log("product seo ", product)
     const [activeTab, setActiveTab] = useState(0);
 
     const showTab = (tabIndex) => {

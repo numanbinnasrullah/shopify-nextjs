@@ -9,6 +9,10 @@ const productPageQuery = async (productSlug) => {
               description
               title
             }
+            featuredImage {
+              id
+              url
+            }
             id
           title
           description

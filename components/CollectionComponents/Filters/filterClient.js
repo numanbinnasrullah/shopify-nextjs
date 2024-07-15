@@ -13,7 +13,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
  
   const [sendFilterdata, retrieveFilterResponse] =  useFilterRequestMutation();
  
-  console.log("Collection Page console",slug, collection?.products?.filters)
+  // console.log("Collection Page console",slug, collection?.products?.filters)
   // console.log("retrieveFilterResponse", retrieveFilterResponse)
   // collection?.products?.filters?.filter(filter => filter.label.includes('Price')).map((filter, index) => (
   //   filter.values.map((value, index) => {
@@ -24,7 +24,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
   const priceFilter = collection?.products?.filters?.find((filter) =>
   filter.label.includes("Price")
   );
-  console.log("priceFilter", priceFilter?.values[0].input)
+  // console.log("priceFilter", priceFilter?.values[0].input)
   let priceData;
   if(priceFilter?.values[0].input){
     priceData = JSON.parse(priceFilter?.values[0].input);
@@ -103,7 +103,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
 
 
   const handleSizeChange = (size) => {
-    console.log("handle size", size)
+    // console.log("handle size", size)
     setSelectedSizes((prevSelectedSizes) => {
       const newSelectedSizes = prevSelectedSizes.includes(size)
         ? prevSelectedSizes.filter((selectedSize) => selectedSize !== size)
@@ -138,7 +138,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
     params.delete("previousPage");
     // Add new size parameters
     size.forEach((sizeItem) => {
-      console.log("Sizes select ", sizeItem);
+      // console.log("Sizes select ", sizeItem);
       // Check if size contains "x" or is a single word
       if (sizeItem.includes("x") || !/\s/.test(sizeItem)) {
         // If size contains "x" or is a single word, add it directly to params
@@ -158,9 +158,9 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
     try {
       if (params && params instanceof URLSearchParams) {
         const decodedParams = decodeURIComponent(params.toString());
-        console.log("Numan", decodedParams)
+        // console.log("Numan", decodedParams)
         const newUrl = `?${decodedParams.replace(/\+/g, "")}`;
-        console.log("new URL", newUrl);
+        // console.log("new URL", newUrl);
       }
     } catch (error) {
       console.error("Error generating new URL:", error);
@@ -170,7 +170,7 @@ const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOpti
        newUrl = `?${params.toString().replace(/\+/g, "")}`;
 
     }
-    console.log("new URL", newUrl)
+    // console.log("new URL", newUrl)
     history.pushState(null, '', newUrl);
   };
 
@@ -181,7 +181,7 @@ useEffect(() => {
 
   // Get selected sizes and colors from URL parameters
   const sizesFromUrl = urlParams.getAll('filter.size').map(size => {
-    console.log("size get ker lea hy url sy", size)
+    // console.log("size get ker lea hy url sy", size)
     if ( size.includes('x')) {
       return  size.replace('x', ' x ')
     } else {
@@ -291,7 +291,7 @@ useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
         const params = new URLSearchParams(window.location.search);
-        console.log("updateURL", params.get("lt-price"));
+        // console.log("updateURL", params.get("lt-price"));
   
         params.delete("filter.gt-price");
         params.delete("filter.lt-price");
@@ -302,7 +302,7 @@ useEffect(() => {
 
           newUrl = `?${params.toString()}`;
         }
-        console.log("newUrl", newUrl);
+        // console.log("newUrl", newUrl);
   
         window.history.pushState(null, '', newUrl);
       } catch (error) {
@@ -327,7 +327,7 @@ useEffect(() => {
 
   // Function to handle range change
   const handleRangeChange = (range) => {
-    console.log("handleRangeChange", range)
+    // console.log("handleRangeChange", range)
     setSelectedRange(range); 
 
     // Clear previous timer
@@ -381,16 +381,16 @@ useEffect(() => {
     if(params.size > 0){
       const minPriceParam = Number(params.get("filter.gt-price"))
       const maxPriceParam = Number(params.get("filter.lt-price"))
-      console.log("Use Effect chla 1", Number(minPriceParam))
-      console.log("Use Effect chlaa", maxPriceParam)
+      // console.log("Use Effect chla 1", Number(minPriceParam))
+      // console.log("Use Effect chlaa", maxPriceParam)
       if(minPriceParam || maxPriceParam){
         setafterminPrice(Number(minPriceParam))
         setaftermaxPrice(Number(maxPriceParam))
   
-        console.log("asdasdasdasd", typeof(aftermaxPrice))
+        // console.log("asdasdasdasd", typeof(aftermaxPrice))
   
-        console.log("asdasdasdasdasdasd", afterminPrice)
-        console.log("asdas", aftermaxPrice)
+        // console.log("asdasdasdasdasdasd", afterminPrice)
+        // console.log("asdas", aftermaxPrice)
         // setMinPrice(minPriceParam);
         // setMaxPrice(maxPriceParam);
         setSelectedRange([minPriceParam, maxPriceParam]);
@@ -444,18 +444,18 @@ useEffect(() => {
   const RemoveFilter = (receiveFilter, filterType) => {
       if (receiveFilter.includes('x')) {
       receiveFilter = receiveFilter.replace(/\s/g, '');
-      console.log("removeFilter", receiveFilter)
+      // console.log("removeFilter", receiveFilter)
     }
    
     const params = new URLSearchParams(window.location.search);
-    console.log("filterType", params.get("nextPage"))
+    // console.log("filterType", params.get("nextPage"))
     
     // Determine the key to delete based on the filter type (size or color)
     const filterKey = 'filter.' + filterType; // Use the filterType parameter
   
     // Get the current selected filter values from the URL parameters
     const currentFilters = params.getAll(filterKey);
-    console.log("currentFilters", filterKey )
+    // console.log("currentFilters", filterKey )
     // Remove the clicked filter value from the list of current filters
     const updatedFilters = currentFilters.filter(filter => filter !== receiveFilter);
    
@@ -491,7 +491,7 @@ useEffect(() => {
   
   const RemovePriceFilter = (gtPrice, ltPrice) => {
     const params = new URLSearchParams(window.location.search);
-    console.log("filterType", ltPrice)
+    // console.log("filterType", ltPrice)
   
     // Remove the parameter from the URL parameters
     params.delete(gtPrice);

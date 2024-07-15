@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export async function generateMetadata({ params }) {
   const [getCollection, getCollectionRes] =  useGetCollectionMutation();
-  console.log("Get Collection SEO*******", getCollectionRes?.data?.res?.data?.collection)
+  // console.log("Get Collection SEO*******", getCollectionRes?.data?.res?.data?.collection)
   // const meta = await GetSinglePost(params.slug);
   // const robots = meta?.post?.seo?.robots;
 
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }) {
 
 const Filters =  ({ collection, slug, initialcheck, variantOptions}) => {
   const [getCollection, getCollectionRes] =  useGetCollectionMutation();
-  console.log("Get Collection Try", getCollectionRes?.data?.res?.data?.collection)
+  // console.log("Get Collection Try", getCollectionRes?.data?.res?.data?.collection)
   var collectionData = {
     slug: slug
   }

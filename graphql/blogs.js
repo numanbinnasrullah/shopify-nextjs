@@ -1,39 +1,37 @@
 
-import { graphql } from './graphql'; // This is your GraphQL client setup file
+import { graphql } from './graphql'; 
 
-const blogsQuery = async (blogId) => {
-  console.log("blogs query:", blogId);
+const blogsQuery = async () => {
+  // console.log("blogs query:", blogId);
   const query = `
-  {
-	blogs(query: "87509991609", first: 1) {
-	  edges {
-	    node {
-	      id
-        articles(first:3) {
-          edges {
-            node {
-              id
-              title
-              content  
-              image {
-                url
+    query blogs{
+      articles(first:100) {
+                edges {
+                  node {
+                        id
+                        title
+                        handle
+                        content  
+                        image {
+                          url
+                        }   
+                  }
+                }
+                pageInfo{
+                  hasNextPage
+                  endCursor
+                }
               }
-            }
-          }
-        }
-	    }
-	  }
-	} 
-}
+    }
   
   `;
 
   // "id": "gid://shopify/ProductVariant/42795461083321"
-  const variables = {
-    "variantID": variantID,
-    "proquantity": quantity
-  };
-  const Query = { query, variables }
+  // const variables = {
+  //   "variantID": variantID,
+  //   "proquantity": quantity
+  // };
+  const Query = { query }
   const res = await graphql(Query);
   return res
 };

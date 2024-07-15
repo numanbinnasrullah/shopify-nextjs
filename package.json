@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.4",
+    "@react-email/components": "^0.0.21",
     "@reduxjs/toolkit": "^2.2.3",
     "cheerio": "^1.0.0-rc.12",
     "debounce": "^2.0.0",
+    "dompurify": "^3.1.5",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "html-to-text": "^9.0.5",
@@ -24,6 +26,7 @@
     "react-dom": "^18",
     "react-redux": "^9.1.2",
     "react-slick": "^0.30.1",
+    "resend": "^3.4.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {

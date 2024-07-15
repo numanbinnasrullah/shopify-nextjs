@@ -11,7 +11,9 @@ import filtersQuery from '@/graphql/filters'
 
 
 
+
 const page = async ({params, searchParams }) => {
+  // console.log("collection params", params)
 // Initialize variantOptions
 const variantOptions = [];
 let paginate = ""
@@ -108,9 +110,47 @@ if (priceRange.min !== undefined && priceRange.max !== undefined) {
   // const collectionPageData = await collectionPageQuery(params.slug, "")
 //   console.log("Collection Page Data", collectionPageData?.data?.collection?.products);
   const { collection } = collectionPageData?.data
-// console.log("initail check", collection)
+// console.log("initail check", collection?.products?.edges)
   return (
       <>
+         <head>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+              "@context": "http://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+            
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "collection",
+                  "item": `http://localhost:3000/collections/${params?.slug}`
+                }
+              ]
+            }) }} />
+
+
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+              "@context": "http://schema.org",
+              "@type": "CollectionPage",
+              "@id": `http://localhost:3000/collections/${params?.slug}`,
+              "name": params?.slug,
+              "url": `http://localhost:3000/collections/${params?.slug}`,
+              "image": collection?.image?.url,
+              "mainEntity": {
+                "@type": "ItemList",
+                "itemListElement": collection?.products?.edges.map((item, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,  // Use the index to set the position dynamically
+                "item": {
+                  "@id": `http://localhost:3000/collections/${params?.slug}/${item?.node.handle}`,
+                  "url": `http://localhost:3000/collections/${params?.slug}/${item?.node.handle}`
+                }
+              }))
+              }
+
+            }) }} />
+
+          </head>
           {/* <Header menu={menu} /> */}
             <CollectionWrapper>
             

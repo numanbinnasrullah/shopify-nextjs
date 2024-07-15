@@ -6,6 +6,7 @@ import cartReducer from "./reducers/cartReducer";
 import filtersService from "./services/filterService";
 import collectionService from "./services/collectionService";
 import checkoutService from "./services/checkoutService";
+import blogService from "./services/blogService";
 // import authService  from "./services/authService";
 // import authReducer from "./reducers/authReducer";
 // import productService from "./services/productService";
@@ -18,11 +19,12 @@ const Store = configureStore({
         [filtersService.reducerPath]: filtersService.reducer,
         [collectionService.reducerPath]: collectionService.reducer,
         [checkoutService.reducerPath]: checkoutService.reducer,
+        [blogService.reducerPath]: blogService.reducer,
 
         "cartReducer": cartReducer,
     },
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(homePageService.middleware, cartPageService.middleware, filtersService.middleware, collectionService.middleware, checkoutService.middleware),
+    getDefaultMiddleware().concat(homePageService.middleware, cartPageService.middleware, filtersService.middleware, collectionService.middleware, checkoutService.middleware, blogService.middleware),
 },
 );
 setupListeners(Store.dispatch);

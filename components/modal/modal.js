@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const Modal = ({ isOpen, onClose, product, selectedImageId, selectedPrice, selectedSize }) => {
   const cartId = JSON.stringify(localStorage.getItem('cartId'))
-  console.log("Model wali id", cartId)
+  // console.log("Model wali id", cartId)
   const [selectImage, setSelectImage] = useState(null);
   useEffect(() => {
     const filteredImage = product?.images?.edges.find(item => item?.node?.id === selectedImageId);

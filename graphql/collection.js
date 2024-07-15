@@ -5,7 +5,7 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
   //   console.log("Filter BBBBB", filter)
   // })
 
-  console.log("Collection paginate", paginate)
+  // console.log("Collection paginate", paginate)
   
       if(paginate && paginate.includes('nextPage')){
         const query = `
@@ -15,6 +15,10 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
             title
             description
             handle
+            image {
+              id
+              url
+            }
             seo {
               description
               title
@@ -124,6 +128,10 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
             title
             description
             handle
+            image {
+              id
+              url
+            }
             products(last: ${process.env.Collection_Products_Limit},  before: $previousPage) {
               filters {
                 id
@@ -231,6 +239,10 @@ const collectionPageQuery = async(collectionSlug, paginate) => {
                 title
                 description
                 handle
+                image {
+                  id
+                  url
+                }
                 products(first: ${process.env.Collection_Products_Limit}) {
                   filters {
                     id

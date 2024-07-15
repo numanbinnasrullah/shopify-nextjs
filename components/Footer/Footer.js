@@ -80,6 +80,7 @@ const Footer = () => {
                                     <span>{link.name}</span>
                                 </Link>
                                 ))}
+                                {/* <Link className="block w-full max-w-fit text-white text-sm py-2 mb-1 capitalize" href="pages/faq">FAQ</Link> */}
                             </div>
                         </div>
                     </div>
