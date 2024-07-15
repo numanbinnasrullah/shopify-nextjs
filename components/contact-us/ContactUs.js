@@ -42,7 +42,7 @@ const ContactUs = () => {
       <div class="bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-8">
         <h2 class="text-3xl text-gray-800 font-extrabold text-center mb-12">Contact us</h2>
         
-        <form class="space-y-3 max-w-xl mx-auto text-gray-800" onSubmit={handleSubmit}>
+        <form class="space-y-3 max-w-xl mx-auto text-gray-800">
           <input
             type="text"
             name="name"
