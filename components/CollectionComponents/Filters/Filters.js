@@ -87,14 +87,14 @@ export async function generateMetadata({ params }) {
 }
 
 const Filters =  ({ collection, slug, initialcheck, variantOptions}) => {
-  const [getCollection, getCollectionRes] =  useGetCollectionMutation();
+  // const [getCollection, getCollectionRes] =  useGetCollectionMutation();
   // console.log("Get Collection Try", getCollectionRes?.data?.res?.data?.collection)
   var collectionData = {
     slug: slug
   }
-  useEffect(()=>{
-    getCollection(collectionData)
-  },[])
+  // useEffect(()=>{
+  //   getCollection(collectionData)
+  // },[])
   return (
     <>
       <div class="filter-box hidden lg:block w-full max-w-[300px] pr-10">
