@@ -15,27 +15,27 @@ const ContactUs = () => {
     })
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      const response = await fetch('http://localhost:3000/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-      if (response.ok) {
-        console.log('Email sent successfully!')
-        alert('Email sent successfully!')
-      } else {
-        console.log('Failed to send Email')
-        alert('Failed to send Email.')
-      }
-    } catch (error) {
-      console.error('Error:', error)
-    }
-  }
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   try {
+  //     const response = await fetch('http://localhost:3000/api/contact', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(formData)
+  //     })
+  //     if (response.ok) {
+  //       console.log('Email sent successfully!')
+  //       alert('Email sent successfully!')
+  //     } else {
+  //       console.log('Failed to send Email')
+  //       alert('Failed to send Email.')
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error)
+  //   }
+  // }
 
   return (
     <div class="font-[sans-serif] max-w-6xl mx-auto p-4 mb-10">
