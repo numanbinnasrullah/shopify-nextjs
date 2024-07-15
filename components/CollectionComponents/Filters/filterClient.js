@@ -9,6 +9,8 @@ import { usePathname } from 'next/navigation'
 import { useFilterRequestMutation } from "@/store/services/filterService";
 
 
+
+
 const FilterClient = ({ collection, getSelected, initialcheck, slug, variantOptions }) => {
  
   const [sendFilterdata, retrieveFilterResponse] =  useFilterRequestMutation();
