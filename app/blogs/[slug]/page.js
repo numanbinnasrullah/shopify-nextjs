@@ -27,22 +27,22 @@ export async function generateMetadata({ params }) {
 
   // console.log(meta.post.seo.focusKeywords);
   return {
-    title: articles.map((article, i) => (key={i},article.node.blog.articleByHandle.seo.title)),
+    title: articles.map((article, i) => ({key:i ,title:article.node.blog.articleByHandle.seo.title})),
     generator: process.env.applicationName,
     applicationName: process.env.applicationName,
-    description: articles.map((article, i) => (key={i},article.node.blog.articleByHandle.seo.description)),
+    description: articles.map((article, i) => ({key:i, description:article.node.blog.articleByHandle.seo.description})),
     authors: [{ name: `${process.env.applicationName}` }],
     creator: process.env.applicationName,
     publisher: process.env.applicationName,
     metadataBase: new URL(`${process.env.BASE_URL}`),
     openGraph: {
-      title: articles.map((article, i) => (key={i},article.node.blog.articleByHandle.seo.title)),
-      description: articles.map((article, i) => (key={i},article.node.blog.articleByHandle.seo.description)),
+      title: articles.map((article, i) => ({key:i,title:article.node.blog.articleByHandle.seo.title})),
+      description: articles.map((article, i) => ({key:i,description:article.node.blog.articleByHandle.seo.description})),
       url: `${process.env.BASE_URL}`,
       siteName: `${process.env.applicationName}`,
       images: [
         {
-          url: articles.map((article, i) => (key={i},article?.node?.blog?.articleByHandle.image.url)),
+          url: articles.map((article, i) => ({key:i,url:article?.node?.blog?.articleByHandle.image.url})),
           // width: 800,
           // height: 600,
         },

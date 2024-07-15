@@ -52,7 +52,7 @@ export async function generateMetadata({ params }) {
       siteName: `${process.env.applicationName}`,
       images: [
         {
-          url: productPageData?.data?.product?.images?.edges.map((thumbUrl, index) => (key={index}, thumbUrl.node.originalSrc)),
+          url: productPageData?.data?.product?.images?.edges.map((thumbUrl, index) => ({key:index, url:thumbUrl.node.originalSrc})),
           // width: 800,
           // height: 600,
         },
@@ -188,7 +188,7 @@ const page = async ({params}) => {
           "description": product?.description,
           "category": "Plain Dyed Duvet Cover",
           "url": `product/${params?.slug}`,
-          "sku": product?.variants?.edges.map((variant, i) => (key={i},variant?.node?.sku)),
+         "sku": product?.variants?.edges.map((variant, i) => ({ key: i, sku: variant?.node?.sku})),
           "image": {
             "@type": "ImageObject",
             "url": product?.featuredImage?.url,
