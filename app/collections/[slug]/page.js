@@ -139,6 +139,7 @@ if (priceRange.min !== undefined && priceRange.max !== undefined) {
               "mainEntity": {
                 "@type": "ItemList",
                 "itemListElement": collection?.products?.edges.map((item, i) => ({
+                  key: `item-${i}`,
                 "@type": "ListItem",
                 "position": i + 1,  // Use the index to set the position dynamically
                 "item": {
