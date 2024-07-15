@@ -113,7 +113,7 @@ if (priceRange.min !== undefined && priceRange.max !== undefined) {
 // console.log("initail check", collection?.products?.edges)
   return (
       <>
-         <head>
+         {/* <head>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
               "@context": "http://schema.org",
               "@type": "BreadcrumbList",
@@ -151,7 +151,7 @@ if (priceRange.min !== undefined && priceRange.max !== undefined) {
 
             }) }} />
 
-          </head>
+          </head> */}
           {/* <Header menu={menu} /> */}
             <CollectionWrapper>
             
