@@ -9,6 +9,7 @@ import React from 'react'
 const Collection = async() => {
 
     return (
+        
         <>
             <CollectionWrapper>
                 <CollectionDescription />

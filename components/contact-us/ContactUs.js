@@ -4,8 +4,9 @@ import React, { useState } from 'react'
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     name: '',
+    subject:"",
     email: '',
-    message: ''
+    message: '',
   })
 
   const handleChange = (e) => {
@@ -18,7 +19,7 @@ const ContactUs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:3000/api/contact', {
+      const response = await fetch('http://localhost:3000/api/send-mail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -49,6 +50,14 @@ const ContactUs = () => {
             placeholder="Name"
             className="w-full border rounded py-3 px-4 text-sm focus:outline-slate-600"
             value={formData.name}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="subject"
+            placeholder="Subject"
+            className="w-full border rounded py-3 px-4 text-sm focus:outline-slate-600"
+            value={formData.subject}
             onChange={handleChange}
           />
            <input
