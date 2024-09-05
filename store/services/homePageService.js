@@ -19,6 +19,7 @@ const homePageService = createApi({
             }),
         }),
     }),
+    
 });
 
 export const { useGetMenuQuery, useGetFeaturedCollectionsQuery } = homePageService;
