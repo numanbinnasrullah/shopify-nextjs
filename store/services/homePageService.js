@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const homePageService = createApi({
     reducerPath: 'homePage',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3000/api/',
+        baseUrl: 'https://shopify-nextjs-mu-nine.vercel.app/api/',
     }),
     endpoints: (builder) => ({
         getMenu: builder.query({

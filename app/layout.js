@@ -4,6 +4,7 @@ import Header from "@/components/Header/Header";
 import menuQuery from "@/graphql/menu";
 import Footer from "@/components/Footer/Footer";
 import ReduxProvider from "@/utils/reduxProvider";
+import Announcement from "@/components/Header/announcement-bar/Announcement";
 
 
 
@@ -63,6 +64,7 @@ export default  function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <ReduxProvider>
+        <Announcement />
          <Header  />
           {children}
          <Footer />
